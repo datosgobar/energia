@@ -1,0 +1,35 @@
+//  Tipografía
+    $font-family-sans-serif:  'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    $font-family-serif:       Georgia, "Times New Roman", Times, serif;
+    $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
+    $font-family-base:        $font-family-sans-serif;
+
+//  Tamaño tipográfico
+    $font-size-base:          responsive 12px 18px;
+    $font-size-h1:            responsive (12px * 2.6) (18px * 2.6);
+    $font-size-h2:            responsive (12px * 2.15) (18px * 2.15);
+    $font-size-h3:            responsive (12px * 1.7) (18px * 1.7);
+    $font-size-h4:            responsive (12px * 1.25) (18px * 1.25);
+    $font-size-h5:            $font-size-base;
+    $font-size-h6:            responsive (12px * 0.85) (18px * 0.85);
+
+    $line-height-base:        1.428571429;                                      // 20/14
+
+//  Responsive Rules
+    $small:                   768px;    // @media (min-width: $small)   {}
+    $medium:                  992px;    // @media (min-width: $medium)  {}
+    $large:                   1200px;   // @media (min-width: $large)   {}
+
+//  Text Color
+    $generic_color:           #767676;  // Color Generico
+    $dark_color:              #424242;  // Color Generico Oscuro
+
+//  Colores Gobierno
+    $gobar_color_dark:        #0695d6;  // Color Gob. Nación Oscuro
+    $gobar_color_ligth:       #17b2f8;  // Color Gob. Nación Claro
+
+//  Header
+    $navHeight:               72px;     // Altura Header
+
+//  Footer
+    $footerHeight:            265px;

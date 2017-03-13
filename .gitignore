@@ -1,0 +1,8 @@
+node_modules/
+
+*.jshintrc
+
+package.json
+gulpfile.js
+
+mergeFiles.php

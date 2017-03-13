@@ -1,0 +1,159 @@
+@import "start";
+
+body {
+  padding-top: 0px;
+}
+
+#content {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 72px 0px 0px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+
+#placa {
+  background-color: silver;
+  width: calc(400px - 40px);
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  position: relative;
+
+  .placa_titulo {
+    width: 100%;
+    text-align: center;
+    background: white;
+    border: 1px solid silver;
+    border-radius: 20px;
+  }
+  .placas_valor {
+    width: 100%;
+    padding: 20px 0px;
+
+    .placa_icon {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: row;
+      margin-right: 10px;
+
+      img {
+        width: 25px;
+        margin-right: 5px;
+      }
+    }
+
+    .placa_valor {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      flex-direction: row;
+    }
+    .placa_prod {}
+    .placa_imp {}
+    .placa_exp {}
+    .placa_lost {}
+    .placa_efi {}
+    .placa_more {}
+  }
+  .placas_graficos {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .placa_grafico {
+      width: 100%;
+      height: 50px;
+      background: white;
+      margin-bottom: 20px;
+    }
+  }
+  .agrup {
+    width: 100%;
+    background: white;
+    min-height: 100px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
+    padding: 10px;
+    flex-wrap: wrap;
+
+    .backButton {
+      background: antiquewhite;
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 10px;
+      cursor: pointer;
+
+      .backButton_text {
+      }
+    }
+  }
+  .pannel_button {
+    height: 50px;
+    font-size: 15px;
+    margin: 0px;
+    padding: 0px 5px;
+    position: absolute;
+    left: 0px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 20px;
+    background: white;
+    border: 2px solid silver;
+  }
+}
+
+
+#sankey {
+  height: 100%;
+}
+
+.node rect {
+  // cursor: move;
+  cursor: point;
+  fill-opacity: 1;
+  shape-rendering: crispEdges;
+  z-index: 20;
+}
+
+.node text {
+  pointer-events: none;
+  font-weight: bold;
+  // text-shadow: 0 1px 0 #fff;
+}
+
+.link {
+  fill-opacity: 0.75;
+  fill: none;
+  z-index: 10;
+}
+
+.link-hover {
+  // stroke-opacity: 0.8;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $small) {}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $medium) {}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $large) {}
