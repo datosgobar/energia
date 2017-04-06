@@ -1,48 +1,76 @@
 id,name,parent,category,position,importation,exportation,production
-0,ACEITES VEGETALES,42,PRIMARIA,1,500;200;300;400;500;800,1500;1100;2000;3000;5000;7000,200;170;200;200;250;400
-1,ALCOHOL VEGETAL,42,PRIMARIA,1,1500,500,500
-2,BAGAZO,45,PRIMARIA,1,0,0,0
-3,BIODIESEL,43,SECUNDARIA,3,500,1500,0
-4,BIOETANOL,43,SECUNDARIA,3,1500,500,0
-5,CARBON MINERAL,44,PRIMARIA,1,0,0,0
-6,CARBON VEGETAL,44,PRIMARIA,1,0,0,0
-7,CENTRALES ELECTRICAS,null,CENTRALES ELECTRICAS,2,0,0,0
-8,COMERCIAL Y PUBLICO,null,COMERCIAL Y PUBLICO,4,0,0,0
-9,CONSUMO PROPIO,null,CONSUMO PROPIO,4,0,0,0
-10,COQUE PETROLEO,46,COQUE PETROLEO,3,0,0,0
-11,ELECTRICIDAD,null,ELECTRICIDAD,3,0,0,0
-12,EOLICA,45,EOLICA,1,0,0,0
-13,ETANO,45,ETANO,1,0,0,0
-14,EXPORTACIONES,null,EXPORTACIONES,4,0,0,0
-15,FUELOIL,46,FUELOIL,3,0,0,0
-16,GAS ALTOS HORNOS,null,GAS ALTOS HORNOS,2,0,0,0
-17,GAS COQUERIA,46,GAS COQUERIA,3,0,0,0
-18,GAS DE POZO,null,GAS DE POZO,1,0,0,0
-19,GAS DE REFINERIA,null,GAS DE REFINERIA,3,0,0,0
-20,GAS DISTRIBUIDO,null,GAS DISTRIBUIDO,3,0,0,0
-21,GASOIL,46,GASOIL,3,0,0,0
-22,GASOLINA ESTABILIZADA PETROLEO y GAS,null,GASOLINA ESTABILIZADA PETROLEO y GAS,3,0,0,0
-23,GLP,46,GLP,3,0,0,0
-24,HIDRAULICA,45,HIDRAULICA,1,0,0,0
-25,IMPORTACIONES,null,IMPORTACIONES,0,0,0,0
-26,KEROSENE,46,KEROSENE,3,0,0,0
-27,LEÑA,45,LEÑA,1,0,0,0
-28,MOTONAFTAS,46,MOTONAFTAS,3,0,0,0
-29,NE CARBON,45,NE CARBON,1,0,0,0
-30,NO ENERGETICO,46,NO ENERGETICO,3,0,0,0
-31,NUCLEAR,46,NUCLEAR,3,0,0,0
-32,OTRAS NAFTAS,46,OTRAS NAFTAS,3,0,0,0
-33,OTROS CENTROS DE TRANSFORMACION,null,OTROS CENTROS DE TRANSFORMACION,2,0,0,0
-34,OTROS PRIMARIOS,45,OTROS PRIMARIOS,1,0,0,0
-35,PERDIDAS,null,PERDIDAS,4,0,0,0
-36,PETROLEO,null,PETROLEO,1,0,0,0
-37,PLANTAS DE TRATAMIENTO DE GAS,null,PLANTAS DE TRATAMIENTO DE GAS,2,0,0,0
-38,REFINERIAS,null,REFINERIAS,2,0,0,0
-39,RESIDENCIAL,null,RESIDENCIAL,4,0,0,0
-40,SOLAR,45,SOLAR,1,0,0,0
-41,TRANSPORTE,null,TRANSPORTE,4,0,0,0
-42,ACEITES Y ALCOHOLES,45,PRIMARIA,1,2000,2000,0
-43,BIOCOMBUSTIBLES,null,SECUNDARIA,3,2000,2000,0
-44,CARBONES,null,PRIMARIA,1,2000,2000,0
-45,OTROS PRIMARIOS,null,PRIMARIA,1,4000,4000,0
-46,OTROS SECUNDARIOS,null,SECUNDARIA,3,8000,8000,0
+0,Energías Primarias,null,Energías Primarias,1,0,0,0
+1,Energía Hidráulica,0,Energías Primarias,1,0,0,0
+2,Energía Nuclear,0,Energías Primarias,1,0,0,0
+3,Gas Natural de Pozo,0,Energías Primarias,1,0,0,0
+4,Petróleo,0,Energías Primarias,1,0,0,0
+5,Otras Fuentes Primarias de Energía,0,Energías Primarias,1,0,0,0
+6,Energía Eólica,5,Energías Primarias,1,0,0,0
+7,Energía Solar,5,Energías Primarias,1,0,0,0
+8,Carbón Mineral,5,Energías Primarias,1,0,0,0
+9,Aceites y Alcoholes Vegetales,5,Energías Primarias,1,0,0,0
+10,Alcohol Vegetal,9,Energías Primarias,1,0,0,0
+11,Aceites Vegetales,9,Energías Primarias,1,0,0,0
+12,Leña Bagazo y Otros,5,Energías Primarias,1,0,0,0
+13,Leña,12,Energías Primarias,1,0,0,0
+14,Bagazo,12,Energías Primarias,1,0,0,0
+15,Otros Primarios,12,Energías Primarias,1,0,0,0
+16,Energías Secundarias,null,Energías Secundarias,3,0,0,0
+17,Energía Eléctrica,16,Energías Secundarias,3,0,0,0
+18,Gas Distribuido por Redes,16,Energías Secundarias,3,0,0,0
+19,Gas Licuado,16,Energías Secundarias,3,0,0,0
+20,Derivados del Petróleo,16,Energías Secundarias,3,0,0,0
+21,Gas Oil,20,Energías Secundarias,3,0,0,0
+22,Fuel Oil,20,Energías Secundarias,3,0,0,0
+23,Motonaftas,20,Energías Secundarias,3,0,0,0
+24,Biocombustibles,16,Energías Secundarias,3,0,0,0
+25,Biodiesel,24,Energías Secundarias,3,0,0,0
+26,Bioetanol,24,Energías Secundarias,3,0,0,0
+27,Otras Fuentes Secundarias de Energía,16,Energías Secundarias,3,0,0,0
+28,Gas de Alto Horno,27,Energías Secundarias,3,0,0,0
+29,No Energético de Carbón,27,Energías Secundarias,3,0,0,0
+30,Carbón Vegetal,27,Energías Secundarias,3,0,0,0
+31,Energías Secundarias del Petróleo,27,Energías Secundarias,3,0,0,0
+32,Carbón Residual,31,Energías Secundarias,3,0,0,0
+33,Coque de Petróleo,31,Energías Secundarias,3,0,0,0
+34,Gas de Refinería,31,Energías Secundarias,3,0,0,0
+35,Kerosene,31,Energías Secundarias,3,0,0,0
+36,No Energético,31,Energías Secundarias,3,0,0,0
+37,Otras Naftas,31,Energías Secundarias,3,0,0,0
+38,Energías Secundarias del Carbón,27,Energías Secundarias,3,0,0,0
+39,Coque de Carbón,38,Energías Secundarias,3,0,0,0
+40,Gas de Coquería,38,Energías Secundarias,3,0,0,0
+41,Energías Secundarias del Gas,27,Energías Secundarias,3,0,0,0
+42,Etano,41,Energías Secundarias,3,0,0,0
+43,Gasolina,41,Energías Secundarias,3,0,0,0
+44,Oferta,null,Oferta,0,0,0,0
+45,Producción,44,Oferta,0,0,0,0
+46,Importación,44,Oferta,0,0,0,0
+47,Exportación,44,Oferta,0,0,0,0
+48,Pérdidas,44,Oferta,0,0,0,0
+49,Otros Conceptos de Oferta,44,Oferta,0,0,0,0
+50,Variación de Stock,49,Oferta,0,0,0,0
+51,Búnker,49,Oferta,0,0,0,0
+52,No Aprovechado,49,Oferta,0,0,0,0
+53,Ajustes,49,Oferta,0,0,0,0
+54,Centros de Transformación,null,Centros de Transformación,2,0,0,0
+55,Centrales Eléctricas,54,Centros de Transformación,2,0,0,0
+56,Servicio Público,55,Centros de Transformación,2,0,0,0
+57,Autoproducción,55,Centros de Transformación,2,0,0,0
+58,Plantas de Tratamiento de Gas,54,Centros de Transformación,2,0,0,0
+59,Refinerías,54,Centros de Transformación,2,0,0,0
+60,Otros Centros de Transformación,54,Centros de Transformación,2,0,0,0
+61,Aceiteras y Destilerías,60,Centros de Transformación,2,0,0,0
+62,Coquerías,60,Centros de Transformación,2,0,0,0
+63,Carboneras,60,Centros de Transformación,2,0,0,0
+64,Altos Hornos,60,Centros de Transformación,2,0,0,0
+65,Consumo,null,Consumo,4,0,0,0
+66,Consumo Propio,65,Consumo,4,0,0,0
+67,Consumo Final,65,Consumo,4,0,0,0
+68,Residencial,67,Consumo,4,0,0,0
+69,Consumo No Energético,67,Consumo,4,0,0,0
+70,Transporte,67,Consumo,4,0,0,0
+71,Comercial,67,Consumo,4,0,0,0
+72,Industria,67,Consumo,4,0,0,0
+73,Agropecuario,67,Consumo,4,0,0,0
+74,Pérdidas por Transformación,null,Pérdidas por Transformación,3,0,0,0

@@ -1,30 +1,33 @@
 //  Variables Globales
-    let scaleColorLink  = d3.scaleOrdinal().range(['#80A1C1','#BA3F1D','#333333','#643173','#BA3F1D']);
-    let fontScale       = d3.scaleLinear().range([8, 16]);
+let scaleColorLink  = d3.scaleOrdinal().range(['#80A1C1','#BA3F1D','#333333','#643173','#BA3F1D']);
+let fontScale       = d3.scaleLinear().range([8, 16]);
 
 //  Funciones
-    // const formatoNumero = (d) => {
-    //   let format = d3.format(',.0f');
-    //
-    //   return `${ format(d) } Twh`;
-    // };
+// const formatoNumero = (d) => {
+//   let format = d3.format(',.0f');
+//
+//   return `${ format(d) } Twh`;
+// };
 
-    /* Resta el porcentaje indicado a un color (RR, GG o BB) hexadecimal para oscurecerlo */
-    const subtractLight = function(color, amount){
-      let cc = parseInt(color,16) - amount;
-      let c = (cc < 0) ? 0 : (cc);
-      c = (c.toString(16).length > 1 ) ? c.toString(16) : `0${c.toString(16)}`;
-      return c;
-    };
+/* Resta el porcentaje indicado a un color (RR, GG o BB) hexadecimal para oscurecerlo */
+const subtractLight = function(color, amount){
+  let cc = parseInt(color,16) - amount;
+  let c = (cc < 0) ? 0 : (cc);
+  c = (c.toString(16).length > 1 ) ? c.toString(16) : `0${c.toString(16)}`;
 
-    /* Oscurece un color hexadecimal de 6 caracteres #RRGGBB segun el porcentaje indicado */
-    const darken = (color, amount) =>{
-      color = (color.indexOf('#')>=0) ? color.substring(1,color.length) : color;
-      amount = parseInt((255*amount)/100);
-      return color = `#${subtractLight(color.substring(0,2), amount)}${subtractLight(color.substring(2,4), amount)}${subtractLight(color.substring(4,6), amount)}`;
-    };
+  return c;
+};
 
-$(document).ready(() => {
+/* Oscurece un color hexadecimal de 6 caracteres #RRGGBB segun el porcentaje indicado */
+const darken = (color, amount) =>{
+  color = (color.indexOf('#')>=0) ? color.substring(1,color.length) : color;
+  amount = parseInt((255*amount)/100);
+  color = `#${subtractLight(color.substring(0,2), amount)}${subtractLight(color.substring(2,4), amount)}${subtractLight(color.substring(4,6), amount)}`;
+
+  return color;
+};
+
+$(() => {
 
   let height      = $('#content').height(),
       width       = $('#content').width() - $('#placa').width(),
@@ -41,20 +44,6 @@ $(document).ready(() => {
       //     clavesNodos.push({ 'id': v.id, 'state': true });
       //   });
       // };
-      const updatePlaca = (element) => {
-        let contenedor = d3.select('#placa');
-            contenedor.select('.placa_titulo').style('text-transform', 'uppercase').text(element.name);
-            contenedor.select('.placa_prod').text(element.value);
-            contenedor.select('.placa_imp').text(element.value * 0.2);
-            contenedor.select('.placa_exp').text(element.value * 0.1);
-            contenedor.select('.placa_lost').text(element.value * 0.05);
-            contenedor.select('.placa_efi').text(((element.value -  (element.value * 0.05)) * 100) / element.value);
-            contenedor.select('.placa_more').text(element.value  * 0.01);
-
-        createGrafico(element.prod, contenedor.select('.placa_grafico.grafico_prod'));
-        createGrafico(element.imp, contenedor.select('.placa_grafico.grafico_imp'));
-        createGrafico(element.exp, contenedor.select('.placa_grafico.grafico_exp'));
-      };
       const createGrafico = (data, container) => {
         // Variables
         let margin = { top: 0, right: 0, bottom: 0, left: 0 };
@@ -105,6 +94,21 @@ $(document).ready(() => {
           .attr('stroke-width', 1.5)
           .attr('d', line);
       };
+      const updatePlaca = (element) => {
+        let contenedor = d3.select('#placa');
+            contenedor.select('.placa_titulo').style('text-transform', 'uppercase').text(element.name);
+            contenedor.select('.placa_prod').text(element.value);
+            contenedor.select('.placa_imp').text(element.value * 0.2);
+            contenedor.select('.placa_exp').text(element.value * 0.1);
+            contenedor.select('.placa_lost').text(element.value * 0.05);
+            contenedor.select('.placa_efi').text(((element.value -  (element.value * 0.05)) * 100) / element.value);
+            contenedor.select('.placa_more').text(element.value  * 0.01);
+
+        createGrafico(element.prod, contenedor.select('.placa_grafico.grafico_prod'));
+        createGrafico(element.imp, contenedor.select('.placa_grafico.grafico_imp'));
+        createGrafico(element.exp, contenedor.select('.placa_grafico.grafico_exp'));
+      };
+
       const fadeIn = (opacity) => (g, i) => {
         updatePlaca(g);
 
@@ -225,7 +229,7 @@ $(document).ready(() => {
       //   //   dataSankey.nodes = nodosOriginales;
       //   //   dataSankey.links = linksOriginales;
       //   //
-      //   //   dataSankey.links = buscarLinks(dataSankey.links, true);
+      //   //   dataSankey.links = declareGroupLinks(dataSankey.links, true);
       //   //
       //   //   dataSankey = buscarNodes(dataSankey.nodes, dataSankey.links);
       //   //   moveId = 0;
@@ -237,17 +241,42 @@ $(document).ready(() => {
       //   //   // let parent = dataSankey.nodes.filter((element) => (element.name === nodo.parent))[0];
       //   //   // clavesNodos.filter((element) => (element.id === parent.id))[0].state = true;
       //   //   //
-      //   //   // dataSankey = buscarNodes(nodosOriginales, dataSankey.links = buscarLinks(linksOriginales));
+      //   //   // dataSankey = buscarNodes(nodosOriginales, dataSankey.links = declareGroupLinks(linksOriginales));
       //   //   //
       //   //   // $('#sankey').empty();
       //   //   // dibujarSankey(width, height, dataSankey);
       //   //   // actualizarSankey($('#content').width(), $('#content').height(), dataSankey, oldLinks);
       //   // }
       // };
+      const createBackButton = (node) => {
+        console.log(node);
+        let button = d3.select('#placa .agrup')
+          .append('div')
+            .attr('id', () => (`node_${ node.id }`))
+            .attr('class', 'backButton')
+            .on('click', (event) => {
+              if (nodesOri[node.id].group) {
+                nodesOri[node.id].group = false;
+              } else {
+                nodesOri[node.id].group = true;
+              }
+
+              $(`#node_${ node.id }`).remove();
+
+              preSankey();
+            });
+
+        button.append('span').attr('class', 'backButton_text').text(node.name);
+        button.append('span')
+          .append('i')
+          .attr('class', 'fa fa-times')
+          .attr('aria-hidden', 'true')
+          .style('margin-left', '10px');
+      };
       const dibujarSankey = (width, heigth, data) => {
 
         // Variables
-        let margin = { top: 20, right: 20, bottom: 20, left: 20 };
+        let margin = { top: 50, right: 50, bottom: 50, left: 50 };
         let size = { width: (width - margin.left - margin.right), height: (heigth - margin.top - margin.bottom) };
 
         $('#sankey').empty();
@@ -349,31 +378,7 @@ $(document).ready(() => {
           link.attr('d', path);
         }
       };
-      const createBackButton = (node) => {
-        console.log(node);
-        let button = d3.select('#placa .agrup')
-          .append('div')
-            .attr('id', () => (`node_${ node.id }`))
-            .attr('class', 'backButton')
-            .on('click', (event) => {
-              if (nodesOri[node.id].group) {
-                nodesOri[node.id].group = false;
-              } else {
-                nodesOri[node.id].group = true;
-              }
 
-              $(`#node_${ node.id }`).remove()
-
-              preSankey();
-            });
-
-        button.append('span').attr('class', 'backButton_text').text(node.name);
-        button.append('span')
-          .append('i')
-          .attr('class', 'fa fa-times')
-          .attr('aria-hidden', 'true')
-          .style('margin-left', '10px');
-      }
       const actualizarSankey = (width, heigth, data, oldLinks) => {
         const linksDiff = (links_old, links_new) => {
           console.log(links_old);
@@ -470,6 +475,7 @@ $(document).ready(() => {
         // });
       };
       const maxParent = (nodo) => {
+        // console.log(nodo);
         let parentNode = nodesGlo.filter((element) => (element.id === nodo.parent))[0];
 
         if (nodo.parent !== false) {
@@ -482,7 +488,7 @@ $(document).ready(() => {
           return nodo;
         }
       };
-      const buscarNodos = () => {
+      const deleteEmptyNodes = () => {
         let del = 0,
             nodesDelete = [],
             status;
@@ -528,7 +534,8 @@ $(document).ready(() => {
         // console.log(links);
         return nodesGlo;
       };
-      const buscarLinks = (desarrollo = false) => {
+
+      const declareGroupLinks = (desarrollo = false) => {
         let links = [],
             source, parentSource, stateSource,
             target, parentTarget, stateTarget,
@@ -539,66 +546,67 @@ $(document).ready(() => {
 
         linksGlo.forEach((v, k) => {
           //Se obtiene source y target del elemento
-            source = nodesGlo.filter((element) => (element.id === parseInt(v.source)))[0];
-            target = nodesGlo.filter((element) => (element.id === parseInt(v.target)))[0];
+          source = nodesGlo.filter((element) => (element.id === parseInt(v.source)))[0];
+          target = nodesGlo.filter((element) => (element.id === parseInt(v.target)))[0];
           //Se guarda source-padre y target-padre
-            parentSource = maxParent(source);
-            parentTarget = maxParent(target);
+          parentSource = maxParent(source);
+          parentTarget = maxParent(target);
           //Se guarda source-state y target-state
-            stateSource = parentSource.group;
-            stateTarget = parentTarget.group;
+          stateSource = parentSource.group;
+          stateTarget = parentTarget.group;
           //Se guarda source y link a crear
-            addSource = (stateSource) ? (parentSource) : (source);
-            addTarget = (stateTarget) ? (parentTarget) : (target);
-            addValue  = parseInt(v.value);
+          addSource = (stateSource) ? (parentSource) : (source);
+          addTarget = (stateTarget) ? (parentTarget) : (target);
+          addValue  = parseInt(v.value);
           //Se consulta si el nodo existe
-            nodoExistente = links.filter((element) => (element.source === addSource.id && element.target === addTarget.id));
+          nodoExistente = links.filter((element) => (element.source === addSource.id && element.target === addTarget.id));
 
-            if  (nodoExistente.length !== 0) {
-              //Se suma valor a duplicado
-              nodoExistente[0].value += addValue;
-            } else {
-              //Se creo nuevo link
-              links.push({
-                'source': addSource.id,
-                'target': addTarget.id,
-                'value':  addValue
-              });
-            }
+          if  (nodoExistente.length !== 0) {
+            //Se suma valor a duplicado
+            nodoExistente[0].value += addValue;
+          } else {
+            //Se creo nuevo link
+            links.push({
+              'source': addSource.id,
+              'target': addTarget.id,
+              'value':  addValue
+            });
+          }
         });
         return links;
       };
+
       const preSankey = () => {
         linksGlo = $.extend(true, [], linksOri);
         nodesGlo = $.extend(true, [], nodesOri);
-
-        //Se eliminan links que no se utilizan
-        linksGlo = buscarLinks();
-        //Se eliminan nodos que no se utilizan
-        nodesGlo = buscarNodos();
+        linksGlo = declareGroupLinks();
+        nodesGlo = deleteEmptyNodes();
 
         dibujarSankey(width, height, { 'nodes': nodesGlo, 'links': linksGlo });
       };
 
-      const start = () => {
-        const solicitarArchivos = () => {
+      const init = () => {
+
+        const downloadFile = () => {
           console.log('Se solicitan archivos'); // Borrar
+
           const formatoSankey     = (elemento, data) => {
             let processData = [];
 
             switch (elemento) {
               case 'nodos':
                 data.forEach((v, k) => {
+
                   processData.push({
-                    'id': parseInt(v.id),
-                    'name': v.name,
-                    'parent': (v.parent === 'null')?(false):(parseInt(v.parent)),
+                    'id'      : parseInt(v.id),
+                    'name'    : v.name,
+                    'parent'  : (v.parent === 'null')?(false):(parseInt(v.parent)),
                     'category': v.category,
-                    'xPos': parseInt(v.position),
-                    'group': true,
-                    'imp': v.importation.split(';').map((element) => (parseInt(element))),
-                    'exp': v.exportation.split(';').map((element) => (parseInt(element))),
-                    'prod': v.production.split(';').map((element) => (parseInt(element)))
+                    'pos'     : parseInt(v.position),
+                    'group'   : false,
+                    'imp'     : v.importation.split(';').map((element) => (parseInt(element))),
+                    'exp'     : v.exportation.split(';').map((element) => (parseInt(element))),
+                    'prod'    : v.production.split(';').map((element) => (parseInt(element)))
                   });
                 });
                 break;
@@ -607,7 +615,7 @@ $(document).ready(() => {
                   processData.push({
                     'source': parseInt(v.source),
                     'target': parseInt(v.target),
-                    'value': parseInt(v.value),
+                    'value' : parseInt(v.value),
                   });
                 });
                 break;
@@ -635,10 +643,10 @@ $(document).ready(() => {
           return promise;
         };
 
-        solicitarArchivos().then(() => {
+        downloadFile().then(() => {
           preSankey();
         });
       };
 
-  start();
+  init();
 });

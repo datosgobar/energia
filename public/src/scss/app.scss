@@ -1,9 +1,302 @@
-@import "start";
+@import "pre";
 
+// Header, Footer and Content
 body {
-  padding-top: 0px;
+  padding-bottom: 230px;
+  position: relative;
+  height: auto;
+
+  @media only screen and (min-device-width: $small) {
+    // padding-top: 72px;
+  }
+}
+#header {
+  background: white;
+  padding: 0;
+  box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.5);
+  position: relative;
+  white-space: nowrap;
+  z-index: 9000;
+
+  @media only screen and (min-device-width: $small) {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  & #header-spacing {
+    padding: 0 20px;
+
+    & .header-links, & .logo-header {
+      height: 72px;
+      font-size: 18px;
+      line-height: 4;
+
+      & svg.edit-svg path {
+        fill: #999999;
+      }
+    }
+    & .header-links {
+      display: none;
+      text-align: right;
+
+      @media only screen and (min-device-width: $small) {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        flex-direction: row;
+      }
+
+      & .header-link {
+        color: $gobar_color_dark;
+        margin: 0;
+        padding: 0 0.3em;
+        line-height: 72px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        height: 100%;
+        cursor: pointer;
+
+        @media only screen and (min-device-width: $medium) {
+          padding: 0 0.5em;
+          font-size: 100%;
+        }
+
+        &.active, &:hover {
+
+          @media only screen and (min-device-width: $small) {
+            background: $gobar_color_dark;
+            color: white;
+          }
+        }
+        &.dropdown {
+          position: relative;
+
+          &.active ul {
+            display: block;
+          }
+          & .caret {
+            margin-bottom: 8px;
+          }
+          & ul {
+            margin: 0;
+            display: none;
+            position: absolute;
+            right: 0;
+            width: 250px;
+            background-color: $gobar_color_dark;
+            color: white;
+            list-style-type: none;
+            text-align: left;
+            bottom: -160px;
+            box-shadow: 0 5px 14px -4px rgba(0, 0, 0, 0.5);
+
+            & a li {
+              height: 40px;
+              line-height: 26px;
+              padding: 7px 14px;
+              color: white;
+
+              &:hover {
+                background: $gobar_color_ligth;
+              }
+            }
+          }
+        }
+      }
+    }
+    & .logo-header {
+
+      &.showing-nav {
+        height: auto;
+      }
+      & .logo-and-xs-icon {
+        position: relative;
+        padding-left: 50px;
+
+        @media only screen and (min-device-width: $small) {
+          padding-left: 0;
+        }
+      }
+      & .icon-reorder {
+        position: absolute;
+        font-size: 30px;
+        top: 50%;
+        left: 0;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        margin-top: -20px;
+        border: none;
+        border-radius: 4px;
+        color: $gobar_color_dark;
+
+        @media only screen and (min-device-width: $small) {
+          display: none;
+        }
+
+        &.active, &:hover {
+          color: white;
+          background: $gobar_color_dark;
+        }
+      }
+      & .xs-navbar {
+        padding-bottom: 10px;
+
+        @media only screen and (min-device-width: $small) {
+          display: none;
+        }
+
+        & .navbar-link {
+          line-height: initial;
+          padding: 10px;
+          color: $gobar_color_dark;
+
+          &:hover {
+            background: $gobar_color_dark;
+            color: white;
+            cursor: pointer;
+
+            & a {
+              color: white;
+            }
+          }
+        }
+        & .dropdown-navbar .navbar-link {
+          padding-left: 15px;
+        }
+      }
+      & .logo-ministerio {
+        height: 100%;
+        width: 300px;
+        max-width: 100%;
+      }
+    }
+  }
+}
+#footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  background: white;
+  height: 230px;
+  width: 100%;
+  z-index: 8000;
+  box-shadow: 0 -2px 4px 0 rgba(220, 220, 220, 0.5);
+
+  & p {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  & #footer-spacer {
+    padding: 20px 0;
+
+    @media only screen and (min-device-width: $small) {
+      padding: 50px 0;
+    }
+
+    & .footer-section {
+      color: $gobar_color_dark;
+      font-size: 16px;
+      font-weight: 500;
+      text-align: center;
+
+      @media only screen and (min-device-width: $small) {
+        text-align: left;
+      }
+
+      &.logo {
+
+        & img {
+          max-width: 300px;
+          margin-bottom: 20px;
+        }
+        & a.social-link {
+          display: inline-block;
+          border-radius: 4px;
+          padding: 8px;
+          text-align: center;
+          width: 46px;
+          height: 46px;
+
+          &:hover {
+            background: $gobar_color_dark;
+            color: white;
+          }
+          & i {
+             display: inline-block;
+             font-size: 28px;
+           }
+        }
+      }
+      &.links-internos a {
+
+        &:hover {
+          color: $gobar_color_ligth;
+        }
+        &.ckan-anchor {
+          display: inline-block;
+          text-align: left;
+        }
+      }
+      &.links-externos {
+
+        & .ckan-link {
+          margin: 0;
+          color: $generic_color;
+        }
+        & .ckan-name {
+          color: $gobar_color_dark;
+
+          &:hover {
+            color: $gobar_color_ligth;
+          }
+        }
+      }
+    }
+  }
+}
+#more {
+  background-color: rgba(242, 242, 242, 1);
+  padding: 80px 0px;
+  width: 100%;
+
+  & p {
+    text-align: center;
+  }
+}
+.header-span-link {
+  color: $gobar_color_dark;
+  font-size: 17px;
+  padding: 0 10px;
+  font-weight: 500;
+}
+.no-padding { padding: 0; }
+.restricted-max-width {
+  width: 100%;
+  max-width: 550px;
+  margin: auto;
+
+  @media only screen and (min-device-width: $medium) {
+    max-width: 750px;
+  }
+  @media only screen and (min-device-width: $large) {
+    max-width: 1200px;
+  }
+
+  &:after {
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
+  }
 }
 
+// Codigo Sitio
 #content {
   position: relative;
   width: 100vw;
@@ -28,7 +321,7 @@ body {
   align-items: center;
   box-sizing: border-box;
   position: relative;
-
+  
   .placa_titulo {
     width: 100%;
     text-align: center;
@@ -148,12 +441,3 @@ body {
 .link-hover {
   // stroke-opacity: 0.8;
 }
-
-/* Small devices (tablets, 768px and up) */
-@media (min-width: $small) {}
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: $medium) {}
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: $large) {}
