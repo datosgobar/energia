@@ -603,7 +603,7 @@ $(() => {
                     'parent'  : (v.parent === 'null')?(false):(parseInt(v.parent)),
                     'category': v.category,
                     'pos'     : parseInt(v.position),
-                    'group'   : false,
+                    'group'   : true,
                     'imp'     : v.importation.split(';').map((element) => (parseInt(element))),
                     'exp'     : v.exportation.split(';').map((element) => (parseInt(element))),
                     'prod'    : v.production.split(';').map((element) => (parseInt(element)))
