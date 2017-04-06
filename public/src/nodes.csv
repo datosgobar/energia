@@ -73,4 +73,4 @@ id,name,parent,category,position,importation,exportation,production
 71,Comercial,67,Consumo,4,0,0,0
 72,Industria,67,Consumo,4,0,0,0
 73,Agropecuario,67,Consumo,4,0,0,0
-74,Pérdidas por Transformación,null,Pérdidas por Transformación,3,0,0,0
+74,Pérdidas por Transformación,null,Centros de Transformación,2,0,0,0
