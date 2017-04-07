@@ -1,0 +1,34 @@
+{
+  "name": "Desarrollo Web",
+  "description": "Herramientas de desarrollo para JavaScript",
+  "main": "Gulpfile.js",
+  "dependencies": {
+    "argob-poncho": "^0.3.2",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-es2016": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0",
+    "bootstrap": "^3.3.7",
+    "browser-sync": "^2.18.8",
+    "d3": "^4.5.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-htmlmin": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^2.4.1",
+    "jquery": "^3.1.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/framlopez/radiacion-uv.git"
+  },
+  "author": "Francisco Tomás López"
+}
