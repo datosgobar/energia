@@ -1,6 +1,12 @@
+let colores = ['#ffbb42','#808080', '#f1854b','#f2385a'];
+
 //  Variables Globales
-let scaleColorLink  = d3.scaleOrdinal().range(['#ffbb42','#f1854b','#808080','#f2385a']).domain('Energías Primarias', 'Energías Secundarias', 'Centros de Transformación', 'Consumo');
-let fontScale       = d3.scaleLinear().range([8, 16]);
+// let scaleColorLink  = d3.scaleOrdinal()
+//   .range('white')
+//   // .range(colores)
+//   .domain('Energías Primarias', 'Centros de Transformación', 'Energías Secundarias', 'Consumo');
+let fontScale       = d3.scaleLinear()
+  .range([8, 16]);
 
 //  Funciones
 // const formatoNumero = (d) => {
@@ -145,8 +151,14 @@ $(() => {
 
           return statusNode;
         });
-        nodesFilter.select('rect').transition().style('fill', (d) => darken(scaleColorLink(d.category), 20));
-        nodesFilter.select('text').transition().attr('text-anchor', 'middle').attr('y', -10).attr('x', (d) => (d.dx / 2)).text((d) => (d.name));
+        nodesFilter.select('rect').transition().style('fill', (d) => darken('white', 20));
+        // nodesFilter.select('rect').transition().style('fill', (d) => darken(colores[d.pos - 1], 20));
+        nodesFilter.select('text')
+          .transition()
+          .attr('text-anchor', 'middle')
+          .attr('y', -10)
+          // .text((d) => (d.name))
+          .attr('x', (d) => (d.dx / 2));
         // nodes focusOut
         nodesFilter = nodes.filter((d) => {
           let statusNode = true;
@@ -194,12 +206,13 @@ $(() => {
         });
         nodesFilter.select('rect')
           .transition()
-          .style('fill', (d) => scaleColorLink(d.category));
+          .style('fill', (d) => 'white');
+          // .style('fill', (d) => colores[d.pos - 1]);
         nodesFilter.select('text')
           .transition()
           .attr('text-anchor', 'end')
           .attr('y', (d) => (d.dy / 2)).attr('x', -10)
-          .text((d) => (d.name.length > 8) ? (d.name.substring(0, 5) + '...') : (d.name))
+          // .text((d) => (d.name.length > 8) ? (d.name.substring(0, 5) + '...') : (d.name))
           .filter((d) => (d.x < width / 2))
             .attr('x', 10 + sankeyChartD3.nodeWidth())
             .attr('text-anchor', 'start');
@@ -278,6 +291,7 @@ $(() => {
         // Variables
         let margin = { top: 50, right: 50, bottom: 50, left: 50 };
         let size = { width: (width - margin.left - margin.right), height: (heigth - margin.top - margin.bottom) };
+        let anchoNodo = 20;
 
         $('#sankey').empty();
 
@@ -291,11 +305,47 @@ $(() => {
 
         // Creación Sankey
         sankeyChartD3 = d3.sankey()
-          .nodeWidth(20) // Ancho nodo
+          .nodeWidth(anchoNodo) // Ancho nodo
           .size([size.width, size.height])
           .nodes(data.nodes)
           .links(data.links)
           .layout();
+
+        // const generarGradientes = (colores) => {
+        //   let keys = {};
+        //
+        //   colores.forEach((v, k) => {
+        //
+        //     colores.forEach((v2, k2) => {
+        //
+        //       keys[`${ k + 1 }${ k2 + 1 }`] = [v, v2];
+        //     });
+        //   });
+        //
+        //   return keys;
+        // };
+        //
+        // let keys = generarGradientes(colores);
+        //
+        // console.log(keys);
+        //
+        // for (let key in keys) {
+        //
+        //   eval(`let key_${ key } = svg.append('defs')
+        //     .append('linearGradient')
+        //       .attr('id', 'key_${ key }')
+        //       .attr('x1', '0%')
+        //       .attr('x2', '100%')
+        //       .attr('spreadMethod', 'pad');
+        //     key_${ key }.append('stop')
+        //         .attr('offset', '0%')
+        //         .attr('stop-color', '${ keys[key][0] }')
+        //         .attr('stop-opacity', 1);
+        //     key_${ key }.append('stop')
+        //         .attr('offset', '100%')
+        //         .attr('stop-color', '${ keys[key][1] }')
+        //         .attr('stop-opacity', 1);`);
+        // }
 
         // Creación de Links
         path = sankeyChartD3.link();
@@ -312,7 +362,14 @@ $(() => {
             .attr('class', 'link')
             .attr('d', path)
             .style('stroke-width', (d) => Math.max(1, d.dy))
-            .style('stroke', 'silver')
+            // .style('stroke', 'silver')
+            // trabajando
+            .style('stroke', (d) => 'silver')
+            // .style('stroke', (d) => {
+            //   let key = [d.source.pos, d.target.pos];
+            //
+            //   return `url(#key_${ key[0] }${ key[1] })`;
+            // })
             .style('stroke-opacity', 0.75)
             .on('mouseover', (d) => { d3.select(d3.event.target).style('stroke-opacity', 1); })
             .on('mouseout', (d) => { d3.select(d3.event.target).style('stroke-opacity', 0.75); })
@@ -338,7 +395,9 @@ $(() => {
         node.append('rect')
             .attr('width', sankeyChartD3.nodeWidth())
             .attr('height', (d) => Math.max(10, d.dy))
-            .style('fill', (d) => scaleColorLink(d.category))
+            .style('stroke', (d) => 'silver')
+            .style('fill', (d) => 'white')
+            // .style('fill', (d) => colores[d.pos - 1])
             .on('mouseover', fadeIn(0.025))
             .on('mouseout', fadeOut())
             .on('dblclick', (e) => {
@@ -358,18 +417,20 @@ $(() => {
             .attr('text-anchor', 'end')
             .attr('y', (d) => (d.dy / 2))
             .attr('dy', '.35em')
-            .style('fill', (d) => scaleColorLink(d.category))
-            // .style('font-size', '8px')
-            .style('font-size', (d) => `${ Math.floor(fontScale(d.value)) }px`)
-            // .text((d) => (d.name))
-            .text((d) => (d.name.length > 8) ? (d.name.substring(0, 5) + '...') : (d.name))
+            .style('fill', 'black')
+            // .style('fill', (d) => colores[d.pos - 1])
+            .style('font-size', '14px')
+            .style('font-weight', 'normal')
+            // .style('font-size', (d) => `${ Math.floor(fontScale(d.value)) }px`)
+            .text((d) => (d.name))
+            // .text((d) => (d.name.length > 8) ? (d.name.substring(0, 5) + '...') : (d.name))
             .filter((d) => (d.x < width / 2))
               .attr('x', 10 + sankeyChartD3.nodeWidth())
               .attr('text-anchor', 'start');
         // Se agrega texto referencia hover link
         link.append('title').text((d) => `${ d.source.name } (${ d.source.id }) → ${ d.target.name } (${ d.target.id }) → ${ d.value }`);
         // Se agrega texto referencia hover node
-        node.append('title').text((d) => `${ d.name } (${ d.id })`);
+        // node.append('title').text((d) => `${ d.name } (${ d.id })`);
 
         // the function for moving the nodes
         function dragmove(d) {
@@ -596,14 +657,13 @@ $(() => {
             switch (elemento) {
               case 'nodos':
                 data.forEach((v, k) => {
-
                   processData.push({
                     'id'      : parseInt(v.id),
                     'name'    : v.name,
                     'parent'  : (v.parent === 'null')?(false):(parseInt(v.parent)),
                     'category': v.category,
                     'pos'     : parseInt(v.position),
-                    'group'   : true,
+                    'group'   : (v.group === 'true')?(true):(false),
                     'imp'     : v.importation.split(';').map((element) => (parseInt(element))),
                     'exp'     : v.exportation.split(';').map((element) => (parseInt(element))),
                     'prod'    : v.production.split(';').map((element) => (parseInt(element)))
