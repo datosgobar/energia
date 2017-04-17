@@ -14,17 +14,17 @@ const browserSync   = require('browser-sync').create();
 //  Static Server
     gulp.task('server', () => {
         browserSync.init({
-            server: { baseDir: '../' }
+            server: { baseDir: '' }
         });
     });
 
-//  VISTAS
+//  Vistas
     gulp.task('view:dev', () => {
       // Se toman todos los archivos de la carpeta public/view
-      gulp.src('../public/src/view/*.html')
+      gulp.src('./public/src/view/*.html')
           .pipe(plumber())
           .pipe(htmlmin({ collapseWhitespace: true }))
-          .pipe(gulp.dest('../'))
+          .pipe(gulp.dest('./'))
           .pipe(browserSync.stream());
     });
     gulp.task('view:prod', () => {
@@ -33,7 +33,7 @@ const browserSync   = require('browser-sync').create();
 
       // Se toman todos los archivos de la carpeta public/src/scss
       // Se toman todos los archivos de la carpeta public/view
-      gulp.src('../public/src/view/*.html')
+      gulp.src('./public/src/view/*.html')
           .pipe(plumber())
           .pipe(htmlmin({ collapseWhitespace: true }))
           .pipe(gulp.dest('../'))
@@ -43,7 +43,7 @@ const browserSync   = require('browser-sync').create();
 //  SASS
     gulp.task('sass:dev', () => {
       // Se toman todos los archivos de la carpeta public/src/scss
-      gulp.src(['../public/src/scss/*.scss', '../public/src/scss/*.css'])
+      gulp.src(['./public/src/scss/*.scss', './public/src/scss/*.css'])
           .pipe(plumber())
           .pipe(sourcemaps.init())
           .pipe(sass())
@@ -53,16 +53,16 @@ const browserSync   = require('browser-sync').create();
           }))
           .pipe(sourcemaps.write())
           .pipe(rename({ suffix: '.min' }))
-          .pipe(gulp.dest('../public/css/'))
+          .pipe(gulp.dest('./public/css/'))
           .pipe(browserSync.stream());
     });
     gulp.task('sass:prod', () => {
       // Se borran todos los archivos de la carpeta public/css
-      gulp.src('../public/css/*.css').pipe(clean({ force: true }));
-      gulp.src('../public/css/*.map').pipe(clean({ force: true }));
+      gulp.src('./public/css/*.css').pipe(clean({ force: true }));
+      gulp.src('./public/css/*.map').pipe(clean({ force: true }));
 
       // Se toman todos los archivos de la carpeta public/src/scss
-      gulp.src(['../public/src/scss/*.scss', '../public/src/scss/*.css'])
+      gulp.src(['./public/src/scss/*.scss', './public/src/scss/*.css'])
           .pipe(plumber())
           .pipe(sass())
           .pipe(autoprefixer({
@@ -71,51 +71,63 @@ const browserSync   = require('browser-sync').create();
           }))
           .pipe(cssnano())
           .pipe(rename({ suffix: '.min' }))
-          .pipe(gulp.dest('../public/css/'))
+          .pipe(gulp.dest('./public/css/'))
           .pipe(browserSync.stream());
     });
 
 //  ECMAS 6
     gulp.task('babel:dev', () => {
       // Se toman todos los archivos de la carpeta public/src/scss
-      gulp.src('../public/src/babel/*.js')
+      gulp.src('./public/src/babel/*.js')
           .pipe(plumber())
           .pipe(sourcemaps.init())
           .pipe(babel({ presets: ['es2015', 'es2016', 'es2017'] }))
           .pipe(sourcemaps.write())
           .pipe(rename({ suffix: '.min' }))
-          .pipe(gulp.dest('../public/js/'))
+          .pipe(gulp.dest('./public/js/'))
           .pipe(browserSync.stream());
     });
     gulp.task('babel:prod', () => {
       // Se borran todos los archivos de la carpeta public/js
-      gulp.src('../public/js/*.js').pipe(clean({ force: true }));
-      gulp.src('../public/js/*.map').pipe(clean({ force: true }));
+      gulp.src('./public/js/*.js').pipe(clean({ force: true }));
+      gulp.src('./public/js/*.map').pipe(clean({ force: true }));
 
       // Se toman todos los archivos de la carpeta public/src/scss
-      gulp.src('../public/src/babel/*.js')
+      gulp.src('./public/src/babel/*.js')
           .pipe(plumber())
           .pipe(babel({ presets: ['es2015', 'es2016', 'es2017'] }))
           .pipe(concat('app.js'))
-          .pipe(gulp.dest('../public/js/'))
+          .pipe(gulp.dest('./public/js/'))
           .pipe(rename({ suffix: '.min' }))
           .pipe(browserSync.stream());
     });
 
 //  Watch
     gulp.task('watch:dev', () => {
-      gulp.watch('../public/src/babel/*.js',   ['babel:dev']);
-      gulp.watch('../public/src/scss/*.scss',  ['sass:dev']);
-      gulp.watch('../public/src/view/*.html',  ['view:dev']);
+      gulp.watch('./public/src/babel/*.js',   ['babel:dev']);
+      gulp.watch('./public/src/scss/*.scss',  ['sass:dev']);
+      gulp.watch('./public/src/view/*.html',  ['view:dev']);
     });
     gulp.task('watch:prod', () => {
-      gulp.watch('../public/src/babel/*.js',   ['babel:prod']);
-      gulp.watch('../public/src/scss/*.scss',  ['sass:prod']);
-      gulp.watch('../public/src/view/*.html',  ['view:prod']);
+      gulp.watch('./public/src/babel/*.js',   ['babel:prod']);
+      gulp.watch('./public/src/scss/*.scss',  ['sass:prod']);
+      gulp.watch('./public/src/view/*.html',  ['view:prod']);
+    });
+
+//  Mover archivos de node_modules
+    gulp.task('node_modules_reply', () => {
+      gulp.src('./node_modules/jquery/dist/jquery.min.js').pipe(gulp.dest('./public/js/'));
+      gulp.src('./node_modules/bootstrap/dist/css/bootstrap.min.css').pipe(gulp.dest('./public/css/'));
+      gulp.src('./node_modules/bootstrap/dist/js/bootstrap.min.js').pipe(gulp.dest('./public/js/'));
+      gulp.src('./node_modules/argob-poncho/dist/css/roboto-fontface.css').pipe(gulp.dest('./public/css/'));
+      gulp.src('./node_modules/argob-poncho/dist/css/poncho.css').pipe(gulp.dest('./public/css/'));
+      gulp.src('./node_modules/argob-poncho/dist/fonts/*').pipe(gulp.dest('./public/fonts/'));
+      gulp.src('./node_modules/d3/build/d3.min.js').pipe(gulp.dest('./public/js/'));
+      gulp.src('./node_modules/d3-drag/build/d3-drag.min.js').pipe(gulp.dest('./public/js/'));
     });
 
 //  Desarrollo
-    gulp.task('dev', ['view:dev', 'sass:dev', 'babel:dev', 'watch:dev', 'server']);
+    gulp.task('dev', ['node_modules_reply', 'view:dev', 'sass:dev', 'babel:dev', 'watch:dev', 'server']);
 
 //  Production
-    gulp.task('prod', ['view:prod', 'sass:prod', 'babel:prod', 'watch:prod', 'server']);
+    gulp.task('prod', ['node_modules_reply', 'view:prod', 'sass:prod', 'babel:prod', 'watch:prod', 'server']);

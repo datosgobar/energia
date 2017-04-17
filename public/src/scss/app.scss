@@ -6,8 +6,8 @@ body {
   position: relative;
   height: auto;
 
-  @media only screen and (min-device-width: $small) {
-    // padding-top: 72px;
+  @media only screen and (min-width: $small) {
+    padding-top: $navHeight;
   }
 }
 #header {
@@ -18,7 +18,7 @@ body {
   white-space: nowrap;
   z-index: 9000;
 
-  @media only screen and (min-device-width: $small) {
+  @media only screen and (min-width: $small) {
     position: fixed;
     top: 0;
     width: 100%;
@@ -28,7 +28,7 @@ body {
     padding: 0 20px;
 
     & .header-links, & .logo-header {
-      height: 72px;
+      height: $navHeight;
       font-size: 18px;
       line-height: 4;
 
@@ -40,7 +40,7 @@ body {
       display: none;
       text-align: right;
 
-      @media only screen and (min-device-width: $small) {
+      @media only screen and (min-width: $small) {
         display: flex;
         justify-content: flex-end;
         align-items: center;
@@ -51,7 +51,7 @@ body {
         color: $gobar_color_dark;
         margin: 0;
         padding: 0 0.3em;
-        line-height: 72px;
+        line-height: $navHeight;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -59,14 +59,14 @@ body {
         height: 100%;
         cursor: pointer;
 
-        @media only screen and (min-device-width: $medium) {
+        @media only screen and (min-width: $medium) {
           padding: 0 0.5em;
           font-size: 100%;
         }
 
         &.active, &:hover {
 
-          @media only screen and (min-device-width: $small) {
+          @media only screen and (min-width: $small) {
             background: $gobar_color_dark;
             color: white;
           }
@@ -116,7 +116,7 @@ body {
         position: relative;
         padding-left: 50px;
 
-        @media only screen and (min-device-width: $small) {
+        @media only screen and (min-width: $small) {
           padding-left: 0;
         }
       }
@@ -134,7 +134,7 @@ body {
         border-radius: 4px;
         color: $gobar_color_dark;
 
-        @media only screen and (min-device-width: $small) {
+        @media only screen and (min-width: $small) {
           display: none;
         }
 
@@ -146,7 +146,7 @@ body {
       & .xs-navbar {
         padding-bottom: 10px;
 
-        @media only screen and (min-device-width: $small) {
+        @media only screen and (min-width: $small) {
           display: none;
         }
 
@@ -195,7 +195,7 @@ body {
   & #footer-spacer {
     padding: 20px 0;
 
-    @media only screen and (min-device-width: $small) {
+    @media only screen and (min-width: $small) {
       padding: 50px 0;
     }
 
@@ -205,7 +205,7 @@ body {
       font-weight: 500;
       text-align: center;
 
-      @media only screen and (min-device-width: $small) {
+      @media only screen and (min-width: $small) {
         text-align: left;
       }
 
@@ -281,10 +281,10 @@ body {
   max-width: 550px;
   margin: auto;
 
-  @media only screen and (min-device-width: $medium) {
+  @media only screen and (min-width: $medium) {
     max-width: 750px;
   }
-  @media only screen and (min-device-width: $large) {
+  @media only screen and (min-width: $large) {
     max-width: 1200px;
   }
 
@@ -300,16 +300,35 @@ body {
 #content {
   position: relative;
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - 72px);
   box-sizing: border-box;
   overflow: hidden;
-  padding: 72px 0px 0px 0px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
+  padding: 0px;
+}
+h1 {
+  font-size: 3.5em;
+  text-align: center;
+  margin: 40px 0px 20px 0px;
+}
+#form_energia {
+
+  & > p {
+    margin: 0px;
+  }
+  & > select {
+    margin: 0px 10px;
+  }
+  & > button {
+
+  }
 }
 
+#sankey {
+  text-align: center;
+  // height: 100%;
+  height: calc(100vh - 25px - 113px - 72px);
+  width: 100vw;
+}
 #placa {
   background-color: silver;
   width: calc(400px - 40px);
@@ -321,7 +340,7 @@ body {
   align-items: center;
   box-sizing: border-box;
   position: relative;
-  
+
   .placa_titulo {
     width: 100%;
     text-align: center;
@@ -414,9 +433,7 @@ body {
 }
 
 
-#sankey {
-  height: 100%;
-}
+
 
 .node rect {
   // cursor: move;

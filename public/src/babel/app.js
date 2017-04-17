@@ -35,8 +35,8 @@ const darken = (color, amount) =>{
 
 $(() => {
 
-  let height      = $('#content').height(),
-      width       = $('#content').width() - $('#placa').width(),
+  let height      = $('#sankey').height(),
+      width       = $('#sankey').width(),
       // clavesNodos = [],
       // dataSankey  = {},
       // moveId = 0,
@@ -292,6 +292,7 @@ $(() => {
         let margin = { top: 50, right: 50, bottom: 50, left: 50 };
         let size = { width: (width - margin.left - margin.right), height: (heigth - margin.top - margin.bottom) };
         let anchoNodo = 20;
+        let separacionNodo = 20;
 
         $('#sankey').empty();
 
@@ -305,7 +306,8 @@ $(() => {
 
         // Creación Sankey
         sankeyChartD3 = d3.sankey()
-          .nodeWidth(anchoNodo) // Ancho nodo
+          .nodeWidth(anchoNodo)
+          .nodePadding(separacionNodo)
           .size([size.width, size.height])
           .nodes(data.nodes)
           .links(data.links)

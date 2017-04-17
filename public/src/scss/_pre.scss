@@ -30,6 +30,7 @@ $large:                   1200px;
   justify-content: center;
   align-items: center;
   flex-direction: row;
+  flex-wrap: nowrap;
 }
 
 .flex_column {
@@ -66,6 +67,10 @@ $large:                   1200px;
 
 .flex_align_end {
   align-items: flex-end;
+}
+
+.flex_wrap {
+  flex-wrap: wrap;
 }
 
 .hide {
