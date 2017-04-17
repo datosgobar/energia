@@ -92,82 +92,82 @@
 
       <form id="form_energia" class="flex flex_wrap" action="index.html" method="post">
         <p>Descubri el flujo de</p>
-        <select name="">
-          <option value="">categoria</option>
+        <select name="categorias">
+          <option value="">Energías Primarias</option>
+          <option value="">Plantas de Tratamiento</option>
+          <option value="">Energías Secundarias</option>
+          <option value="">Consumos</option>
         </select>
         <p>como el</p>
-        <select name="">
-          <option value="">sub-categoria</option>
+        <select name="subcategorias">
+
+          <script type="text/javascript">
+            var data = [
+              'sub1',
+              'sub2',
+              'sub3',
+              'sub4',
+              'sub5',
+              'sub6',
+              'sub7',
+              'sub8',
+              'sub9',
+              'sub10',
+              'sub11',
+              'sub12',
+              'sub13',
+              'sub14',
+              'sub15',
+              'sub16',
+              'sub17',
+              'sub18',
+              'sub19',
+              'sub20'
+            ];
+
+            data.forEach((v, k) => {
+              $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
+            });
+          </script>
+
         </select>
         <p>en el año</p>
-        <select name="">
-          <option value="">año</option>
+        <select name="anio">
+
+          <script type="text/javascript">
+            var data = [
+              '1998',
+              '1999',
+              '2000',
+              '2001',
+              '2002',
+              '2003',
+              '2004',
+              '2005',
+              '2006',
+              '2007',
+              '2008',
+              '2009',
+              '2010',
+              '2011',
+              '2012',
+              '2013',
+              '2014',
+              '2015',
+              '2016',
+              '2017'
+            ];
+
+            data.reverse().forEach((v, k) => {
+              $('select[name=anio]').append(`<option value="${ k }">${ v }</option>`);
+            });
+          </script>
+
         </select>
-        <button class="filter_button" type="button" name="button">BUSCAR</button>
+        <button class="btn btn-default btn-sm no-margin" type="button" name="button">BUSCAR</button>
       </form>
 
       <div id="sankey"></div>
-
-      <div id="placa" class="hide">
-        <article class="placa_titulo">Nombre Nodo</article>
-
-        <div class="placas_valor">
-          <div class="placa_valor">
-            <span class="placa_icon">
-              <img src="public/image/placa_prod.png" alt="">
-              Producción:
-            </span>
-            <article class="placa_prod">2000</article>
-          </div>
-          <div class="placa_valor">
-            <span class="placa_icon">
-              <img src="public/image/placa_imp.png" alt="">
-              Importación:
-            </span>
-            <article class="placa_imp">2000</article>
-          </div>
-          <div class="placa_valor">
-            <span class="placa_icon">
-              <img src="public/image/placa_exp.png" alt="">
-              Exportación:
-            </span>
-            <article class="placa_exp">2000</article>
-          </div>
-          <div class="placa_valor">
-            <span class="placa_icon">
-              <img src="public/image/placa_lost.png" alt="">
-              Perdida:
-            </span>
-            <article class="placa_lost">2000</article>
-          </div>
-          <div class="placa_valor">
-            <span class="placa_icon">
-              <img src="public/image/placa_lost.png" alt="">
-              Eficacia:
-            </span>
-            <article class="placa_efi">2000</article>
-          </div>
-          <div class="placa_valor">
-            <span class="placa_icon">
-              <img src="public/image/placa_lost.png" alt="">
-              Otros factores:
-            </span>
-            <article class="placa_more">2000</article>
-          </div>
-        </div>
-
-        <div class="placas_graficos">
-          <article class="placa_grafico grafico_prod">grafico 1</article>
-          <article class="placa_grafico grafico_imp">grafico 2</article>
-          <article class="placa_grafico grafico_exp">grafico 3</article>
-        </div>
-
-        <div class="agrup">
-
-        </div>
-
-        <button id="pannel_button" class="pannel_button" type="button">&#60;</button>
-      </div>
     </div>
 
     <!-- Footer -->
