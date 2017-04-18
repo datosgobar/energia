@@ -137,7 +137,7 @@ d3.sankey = function() {
     var remainingNodes = nodes,
         nextNodes,
         x = 0,
-        cantidadCol = 4;
+        cantidadCol = 6;
 
     // Work from left to right.
     // Keep updating the breath (x-position) of nodes that are target of recently updated nodes.
@@ -146,7 +146,7 @@ d3.sankey = function() {
       nextNodes = [];
 
       remainingNodes.forEach(function(node) {
-        node.x = node.pos - 1;
+        node.x = node.position - 1;
         node.dx = nodeWidth;
 
         node.sourceLinks.forEach(function(link) {

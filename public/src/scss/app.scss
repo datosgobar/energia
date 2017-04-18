@@ -76,3 +76,22 @@ h1 {
 .link-hover {
   // stroke-opacity: 0.8;
 }
+#tooltip {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 10px;
+  border: 1px solid silver;
+  padding: 10px;
+  position: absolute;
+
+  & > .tooltip_name {
+    font-size: 16px;
+  }
+  & > .tooltip_production {
+    font-size: 14px;
+    color: gray;
+  }
+  & > .tooltip_losses {
+    font-size: 14px;
+    color: gray;
+  }
+}
