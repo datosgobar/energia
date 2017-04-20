@@ -76,7 +76,10 @@ h1 {
 .link-hover {
   // stroke-opacity: 0.8;
 }
-#tooltip {
+
+// ---- Tooltip
+
+#tooltip, #tooltip_intro {
   background-color: rgba(255, 255, 255, 0.85);
   border-radius: 10px;
   border: 1px solid silver;
@@ -94,4 +97,15 @@ h1 {
     font-size: 14px;
     color: gray;
   }
+}
+#intro_screen {
+  top: 0px;
+  left: 0px;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+#tooltip_intro {
+  max-width: 200px;
 }

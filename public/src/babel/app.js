@@ -201,14 +201,118 @@ $(() => {
 
         $('#tooltip').removeAttr('style');
       };
+      const buscarNodo = (id) => nodesOri.filter((element) => element.id === id)[0];
+      const intro = (stage, tooltip_create = false, tooltip_delete = false, next = true) => {
+        let node_map    = [ 2, 27, 13, 26, 12, 31 ],
+            node        = buscarNodo(node_map[stage]),
+            next_node_1 = buscarNodo(node_map[stage + 1]),
+            next_node_2 = buscarNodo(node_map[stage + 2]),
+            intro_container, intro_buttons,
+            button_last, button_next,
+            state;
 
-      const intro = () => {
-        (fadeIn(2))();
-        (fadeIn(27))();
-        (fadeIn(13))();
-        (fadeIn(26))();
-        (fadeIn(12))();
-        (fadeIn(31))();
+        const node_on = (node) => {
+          let node_dom = d3.select(`#node_${ node.id }`);
+
+          node_dom.select('rect')
+            .transition()
+            .style('fill', 'black')
+            .style('stroke', 'black');
+          node_dom.select('text')
+            .transition()
+            .style('fill', 'black');
+        };
+        const link_on = (node, next_node) => {
+          let link_dom = d3.selectAll('#sankey .link').filter((d) => (d.source.id === node.id && d.target.id === next_node.id));
+
+          link_dom.transition()
+            .style('stroke', '#0075C9')
+            .style('stroke-opacity', 0.5);
+        };
+        const node_off = (node) => {
+          let node_dom = d3.select(`#node_${ node.id }`);
+
+          node_dom.select('rect')
+            .transition()
+            .style('fill', null)
+            .style('stroke', null);
+          node_dom.select('text')
+            .transition()
+            .style('fill', null);
+        };
+        const link_off = (node, next_node) => {
+          let link_dom = d3.selectAll('#sankey .link').filter((d) => (d.source.id === node.id && d.target.id === next_node.id));
+
+          link_dom.transition()
+            .style('stroke', null)
+            .style('stroke-opacity', null);
+        };
+
+        // Create tooltip_intro
+        if (tooltip_create) {
+          d3.select('#content')
+            .append('div')
+            .attr('id', 'intro_screen')
+            .style('top', '0px')
+            .style('left', '0px');
+          intro_container = d3.select('#content')
+            .append('div')
+            .attr('id', 'tooltip_intro')
+            .style('bottom', '20px')
+            .style('right', '20px');
+          intro_container.append('h2').attr('class', 'tooltip_name');
+          intro_container.append('p').attr('class', 'tooltip_production');
+          intro_buttons = intro_container.append('div').attr('class', 'flex flex_justify_between');
+          button_last = intro_buttons.append('button').attr('id', 'last').text('Anterior');
+          button_next = intro_buttons.append('button').attr('id', 'next').text('Siguiente');
+        } else {
+          intro_container = d3.select('#tooltip_intro');
+          intro_buttons = intro_container.select('div');
+          button_last = intro_buttons.select('#last');
+          button_next = intro_buttons.select('#next');
+        }
+        // Delete tooltip_intro
+        if (tooltip_delete) {
+          d3.select('#tooltip_intro').remove();
+          d3.select('#intro_screen').remove();
+
+          node_map.forEach((v, k) => {
+            let node = buscarNodo(node_map[k]);
+            let next = buscarNodo(node_map[k + 1]);
+
+            node_off(node);
+            link_off(node, next);
+          });
+
+          return false;
+        }
+
+        if (next) {
+          node_on(node);
+          link_on(node, next_node_1);
+        } else {
+          node_off(next_node_1);
+          link_off(next_node_1, next_node_2);
+        }
+
+        intro_container.select('h2').text(node.name);
+        intro_container.select('p').text('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
+        button_last.attr('class', 'btn btn-default btn-xs').on('click', () => {
+          intro(stage - 1, false, false, false);
+        });
+        button_next.attr('class', 'btn btn-default btn-xs').on('click', () => {
+          intro(stage + 1);
+        });
+
+        if (stage === 0) {
+          button_last.attr('class', 'btn btn-default btn-xs disabled').on('click', () => {
+            intro(stage);
+          });
+        } else if (stage === (node_map.length - 1)) {
+          button_next.attr('class', 'btn btn-primary btn-xs').text('Comenzar').on('click', () => {
+            intro(stage, false, true);
+          });
+        }
       };
       // const colapsarExpandirNodo = (nodo) => {
       //
@@ -353,7 +457,7 @@ $(() => {
           .data(data.nodes)
           .enter()
           .append('g')
-            .attr('id', (d) => d.id)
+            .attr('id', (d) => `node_${ d.id }`)
             .attr('class', 'node')
             .attr('transform', (d) => {
 
@@ -686,7 +790,7 @@ $(() => {
 
         downloadFile().then(() => {
           dibujarSankey(width, height, { 'nodes': nodesOri, 'links': linksOri });
-          intro();
+          intro(0, true);
           // preSankey();
         });
       };
