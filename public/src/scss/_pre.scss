@@ -103,18 +103,18 @@ a {
 
 // Responsive Sitio
 // (portrait and landscape)
-@media only screen and (min-device-width: $x-small) {}
+@media only screen and (min-width: $x-small) {}
 // (landscape)
-@media only screen and (min-device-width: $x-small) and (orientation: landscape) {}
+@media only screen and (min-width: $x-small) and (orientation: landscape) {}
 // (portrait)
-@media only screen and (min-device-width: $x-small) and (orientation: portrait) {}
+@media only screen and (min-width: $x-small) and (orientation: portrait) {}
 // (portrait and landscape)
-@media only screen and (min-device-width: $small) {}
+@media only screen and (min-width: $small) {}
 // (landscape)
-@media only screen and (min-device-width: $small) and (orientation: landscape) {}
+@media only screen and (min-width: $small) and (orientation: landscape) {}
 // (portrait)
-@media only screen and (min-device-width: $small) and (orientation: portrait) {}
+@media only screen and (min-width: $small) and (orientation: portrait) {}
 // (portrait and landscape)
-@media only screen and (min-device-width: $medium) {}
+@media only screen and (min-width: $medium) {}
 // (portrait and landscape)
-@media only screen and (min-device-width: $large) {}
+@media only screen and (min-width: $large) {}

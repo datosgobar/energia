@@ -99,52 +99,28 @@ $(() => {
       };
 
       const fadeIn = (id = null) => (g, i) => {
-        let all_links = d3.selectAll('#sankey .link'),
-            all_nodes = d3.selectAll('#sankey .node'),
-            nodes_id  = [],
-            element_id = (id === null)?(g.id):(id);
+        let all_links   = d3.selectAll('#sankey .link'),
+            all_nodes   = d3.selectAll('#sankey .node'),
+            element_id  = (id === null)?(g.id):(id);
 
-        console.log(element_id);
+        // Estilos aplicados al nodo seleccionado
+        let event_node = d3.select(`#node_${ element_id }`);
+            event_node.select('rect')
+              .transition()
+              .style('fill', 'black')
+              .style('stroke', 'black');
+            event_node.select('text')
+              .transition()
+              .style('fill', 'black');
 
-        let event_node = all_nodes.filter((d) => (d.id === element_id));
-        event_node.select('rect')
+        // Estilos aplicados a los links relacionados
+        all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 42) || (d.target.id === element_id && d.target.id !== 42)))
           .transition()
-          .style('fill', 'black')
-          .style('stroke', 'black');
-        event_node.select('text')
-          .transition()
-          .style('fill', 'black');
-
-        let filter_nodes = all_nodes.filter((d) => {
-          let state = false;
-
-          nodes_id.forEach((element) => { if(d.id === element) { state = true; } });
-
-          return state;
-        });
-        filter_nodes.select('rect')
-          .transition()
-          .style('fill', 'black')
-          .style('stroke', 'black');
-        filter_nodes.select('text')
-          .transition()
-          .style('fill', 'black');
-
-        let filter_links = all_links.filter((d) => {
-          let state = true;
-
-          if (d.source.id === element_id) {
-            nodes_id.push(d.target.id);
-          } else if (d.target.id === element_id) {
-            nodes_id.push(d.source.id);
-          } else {
-            state = false;
-          }
-
-          return state;
-        });
-        filter_links.transition()
           .style('stroke', '#0075C9')
+          .style('stroke-opacity', 0.5);
+        all_links.filter((d) => ((d.source.id === element_id && d.target.id === 42) || (d.target.id === element_id && d.target.id === 42)))
+          .transition()
+          .style('stroke', 'red')
           .style('stroke-opacity', 0.5);
       };
       const tooltipIn = (d) => {
@@ -153,49 +129,28 @@ $(() => {
         $('.tooltip_production').text(`Producción: ${ d.production }`);
         $('.tooltip_losses').text(`Pérdida: ${ d.losses }`);
       };
-      const fadeOut = (opacity) => (g, i) => {
-        let all_links = d3.selectAll('#sankey .link'),
-            all_nodes = d3.selectAll('#sankey .node'),
-            nodes_id  = [];
+      const fadeOut = (id = null) => (g, i) => {
+        let all_links   = d3.selectAll('#sankey .link'),
+            all_nodes   = d3.selectAll('#sankey .node'),
+            element_id  = (id === null)?(g.id):(id);
 
-        let event_node = all_nodes.filter((d) => (d.id === g.id));
-        event_node.select('rect')
+        // Estilos aplicados al nodo seleccionado
+        let event_node = d3.select(`#node_${ element_id }`);
+            event_node.select('rect')
+              .transition()
+              .style('fill', null)
+              .style('stroke', null);
+            event_node.select('text')
+              .transition()
+              .style('fill', null);
+
+        // Estilos aplicados a los links relacionados
+        all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 42) || (d.target.id === element_id && d.target.id !== 42)))
           .transition()
-          .style('fill', null)
-          .style('stroke', null);
-        event_node.select('text')
+          .style('stroke', null)
+          .style('stroke-opacity', null);
+        all_links.filter((d) => ((d.source.id === element_id && d.target.id === 42) || (d.target.id === element_id && d.target.id === 42)))
           .transition()
-          .style('fill', null);
-
-        let filter_nodes = all_nodes.filter((d) => {
-          let state = false;
-
-          nodes_id.forEach((element) => { if(d.id === element) { state = true; } });
-
-          return state;
-        });
-        filter_nodes.select('rect')
-          .transition()
-          .style('fill', null)
-          .style('stroke', null);
-        filter_nodes.select('text')
-          .transition()
-          .style('fill', null);
-
-        let filter_links = all_links.filter((d) => {
-          let state = true;
-
-          if (d.source.id === g.id) {
-            nodes_id.push(d.target.id);
-          } else if (d.target.id === g.id) {
-            nodes_id.push(d.source.id);
-          } else {
-            state = false;
-          }
-
-          return state;
-        });
-        filter_links.transition()
           .style('stroke', null)
           .style('stroke-opacity', null);
 
@@ -352,39 +307,21 @@ $(() => {
 
       const dibujarSankey = (width, heigth, data) => {
 
-        // Se vacia contenedor
-        $('#sankey').empty();
-
         // Se definen variables
-        let margin = {
-          top: 40,
-          right: 200,
-          bottom: 40,
-          left: 200,
-          header: 20
-        },
-        headerSize = 19,
-        size = {
-          width: (((width < 1400)?(width):(1400)) - margin.left - margin.right),
-          height: (heigth - margin.top - margin.bottom - margin.header - headerSize)
-        },
-        secciones = [
-          'COL 01',
-          'COL 02',
-          'COL 03',
-          'COL 04',
-          'COL 05',
-          'COL 06',
-        ],
-        anchoNodo = 20,
-        separacionNodo = 20,
-        posColumnas = [];
+        let margin      = { top: 40, right: 200, bottom: 40, left: 200, header: 20 },
+        headerSize      = 19,
+        size            = { width: 1400 - margin.left - margin.right, height: heigth - margin.top - margin.bottom - margin.header - headerSize },
+        secciones       = [ 'COL 01', 'COL 02', 'COL 03', 'COL 04', 'COL 05', 'COL 06' ],
+        anchoNodo       = 20,
+        separacionNodo  = 20,
+        posColumnas     = [];
 
         // Creación SVG
         svg = d3.select('#sankey')
           .append('svg')
           .attr('width', size.width + margin.right + margin.left)
-          .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize);
+          .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize)
+          .attr('preserveAspectRatio', 'xMidYMid meet');
 
         // Borrar
         // svg.append('g')

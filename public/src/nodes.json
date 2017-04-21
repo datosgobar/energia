@@ -359,5 +359,15 @@
     "losses": 0.0,
     "id": 41,
     "exportation": -254.16371562399999
+  },{
+    "importation": 0,
+    "production": 0,
+    "internal_offer": 0,
+    "position": 8,
+    "name": "Pérdidas",
+    "others": 41,
+    "losses": 0,
+    "id": 42,
+    "exportation": -254
   }
 ]

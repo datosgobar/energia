@@ -2,6 +2,24 @@
 @import "header_footer";
 
 // Codigo Sitio
+h1 {
+  margin: 20px auto;
+  font-size: 34px;
+  max-width: 300px;
+  text-align: center;
+
+  // (portrait and landscape)
+  @media (min-width: $small) {
+    margin: 40px auto 20px auto;
+    max-width: initial;
+    font-size: 40px;
+  }
+  // (portrait and landscape)
+  @media (min-width: $large) {
+    font-size: 49px;
+  }
+}
+
 #content {
   position: relative;
   width: 100vw;
@@ -10,30 +28,47 @@
   overflow: hidden;
   padding: 0px;
 }
-h1 {
-  font-size: 3.5em;
-  text-align: center;
-  margin: 40px 0px 20px 0px;
-}
 #form_energia {
+  margin: 0px 10px;
 
   & > p {
+    display: none;
     margin: 0px;
+
+    // (portrait and landscape)
+    @media (min-width: $small) {
+      display: inherit;
+    }
   }
   & > select {
-    margin: 0px 10px;
+    margin: 0px 10px 0px 0px;
+    max-width: 75px;
+
+    // (portrait and landscape)
+    @media (min-width: $small) {
+      display: inherit;
+      margin: 0px 10px;
+      max-width: 150px;
+    }
   }
   & > button {
+    height: 24px;
+    padding: 0px 10px;
+  }
+}
+#sankey {
+  width: 100vw;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  text-align: center;
+  height: calc(100vh - 72px - 104px - 24px);
 
+  // (portrait and landscape)
+  @media (min-width: $large) {
+    height: calc(100vh - 72px - 113px - 24px);
   }
 }
 
-#sankey {
-  text-align: center;
-  // height: 100%;
-  height: calc(100vh - 31px - 113px - 72px);
-  width: 100vw;
-}
 .chart-encabezado-right, .chart-encabezado-left {
   fill: gray;
   font-weight: bold;
@@ -44,6 +79,7 @@ h1 {
 .chart-encabezado-left {
   text-anchor: end;
 }
+
 .link {
   fill: none;
   z-index: 10;
@@ -60,7 +96,7 @@ h1 {
     // shape-rendering: crispEdges;
 
   }
-  & > .node-text, & > .node-text-start {
+  & > text {
     fill: gray;
     font-weight: normal;
     font-size: 14px;
@@ -71,10 +107,6 @@ h1 {
   & > .node-text-start {
     text-anchor: end;
   }
-}
-
-.link-hover {
-  // stroke-opacity: 0.8;
 }
 
 // ---- Tooltip

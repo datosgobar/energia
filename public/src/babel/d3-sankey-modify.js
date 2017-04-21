@@ -58,23 +58,27 @@ d3.sankey = function() {
 
   // SVG path data generator, to be used as "d" attribute on "path" element selection.
   sankey.link = function() {
-    var curvature = .5;
+    var curvature = .75;
 
     function link(d) {
-      var xs = d.source.x + d.source.dx,
-          xt = d.target.x,
-          xi = d3.interpolateNumber(xs, xt),
+      var xs  = d.source.x + d.source.dx,
+          xt  = d.target.x,
+          xi  = d3.interpolateNumber(xs, xt),
           xsc = xi(curvature),
           xtc = xi(1 - curvature),
-          ys = d.source.y + d.sy + d.dy / 2,
-          yt = d.target.y + d.ty + d.dy / 2;
+          ys  = d.source.y + d.sy + d.dy / 2,
+          yt  = d.target.y + d.ty + d.dy / 2;
 
       if (!d.cycleBreaker) {
-        return "M" + xs + "," + ys
-             + "C" + xsc + "," + ys
-             + " " + xtc + "," + yt
-             + " " + xt + "," + yt;
-      } else {
+        if (d.target.name === 'Pérdidas') { // LINK PERDIDA
+          console.log('nuevo link');
+          return `M ${ xs } ${ ys }
+                  L ${ xs + 5 } ${ ys }
+                  C ${ xs + 5 + 5 } ${ ys } ${ xs + 5 + 5 } ${ ys } ${ xs + 5 + 5 } ${ ys + 15 }`;
+        } else { // NORMAL LINK
+          return `M${ xs },${ ys } C${ xsc },${ ys } ${ xtc },${ yt } ${ xt },${ yt }`;
+        }
+      } else {  // CYCLE LINK
         var xdelta = (1.5 * d.dy + 0.05 * Math.abs(xs - xt));
         xsc = xs + xdelta;
         xtc = xt - xdelta;
@@ -87,7 +91,6 @@ d3.sankey = function() {
              + " " + xm + "," + (ym + ydelta)
              + "S" + xtc + "," + yt
              + " " + xt + "," + yt;
-
       }
     }
 
