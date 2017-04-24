@@ -71,7 +71,7 @@ d3.sankey = function() {
 
       if (!d.cycleBreaker) {
         if (d.target.name === 'Pérdidas') { // LINK PERDIDA
-          console.log('nuevo link');
+
           return `M ${ xs } ${ ys }
                   L ${ xs + 5 } ${ ys }
                   C ${ xs + 5 + 5 } ${ ys } ${ xs + 5 + 5 } ${ ys } ${ xs + 5 + 5 } ${ ys + 15 }`;
@@ -402,13 +402,13 @@ d3.sankey = function() {
   // Alteración del código
   // Ordena los nodos de mayor a menor en función de su valor
   function byValue(first, second) {
-    let firstValue = first.value,
-        secondValue = second.value;
+    let firstValue = first.positionY,
+        secondValue = second.positionY;
 
     if (firstValue < secondValue) {
-      return 1;
-    } else if (firstValue > secondValue) {
       return -1;
+    } else if (firstValue > secondValue) {
+      return 1;
     }
 
     return 0;

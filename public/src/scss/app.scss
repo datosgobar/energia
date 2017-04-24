@@ -112,8 +112,8 @@ h1 {
 // ---- Tooltip
 
 #tooltip, #tooltip_intro {
-  background-color: rgba(255, 255, 255, 0.85);
-  border-radius: 10px;
+  background-color: white;
+  border-radius: 4px;
   border: 1px solid silver;
   padding: 10px;
   position: absolute;
@@ -121,13 +121,63 @@ h1 {
   & > .tooltip_name {
     font-size: 16px;
   }
+  & > .tooltip_ktep {}
   & > .tooltip_production {
+    font-size: 14px;
+    color: gray;
+  }
+  & > .tooltip_importation {
+    font-size: 14px;
+    color: gray;
+  }
+  & > .tooltip_exportation {
+    font-size: 14px;
+    color: gray;
+  }
+  & > .tooltip_consumo {
     font-size: 14px;
     color: gray;
   }
   & > .tooltip_losses {
     font-size: 14px;
     color: gray;
+  }
+  & > .tooltip_others {
+    font-size: 14px;
+    color: gray;
+  }
+}
+#tooltip {
+  transform: translate(-50%, -100%);
+  top: -1000px;
+  left: -1000px;
+
+
+  &:after, &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: translate(-50%, 100%);
+  }
+  &:after {
+    left: 50%;
+    border-color: white transparent transparent transparent;
+    border-width: 10px;
+    line-height: 0px;
+    _border-color: white black black black;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
+  }
+  &:before {
+    left: 50%;
+    border-color: silver transparent transparent transparent;
+    border-width: 11px;
+    line-height: 0px;
+    _border-color: silver black black black;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
   }
 }
 #intro_screen {

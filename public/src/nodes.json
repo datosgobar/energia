@@ -4,6 +4,7 @@
     "production": 3565.00253042954,
     "internal_offer": 3529.7054756728121,
     "position": 1,
+    "positionY": 3,
     "name": "Energía Hidráulica",
     "others": 0.0,
     "losses": -35.297054756728102,
@@ -14,6 +15,7 @@
     "production": 0.0,
     "internal_offer": 2203.74737314,
     "position": 1,
+    "positionY": 4,
     "name": "Energía Nuclear",
     "others": -0.25262685999996398,
     "losses": 0.0,
@@ -24,6 +26,7 @@
     "production": 37786.0,
     "internal_offer": 41963.546361186753,
     "position": 1,
+    "positionY": 1,
     "name": "Gas Natural de Pozo",
     "others": 160.47176934475101,
     "losses": -939.42112375799798,
@@ -34,6 +37,7 @@
     "production": 27495.684183881,
     "internal_offer": 26785.986812155199,
     "position": 1,
+    "positionY": 2,
     "name": "Petróleo",
     "others": 331.01592576719696,
     "losses": 0.0,
@@ -44,6 +48,7 @@
     "production": 179.95544350200001,
     "internal_offer": 179.95544350200001,
     "position": 1,
+    "positionY": 12,
     "name": "Energía Eólica",
     "others": 0.0,
     "losses": 0.0,
@@ -54,6 +59,7 @@
     "production": 1.2627379999999999,
     "internal_offer": 1.2627379999999999,
     "position": 1,
+    "positionY": 9,
     "name": "Energía Solar",
     "others": 7.8062556418956295e-17,
     "losses": 0.0,
@@ -64,6 +70,7 @@
     "production": 19.825769999999999,
     "internal_offer": 1358.2805651199999,
     "position": 1,
+    "positionY": 6,
     "name": "Carbón Mineral",
     "others": -84.703757297599992,
     "losses": 0.0,
@@ -74,6 +81,7 @@
     "production": 425.43370382119701,
     "internal_offer": 425.43370382119701,
     "position": 1,
+    "positionY": 10,
     "name": "Alcohol Vegetal",
     "others": 0.0,
     "losses": 0.0,
@@ -84,6 +92,7 @@
     "production": 1672.5421497080899,
     "internal_offer": 1672.5421497080899,
     "position": 1,
+    "positionY": 5,
     "name": "Aceites Vegetales",
     "others": 0.0,
     "losses": 0.0,
@@ -94,6 +103,7 @@
     "production": 912.87138970733395,
     "internal_offer": 912.87138970733395,
     "position": 1,
+    "positionY": 7,
     "name": "Leña",
     "others": 0.0,
     "losses": 0.0,
@@ -104,6 +114,7 @@
     "production": 804.27559499999995,
     "internal_offer": 804.27559499999995,
     "position": 1,
+    "positionY": 8,
     "name": "Bagazo",
     "others": 0.0,
     "losses": 0.0,
@@ -114,6 +125,7 @@
     "production": 365.285882695,
     "internal_offer": 365.285882695,
     "position": 1,
+    "positionY": 11,
     "name": "Otros Primarios",
     "others": 0.0,
     "losses": 0.0,
@@ -124,6 +136,7 @@
     "production": 12506.2538032023,
     "internal_offer": 11529.833150401431,
     "position": 5,
+    "positionY": 1,
     "name": "Energía Eléctrica",
     "others": 0.0,
     "losses": -1747.09648585687,
@@ -134,6 +147,7 @@
     "production": 33615.189669046798,
     "internal_offer": 35953.541754300903,
     "position": 3,
+    "positionY": 1,
     "name": "Gas Distribuido por Redes",
     "others": -206.19519995914197,
     "losses": -1986.0292947867599,
@@ -144,6 +158,7 @@
     "production": 2841.3914209999998,
     "internal_offer": 1900.7000077999996,
     "position": 3,
+    "positionY": 5,
     "name": "Gas Licuado",
     "others": -0.59413419999999495,
     "losses": 0.0,
@@ -154,6 +169,7 @@
     "production": 10160.4783170834,
     "internal_offer": 13316.830536372201,
     "position": 3,
+    "positionY": 2,
     "name": "Gas Oil",
     "others": -179.1404884967998,
     "losses": 0.0,
@@ -164,6 +180,7 @@
     "production": 4513.75187284,
     "internal_offer": 3724.9611124600005,
     "position": 3,
+    "positionY": 4,
     "name": "Fuel Oil",
     "others": -765.3553010600001,
     "losses": 0.0,
@@ -174,6 +191,7 @@
     "production": 6250.0391461929603,
     "internal_offer": 6298.8701234990403,
     "position": 3,
+    "positionY": 3,
     "name": "Motonaftas",
     "others": 37.565230906079996,
     "losses": 0.0,
@@ -184,6 +202,7 @@
     "production": 1604.30243,
     "internal_offer": 902.78129000000001,
     "position": 3,
+    "positionY": 7,
     "name": "Biodiesel",
     "others": 0.0,
     "losses": 0.0,
@@ -194,6 +213,7 @@
     "production": 413.05307648000002,
     "internal_offer": 407.09137183999997,
     "position": 3,
+    "positionY": 13,
     "name": "Bioetanol",
     "others": -5.9617046400000504,
     "losses": 0.0,
@@ -204,6 +224,7 @@
     "production": 599.28355108367202,
     "internal_offer": 599.28355108367202,
     "position": 3,
+    "positionY": 12,
     "name": "Gas de Alto Horno",
     "others": 0.0,
     "losses": 0.0,
@@ -214,6 +235,7 @@
     "production": 0.0,
     "internal_offer": 0.0,
     "position": 3,
+    "positionY": 16,
     "name": "Carbón Residual",
     "others": 0.0,
     "losses": 0.0,
@@ -224,6 +246,7 @@
     "production": 1274.54873129625,
     "internal_offer": 1153.8383604442499,
     "position": 3,
+    "positionY": 9,
     "name": "Gas de Refinería",
     "others": -120.710370852,
     "losses": 0.0,
@@ -234,6 +257,7 @@
     "production": 1381.803486,
     "internal_offer": 522.0085981320002,
     "position": 3,
+    "positionY": 8,
     "name": "Kerosene",
     "others": -952.70812786800002,
     "losses": 0.0,
@@ -244,6 +268,7 @@
     "production": 960.56134459698001,
     "internal_offer": 391.91997975018,
     "position": 3,
+    "positionY": 10,
     "name": "Otras Naftas",
     "others": 69.719473004400001,
     "losses": 0.0,
@@ -254,6 +279,7 @@
     "production": 122.822239788,
     "internal_offer": 122.822239788,
     "position": 3,
+    "positionY": 15,
     "name": "Gas de Coquería",
     "others": 0.0,
     "losses": 0.0,
@@ -262,6 +288,7 @@
   },{
     "production": 12506.2538032023,
     "position": 4,
+    "positionY": 1,
     "name": "Centrales Eléctricas",
     "perdida": 13639.393955307645,
     "id": 26,
@@ -269,6 +296,7 @@
   },{
     "production": 37431.922193478793,
     "position": 2,
+    "positionY": 1,
     "name": "Plantas de Tratamiento de Gas",
     "perdida": 1.3642420526593924e-12,
     "id": 27,
@@ -276,6 +304,7 @@
   },{
     "production": 27306.668978504895,
     "position": 2,
+    "positionY": 2,
     "name": "Refinerías",
     "perdida": 1457.0624859023083,
     "id": 28,
@@ -283,40 +312,49 @@
   },{
     "production": 3661.6938944259596,
     "position": 2,
+    "positionY": 3,
     "name": "Otros Centros de Transformación",
     "perdida": 359.4463011566869,
     "id": 29,
     "consumo": 4021.1401955826468
   },{
     "position": 6,
+    "positionY": 11,
     "name": "Consumo Propio",
     "id": 30
   },{
     "position": 6,
+    "positionY": 2,
     "name": "Residencial",
     "id": 31
   },{
     "position": 6,
+    "positionY": 6,
     "name": "Consumo No Energético",
     "id": 32
   },{
     "position": 6,
+    "positionY": 1,
     "name": "Transporte",
     "id": 33
   },{
     "position": 6,
+    "positionY": 4,
     "name": "Comercial",
     "id": 34
   },{
     "position": 6,
+    "positionY": 3,
     "name": "Industria",
     "id": 35
   },{
     "position": 6,
+    "positionY": 5,
     "name": "Agropecuario",
     "id": 36
   },{
     "position": 6,
+    "positionY": 10,
     "name": "Pérdidas por Transformación",
     "id": 37
   },{
@@ -324,6 +362,7 @@
     "production": 1522.9417307799999,
     "internal_offer": 1523.0276552728001,
     "position": 3,
+    "positionY": 11,
     "name": "Coque",
     "others": 0.085924492800131702,
     "losses": 0.0,
@@ -334,6 +373,7 @@
     "production": 335.07542769119999,
     "internal_offer": 335.07542769119999,
     "position": 3,
+    "positionY": 14,
     "name": "Carbón de Leña",
     "others": 0.0,
     "losses": 0.0,
@@ -344,6 +384,7 @@
     "production": 2409.605395038388,
     "internal_offer": 2413.079303759208,
     "position": 3,
+    "positionY": 6,
     "name": "No Energéticos",
     "others": 12.79844232562,
     "losses": 0.0,
@@ -354,6 +395,7 @@
     "production": 1009.548426432,
     "internal_offer": 796.7030664319999,
     "position": 3,
+    "positionY": 9,
     "name": "Gasolina",
     "others": 41.318355623999899,
     "losses": 0.0,
@@ -364,10 +406,37 @@
     "production": 0,
     "internal_offer": 0,
     "position": 8,
+    "positionY": 1,
     "name": "Pérdidas",
     "others": 41,
     "losses": 0,
     "id": 42,
     "exportation": -254
+  },{
+    "position": 6,
+    "positionY": 0,
+    "name": "borrar",
+    "id": 43
+  },{
+    "position": 6,
+    "positionY": 8,
+    "name": "borrar",
+    "id": 44
+  },{
+    "position": 6,
+    "positionY": 8,
+    "name": "borrar",
+    "id": 45,
+    "header": true
+  },{
+    "position": 6,
+    "positionY": 8,
+    "name": "borrar",
+    "id": 46
+  },{
+    "position": 6,
+    "positionY": 8,
+    "name": "borrar",
+    "id": 47
   }
 ]

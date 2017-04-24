@@ -93,12 +93,22 @@
       <form id="form_energia" class="flex flex_wrap" action="index.html" method="post">
         <p>Descubri el flujo de</p>
         <select name="categorias">
-          <option value="">COL 01</option>
-          <option value="">COL 02</option>
-          <option value="">COL 03</option>
-          <option value="">COL 04</option>
-          <option value="">COL 05</option>
-          <option value="">COL 06</option>
+
+          <script type="text/javascript">
+            var data = [
+              'Energías primarias',
+              'Energías secundarias',
+              'Energías terciarias',
+              'Centros de transformación',
+              'Consumos',
+              'No aprovechables'
+            ];
+
+            data.forEach((v, k) => {
+              $('select[name=categorias]').append(`<option value="${ k }">${ v }</option>`);
+            });
+          </script>
+
         </select>
         <p>como el</p>
         <select name="subcategorias">
@@ -171,9 +181,13 @@
 
       <div id="sankey"></div>
       <div id="tooltip" class="flex flex_column flex_align_start">
-        <span class="tooltip_name"></span>
+        <span class="tooltip_name"></span><span class="tooltip_ktep"></span>
         <span class="tooltip_production"></span>
+        <span class="tooltip_importation"></span>
+        <span class="tooltip_exportation"></span>
+        <span class="tooltip_consumo"></span>
         <span class="tooltip_losses"></span>
+        <span class="tooltip_others"></span>
       </div>
     </div>
 
