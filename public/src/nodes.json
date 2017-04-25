@@ -402,38 +402,38 @@
     "id": 41,
     "exportation": -254.16371562399999
   },{
-    "importation": 0,
-    "production": 0,
-    "internal_offer": 0,
+    "internal_offer": 1,
     "position": 8,
     "positionY": 1,
     "name": "Pérdidas",
-    "others": 41,
-    "losses": 0,
-    "id": 42,
-    "exportation": -254
+    "id": 42
   },{
+    "internal_offer": 1,
     "position": 6,
     "positionY": 0,
     "name": "borrar",
     "id": 43
   },{
+    "internal_offer": 1,
     "position": 6,
     "positionY": 8,
     "name": "borrar",
     "id": 44
   },{
+    "internal_offer": 1,
     "position": 6,
     "positionY": 8,
     "name": "borrar",
     "id": 45,
     "header": true
   },{
+    "internal_offer": 1,
     "position": 6,
     "positionY": 8,
     "name": "borrar",
     "id": 46
   },{
+    "internal_offer": 1,
     "position": 6,
     "positionY": 8,
     "name": "borrar",

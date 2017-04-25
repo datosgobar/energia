@@ -19,6 +19,17 @@ let COLORES_GRADIENTE = [ '#206aab', '#0075c9', '#009dda', '#4dcbec', '#7fdaf1',
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
       ]
+    },
+    SANKEY = {
+      secciones_header: [
+        ['ENERGÍAS', 'PRIMARIAS'],
+        ['CENTROS DE', 'TRANSFORMACIÓN'],
+        ['ENERGÍAS', 'SECUNDARIAS'],
+        ['CENTROS DE', 'TRANSFORMACIÓN'],
+        ['ENERGÍAS', 'TERCIARIAS'],
+        ['SECTORES', 'DE CONSUMOS'],
+        ['NO APROVECHABLES']
+      ]
     };
 
 // FUNCIONES
@@ -52,8 +63,7 @@ $(() => {
           event_node = d3.select(`#node_${ element_id }`);
             event_node.select('rect')
               .transition()
-              .style('fill', COLORES_GRADIENTE[g.position - 1])
-              .style('stroke', 'white');
+              .style('stroke', 'black');
             event_node.select('text')
               .transition()
               .style('fill', 'transparent');
@@ -65,7 +75,7 @@ $(() => {
             .style('stroke-opacity', 0.5);
           all_links.filter((d) => ((d.source.id === element_id && d.target.id === 42) || (d.target.id === element_id && d.target.id === 42)))
             .transition()
-            .style('stroke', 'red')
+            .style('stroke', (`url(#losses)`))
             .style('stroke-opacity', 0.5);
           break;
         case 'fadeOut':
@@ -73,7 +83,6 @@ $(() => {
           event_node = d3.select(`#node_${ element_id }`);
             event_node.select('rect')
               .transition()
-              .style('fill', null)
               .style('stroke', null);
             event_node.select('text')
               .transition()
@@ -94,7 +103,7 @@ $(() => {
         button_last, button_next;
 
     const node_on = (node) => {
-      node_dom.select('rect').transition().style('fill', COLORES_GRADIENTE[node.position - 1]).style('stroke', 'white');
+      node_dom.select('rect').transition().style('stroke', 'black');
       node_dom.select('text').transition().style('fill', 'black');
     };
     const node_off = (node) => {
@@ -157,435 +166,188 @@ $(() => {
       button_next.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage + 1, 'normal', 'next'); });
     }
   };
+  const tooltipIn = (d) => {
 
-      const tooltipIn = (d) => {
+    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7 - 20, left: $('#sankey svg').position().left + d.x + 210 });
 
-        $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7 - 20, left: $('#sankey svg').position().left + d.x + 210 });
+    if (d.position === 1 || d.position === 3 || d.position === 5) {
+      $('.tooltip_name').text(d.name);
+      $('.tooltip_ktep').text(d.ketp);
+      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.production }`);
+      $('.tooltip_importation').removeAttr('style').text(`Importación: ${ d.importation }`);
+      $('.tooltip_exportation').removeAttr('style').text(`Exportación: ${ d.exportation }`);
+      $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
+      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.losses }`);
+      $('.tooltip_others').removeAttr('style').text(`Otros: ${ d.others }`);
+    } else if (d.position === 2 || d.position === 4) {
+      $('.tooltip_name').text(d.name);
+      $('.tooltip_ktep').text(d.ketp);
+      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.production }`);
+      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importation }`);
+      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportation }`);
+      $('.tooltip_consumo').removeAttr('style').text(`Consumo: ${ d.consumo }`);
+      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.losses }`);
+      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.others }`);
+    } else {
+      $('.tooltip_name').text(d.name);
+      $('.tooltip_ktep').text(d.ketp);
+      $('.tooltip_production').css({'display': 'none'}).text(`Producción: ${ d.production }`);
+      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importation }`);
+      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportation }`);
+      $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
+      $('.tooltip_losses').css({'display': 'none'}).text(`Pérdida: ${ d.losses }`);
+      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.others }`);
+    }
+  };
+  const dibujarSankey = (width, heigth, data) => {
 
-        if (d.position === 1 || d.position === 3 || d.position === 5) {
-          $('.tooltip_name').text(d.name);
-          $('.tooltip_ktep').css({'display': 'none'}).text(d.ketp);
-          $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.production }`);
-          $('.tooltip_importation').removeAttr('style').text(`Importación: ${ d.importation }`);
-          $('.tooltip_exportation').removeAttr('style').text(`Exportación: ${ d.exportation }`);
-          $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
-          $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.losses }`);
-          $('.tooltip_others').removeAttr('style').text(`Otros: ${ d.others }`);
-        } else if (d.position === 2 || d.position === 4) {
-          $('.tooltip_name').text(d.name);
-          $('.tooltip_ktep').removeAttr('style').text(d.ketp);
-          $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.production }`);
-          $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importation }`);
-          $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportation }`);
-          $('.tooltip_consumo').removeAttr('style').text(`Consumo: ${ d.consumo }`);
-          $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.losses }`);
-          $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.others }`);
-        } else {
-          $('.tooltip_name').text(d.name);
-          $('.tooltip_ktep').removeAttr('style').text(d.ketp);
-          $('.tooltip_production').css({'display': 'none'}).text(`Producción: ${ d.production }`);
-          $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importation }`);
-          $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportation }`);
-          $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
-          $('.tooltip_losses').css({'display': 'none'}).text(`Pérdida: ${ d.losses }`);
-          $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.others }`);
-        }
-      };
+    // Se definen variables
+    let margin      = { top: 40, right: 200, bottom: 40, left: 200, header: 20 },
+    headerSize      = 38,
+    size            = { width: 1400 - margin.left - margin.right, height: heigth - margin.top - margin.bottom - margin.header - headerSize },
+    anchoNodo       = 20,
+    separacionNodo  = 20,
+    posColumnas     = [];
 
+    // Creación SVG
+    svg = d3.select('#sankey')
+      .append('svg')
+      .attr('width', size.width + margin.right + margin.left)
+      .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize)
+      .attr('preserveAspectRatio', 'xMidYMid meet');
 
+    // Se agregan encabezados
+    let encabezado = svg.append('g')
+      .attr('id', 'chart-encabezado')
+      .attr('transform', `translate(${ margin.left }, ${ margin.top + 15 })`);
+    encabezado.append('text')
+      .attr('class', 'chart-encabezado-left')
+      .attr('x', -10)
+      .text(SANKEY.secciones_header[0][0]);
+    encabezado.append('text')
+      .attr('class', 'chart-encabezado-left')
+      .attr('x', -10)
+      .attr('y', 19)
+      .text(SANKEY.secciones_header[0][1]);
 
-      // const colapsarExpandirNodo = (nodo) => {
-      //
-      //   nodesOri[nodo.id].group = (nodesOri[nodo.id].group) ? (false) : (true);
-      //
-      //   return nodesOri;
-      //
-      //
-      //   // let oldLinks = dataSankey.links;
-      //
-      //   // if (nodo.parent === false) {
-      //   //   console.log('Se expande nodo');
-      //   //   clavesNodos.forEach((element) => { if (element.id === nodo.id + moveId) { element.state = false; } });
-      //   //
-      //   //   dataSankey.nodes = nodosOriginales;
-      //   //   dataSankey.links = linksOriginales;
-      //   //
-      //   //   dataSankey.links = declareGroupLinks(dataSankey.links, true);
-      //   //
-      //   //   dataSankey = buscarNodes(dataSankey.nodes, dataSankey.links);
-      //   //   moveId = 0;
-      //   //   $('#sankey').empty();
-      //   //   dibujarSankey(width, height, dataSankey);
-      //   //   // actualizarSankey($('#content').width(), $('#content').height(), dataSankey, oldLinks);
-      //   // } else {
-      //   //   console.log('Se colapsa nodo');
-      //   //   // let parent = dataSankey.nodes.filter((element) => (element.name === nodo.parent))[0];
-      //   //   // clavesNodos.filter((element) => (element.id === parent.id))[0].state = true;
-      //   //   //
-      //   //   // dataSankey = buscarNodes(nodosOriginales, dataSankey.links = declareGroupLinks(linksOriginales));
-      //   //   //
-      //   //   // $('#sankey').empty();
-      //   //   // dibujarSankey(width, height, dataSankey);
-      //   //   // actualizarSankey($('#content').width(), $('#content').height(), dataSankey, oldLinks);
-      //   // }
-      // };
+    // Se crea grafico
+    let chart = svg.append('g')
+      .attr('transform', `translate(${ margin.left }, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header })`);
+    console.log(data.nodes);
+    console.log(data.nodes.filter((element) => (element.internal_offer > 0 || typeof(element.internal_offer) === 'undefined')));
+    // Creación Sankey
+    sankeyChartD3 = d3.sankey()
+      .nodeWidth(anchoNodo)
+      .nodePadding(separacionNodo)
+      .size([size.width, size.height])
+      .nodes(data.nodes)
+      .links(data.links)
+      .layout();
 
-      const dibujarSankey = (width, heigth, data) => {
+    let keys = GENERAR_GRADIENTES(COLORES_GRADIENTE);
 
-        // Se definen variables
-        let margin      = { top: 40, right: 200, bottom: 40, left: 200, header: 20 },
-        headerSize      = 19,
-        size            = { width: 1400 - margin.left - margin.right, height: heigth - margin.top - margin.bottom - margin.header - headerSize },
-        secciones       = [
-          'Energías primarias',
-          'Centros de transformación',
-          'Energías secundarias',
-          'Centros de transformación',
-          'Energías terciarias',
-          'Consumos',
-          'No aprovechables'
-        ],
-        anchoNodo       = 20,
-        separacionNodo  = 20,
-        posColumnas     = [];
+    svg.append('defs')
+      .append('linearGradient')
+      .attr('id', 'losses')
+      .attr('x1', '50%')
+      .attr('x2', '50%')
+      .attr('y1', '0%')
+      .attr('y2', '100%');
+    d3.select('#losses').append('stop').attr('offset', '0%').attr('stop-color', `red`).attr('stop-opacity', 1);
+    d3.select('#losses').append('stop').attr('offset', '50%').attr('stop-color', `red`).attr('stop-opacity', 1);
+    d3.select('#losses').append('stop').attr('offset', '100%').attr('stop-color', `white`).attr('stop-opacity', 0);
 
-        // Creación SVG
-        svg = d3.select('#sankey')
-          .append('svg')
-          .attr('width', size.width + margin.right + margin.left)
-          .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize)
-          .attr('preserveAspectRatio', 'xMidYMid meet');
+    for (let key in keys) {
+      svg.select('defs').append('linearGradient').attr('id', `key_${ key }`).attr('gradientUnits', 'userSpaceOnUse');
+      d3.select(`#key_${ key }`).append('stop').attr('offset', '0%').attr('stop-color', `${ keys[key][0] }`).attr('stop-opacity', 1);
+      d3.select(`#key_${ key }`).append('stop').attr('offset', '100%').attr('stop-color', `${ keys[key][1] }`).attr('stop-opacity', 1);
+    }
 
-        // Se agregan encabezados
-        let encabezado = svg.append('g')
-          .attr('id', 'chart-encabezado')
-          .attr('transform', `translate(${ margin.left }, ${ margin.top + 15 })`);
-        encabezado.append('text')
-          .attr('class', 'chart-encabezado-left')
-          .attr('x', -10)
-          .text(secciones[0]);
+    // Creación de Links
+    path = sankeyChartD3.link();
 
-        // Se crea grafico
-        let chart = svg.append('g')
-          .attr('transform', `translate(${ margin.left }, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header })`);
+    //  Se crean links
+    let link = chart.append('g')
+      .attr('id', 'links')
+      .selectAll('.link')
+      .data(sankeyChartD3.links())
+      .enter()
+      .append('path')
+      .attr('d', path)
+      .attr('class', 'link')
+      .style('stroke-width', (d) => Math.max(1, d.dy))
+      // .on('mouseover', (d) => { d3.select(d3.event.target).style('stroke-opacity', 1); })
+      // .on('mouseout', (d) => { d3.select(d3.event.target).style('stroke-opacity', 0.75); })
+      .sort((a, b) => (b.dy - a.dy));
 
-        // Creación Sankey
-        sankeyChartD3 = d3.sankey()
-          .nodeWidth(anchoNodo)
-          .nodePadding(separacionNodo)
-          .size([size.width, size.height])
-          .nodes(data.nodes)
-          .links(data.links)
-          .layout();
+    // Se crean nodos
+    let node = chart.append('g')
+      .attr('id', 'nodes')
+      .selectAll('.node')
+      .data(sankeyChartD3.nodes())
+      .enter()
+      .append('g')
+        .attr('id', (d) => `node_${ d.id }`)
+        .attr('class', 'node')
+        .attr('transform', (d) => {
 
-        let keys = GENERAR_GRADIENTES(COLORES_GRADIENTE);
+          if (posColumnas.indexOf(d.x) === -1) {
+            posColumnas.push(d.x);
+          }
 
-        for (let key in keys) {
-          eval(`let key_${ key } = svg.append('defs')
-          .append('linearGradient')
-          .attr('id', 'key_${ key }')
-          .attr('x1', '0%')
-          .attr('x2', '100%')
-          .attr('spreadMethod', 'pad');
-          key_${ key }.append('stop')
-          .attr('offset', '0%')
-          .attr('stop-color', '${ keys[key][0] }')
-          .attr('stop-opacity', 1);
-          key_${ key }.append('stop')
-          .attr('offset', '100%')
-          .attr('stop-color', '${ keys[key][1] }')
-          .attr('stop-opacity', 1);`);
-        }
+          return `translate(${ d.x }, ${ d.y })`;
+        }); // error compatibilidad
+        // .call(d3.drag().on('drag', dragmove));
 
-        // Creación de Links
-        path = sankeyChartD3.link();
+    // Se crean rectangulos nodos
+    node.filter((element) => (element.name !== 'borrar' && element.internal_offer > 0 || typeof(element.internal_offer) === 'undefined')).append('rect')
+        .attr('width', sankeyChartD3.nodeWidth())
+        .attr('height', (d) => (Math.max(5, d.dy)))
+        .on('mouseover',  fade('fadeIn', null))
+        .on('mouseout',   fade('fadeOut', null))
+        .on('mousemove', tooltipIn);
 
-        //  Se crean links
-        let link = chart.append('g')
-          .attr('id', 'links')
-          .selectAll('.link')
-          .data(data.links)
-          .enter()
-          .append('path')
-          .attr('d', path)
-          .attr('class', 'link')
-          .style('stroke-width', (d) => Math.max(1, d.dy))
-          // .on('mouseover', (d) => { d3.select(d3.event.target).style('stroke-opacity', 1); })
-          // .on('mouseout', (d) => { d3.select(d3.event.target).style('stroke-opacity', 0.75); })
-          .sort((a, b) => (b.dy - a.dy));
+    // Se crean textos nodos
+    node.filter((element) => (element.name !== 'borrar' && element.internal_offer > 0 || typeof(element.internal_offer) === 'undefined')).append('text')
+      .attr('class', 'node-text')
+      .attr('x', 10 + sankeyChartD3.nodeWidth())
+      .attr('y', (d) => (d.dy / 2))
+      .attr('dy', '0.35em')
+      .text((d) => (d.name))
+      .filter((d) => (d.targetLinks.length === 0))
+      .attr('class', 'node-text-start')
+      .attr('x', -10);
 
-          // link.filter((element) => (element.target.name === 'EXPORTACIONES' || element.target.name === 'CONSUMO PROPIO' || element.target.name === 'TRANSPORTE' || element.target.name === 'PERDIDA'))
-          //   .style('stroke', '#BA3F1D');
+    // Se agrega texto referencia hover link
+    // link.append('title').text((d) => `${ d.source.name } (${ d.source.id }) → ${ d.target.name } (${ d.target.id }) → ${ d.value }`);
 
-        // Se crean nodos
-        let node = chart.append('g')
-          .attr('id', 'nodes')
-          .selectAll('.node')
-          .data(data.nodes)
-          .enter()
-          .append('g')
-            .attr('id', (d) => `node_${ d.id }`)
-            .attr('class', 'node')
-            .attr('transform', (d) => {
+    // Se agrega texto referencia hover node
+    // node.append('title').text((d) => `${ d.name } (${ d.id })`);
 
-              if (posColumnas.indexOf(d.x) === -1) {
-                posColumnas.push(d.x);
-              }
+    // Se agregan encabezados
+    posColumnas.sort((a, b) => (a - b)); // Se ordena posicion de columnas
 
-              return `translate(${ d.x }, ${ d.y })`;
-            }); // error compatibilidad
-            // .call(d3.drag().on('drag', dragmove));
+    SANKEY.secciones_header.forEach((v, k) => {
+      encabezado.append('text')
+        .filter((d) => (k > 0))
+        .attr('class', 'chart-encabezado-right')
+        .attr('x', (d) => (posColumnas[k] + anchoNodo + 10))
+        .text(v[0]);
+      encabezado.append('text')
+        .filter((d) => (k > 0))
+        .attr('class', 'chart-encabezado-right')
+        .attr('x', (d) => (posColumnas[k] + anchoNodo + 10))
+        .attr('y', 19)
+        .text(v[1]);
+    });
 
-        // Se crean rectangulos nodos
-        node.filter((element) => (element.name !== 'borrar')).append('rect')
-            .attr('width', sankeyChartD3.nodeWidth())
-            .attr('height', (d) => (Math.max(5, d.dy)))
-            .on('mouseover',  fade('fadeIn', null))
-            .on('mouseout',   fade('fadeOut', null))
-            .on('mousemove', tooltipIn);
-
-        // Se crean textos nodos
-        node.filter((element) => (element.name !== 'borrar')).append('text')
-          .attr('class', 'node-text')
-          .attr('x', 10 + sankeyChartD3.nodeWidth())
-          .attr('y', (d) => (d.dy / 2))
-          .attr('dy', '0.35em')
-          .text((d) => (d.name))
-          .filter((d) => (d.targetLinks.length === 0))
-          .attr('class', 'node-text-start')
-          .attr('x', -10);
-
-        // Se agrega texto referencia hover link
-        // link.append('title').text((d) => `${ d.source.name } (${ d.source.id }) → ${ d.target.name } (${ d.target.id }) → ${ d.value }`);
-
-        // Se agrega texto referencia hover node
-        // node.append('title').text((d) => `${ d.name } (${ d.id })`);
-
-        // Se agregan encabezados
-        posColumnas.sort((a, b) => (a - b)); // Se ordena posicion de columnas
-
-        secciones.forEach((v, k) => {
-          encabezado.append('text')
-            .filter((d) => (k > 0))
-            .attr('class', 'chart-encabezado-right')
-            .attr('x', (d) => (posColumnas[k] + anchoNodo + 10))
-            .text(v);
-        });
-
-        // the function for moving the nodes
-        // function dragmove(d) {
-        //   d3.select(this).attr('transform', `translate(${ d.x = Math.max(0, Math.min(size.width - d.dx, d3.event.x)) }, ${ d.y = Math.max(0, Math.min(size.height - d.dy, d3.event.y)) })`);
-        //   sankeyChartD3.relayout();
-        //   link.attr('d', path);
-        // }
-      };
-
-      // const actualizarSankey = (width, heigth, data, oldLinks) => {
-      //   const linksDiff = (links_old, links_new) => {
-      //     console.log(links_old);
-      //     console.log(links_new);
-      //     let links = [],
-      //         source,
-      //         target;
-      //
-      //     links_new.forEach((v, k) => {
-      //       source  = v.source;
-      //       target  = v.target;
-      //
-      //       links_old.forEach((v, k) => { if ((source !== v.source.id) || (target !== v.target.id)) { links.push(v); } });
-      //     });
-      //
-      //     return links;
-      //   };
-      //
-      //   // let newNodes = nodesDiff(data, sankeyData);
-      //   // let newLinks = linksDiff(oldLinks, data.links);
-      //
-      //   // Parametros
-      //   let margin = {
-      //     top: 0,
-      //     right: 0,
-      //     bottom: 0,
-      //     left: 0
-      //   };
-      //   let size = {
-      //     width: width - margin.left - margin.right,
-      //     height: heigth - margin.top - margin.bottom
-      //   };
-      //
-      //   // Creación Sankey
-      //   sankeyChartD3 = d3.sankey()
-      //     .nodeWidth(20) // Ancho nodo
-      //     .size([size.width, size.height])
-      //     .nodes(data.nodes)
-      //     .links(data.links)
-      //     .layout(32);
-      //
-      //   sankeyChartD3.relayout();
-      //
-      //   // Creación de Links
-      //   path = sankeyChartD3.link();
-      //   $('#links').empty();
-      //
-      //   let links = d3.select('#links')
-      //     .selectAll('.link')
-      //     .data(data.links)
-      //     .enter();
-      //
-      //   links.append('path')
-      //       .attr('class', 'link')
-      //       .attr('d', (d) => path(d))
-      //       .style('stroke-width', (d) => {
-      //         return d.dy;
-      //       })
-      //       .style('stroke', 'gray')
-      //       .on('mouseover', (d) => {
-      //         // console.log(d3.event);
-      //         d3.select(d3.event.target).style('stroke', 'red');
-      //       })
-      //       .on('mouseout', (d) => {
-      //         d3.select(d3.event.target).style('stroke', 'gray');
-      //       });
-      //
-      //   // d3.selectAll('.link')
-      //   //   .data(data.links)
-      //   //   .attr('d', (d) => path(d));
-      //   d3.selectAll('.node')
-      //     .data(data.nodes)
-      //     // .transition()
-      //     .attr('transform', (d) => `translate(${ d.x }, ${ d.y })`);
-      //   d3.selectAll('rect')
-      //     .data(data.nodes)
-      //     .style('opacity', 0)
-      //     .attr('width', sankeyChartD3.nodeWidth())
-      //     .attr('height', (d) => d.dy)
-      //     .transition()
-      //     .style('opacity', 1);
-      //
-      //   // Create Diference
-      //   // newLinks.forEach((v, k) => {
-      //   //   let link = d3.select('#links')
-      //   //     .append('path')
-      //   //       .attr('class', 'link')
-      //   //       .attr('d', () => path(v))
-      //   //       .style('stroke-width', () => Math.max(1, v.dy))
-      //   //       .style('stroke', () => scaleColor(v.source.name.replace(' ', '')))
-      //   //       .sort((a, b) => (b.dy - a.dy));
-      //   //
-      //   //   link.append('title').text(() => `${ v.source.name } → ${ v.target.name } \n ${ formatoNumero(v.value) }`);
-      //   // });
-      // };
-      // const maxParent = (nodo) => {
-      //   // console.log(nodo);
-      //   let parentNode = nodesGlo.filter((element) => (element.id === nodo.parent))[0];
-      //
-      //   if (nodo.parent !== false) {
-      //     if (typeof(parentNode) !== 'undefined' && parentNode.group === true) {
-      //       return maxParent(nodesGlo.filter((element) => (element.id === nodo.parent))[0]);
-      //     } else {
-      //       return nodo;
-      //     }
-      //   } else {
-      //     return nodo;
-      //   }
-      // };
-      // const deleteEmptyNodes = () => {
-      //   let del = 0,
-      //       nodesDelete = [],
-      //       status;
-      //
-      //   // moveId = 0;
-      //
-      //   nodesGlo.forEach((node, nodeI) => {
-      //
-      //     // console.log('nodo: ' + nodeI + ' ( id: ' + node.id + ')');
-      //     status = false;
-      //
-      //     // Consulto si el nodo se utiliza en algun link
-      //     linksGlo.forEach((link, linkI) => {
-      //       if (node.id === link.source) {
-      //         status = true;
-      //         link.source = link.source - del;
-      //       }
-      //       if (node.id === link.target) {
-      //         status = true;
-      //         link.target = link.target - del;
-      //       }
-      //     });
-      //
-      //     // // Modificar el ID restando la cantidad de elementos borrados
-      //     // node.id = node.id - del;
-      //
-      //     if (!status) {
-      //       // console.log('Borrar');
-      //       nodesDelete.push(nodeI);
-      //       del++;
-      //     }
-      //     // else {
-      //     //   // console.log('nodo: ' + nodeI + ' ( id: ' + node.id + ')<-');
-      //     // }
-      //   });
-      //
-      //   nodesDelete.reverse().forEach((node) => { nodesGlo.splice(node, 1); });
-      //
-      //   // moveId = del;
-      //   // nodes.forEach((node, nodeI) => {
-      //   //   console.log('nodo: ' + nodeI + ' ( id: ' + node.id + ')');
-      //   // });
-      //
-      //   // console.log(links);
-      //   return nodesGlo;
-      // };
-      // const declareGroupLinks = () => {
-      //   let links = [],
-      //       source, parentSource, stateSource,
-      //       target, parentTarget, stateTarget,
-      //       nodoExistente,
-      //       addSource,
-      //       addTarget,
-      //       addValue;
-      //
-      //   linksGlo.forEach((v, k) => {
-      //
-      //     //Se obtiene source y target del elemento
-      //     source = nodesGlo.filter((element) => (element.id === parseInt(v.source)))[0];
-      //     target = nodesGlo.filter((element) => (element.id === parseInt(v.target)))[0];
-      //     //Se guarda source-padre y target-padre
-      //     parentSource = maxParent(source);
-      //     parentTarget = maxParent(target);
-      //     //Se guarda source-state y target-state
-      //     stateSource = parentSource.group;
-      //     stateTarget = parentTarget.group;
-      //     //Se guarda source y link a crear
-      //     addSource = (stateSource) ? (parentSource) : (source);
-      //     addTarget = (stateTarget) ? (parentTarget) : (target);
-      //     addValue  = parseInt(v.value);
-      //     //Se consulta si el nodo existe
-      //     nodoExistente = links.filter((element) => (element.source === addSource.id && element.target === addTarget.id));
-      //
-      //     if (nodoExistente.length !== 0) {
-      //       //Se suma valor a duplicado
-      //       nodoExistente[0].value += addValue;
-      //     } else {
-      //       //Se creo nuevo link
-      //       links.push({
-      //         'source': addSource.id,
-      //         'target': addTarget.id,
-      //         'value':  addValue
-      //       });
-      //     }
-      //   });
-      //   return links;
-      // };
-      // const preSankey = () => {
-      //   linksGlo = $.extend(true, [], linksOri);
-      //   nodesGlo = $.extend(true, [], nodesOri);
-      //   linksGlo = declareGroupLinks();
-      //   nodesGlo = deleteEmptyNodes();
-      //
-      //   dibujarSankey(width, height, { 'nodes': nodesGlo, 'links': linksGlo });
-      // };
-
+    // the function for moving the nodes
+    // function dragmove(d) {
+    //   d3.select(this).attr('transform', `translate(${ d.x = Math.max(0, Math.min(size.width - d.dx, d3.event.x)) }, ${ d.y = Math.max(0, Math.min(size.height - d.dy, d3.event.y)) })`);
+    //   sankeyChartD3.relayout();
+    //   link.attr('d', path);
+    // }
+  };
   const downloadFile = () => {
     let promise = new Promise((success) => {
       d3.json('public/src/nodes.json', (nodos) => {
@@ -610,6 +372,5 @@ $(() => {
     dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS });
 
     intro(0, 'create', 'next');
-
   });
 });
