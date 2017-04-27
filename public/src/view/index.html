@@ -39,12 +39,11 @@
     <link rel="stylesheet" type="text/css" href="./public/css/bootstrap.min.css">
     <script type="text/javascript" src="./public/js/bootstrap.min.js"></script>
     <!-- Poncho -->
-    <link rel="stylesheet" href="./public/css/roboto-fontface.min.css">
+    <link rel="stylesheet" href="./public/css/roboto-fontface.css">
     <link rel="stylesheet" href="./public/css/poncho.min.css">
     <!-- D3 -->
     <script type="text/javascript" src="./public/js/d3.min.js"></script>
-    <script type="text/javascript" src="./public/js/d3-drag.min.js"></script>
-    <script type="text/javascript" src="./public/js/d3-sankey-modify.min.js"></script>
+    <script type="text/javascript" src="./public/js/d3-sankey.min.js"></script>
     <!-- App - JavaScript -->
     <script type="text/javascript" src="./public/js/app.min.js"></script>
     <!-- App - CSS -->
@@ -92,91 +91,11 @@
 
       <form id="form_energia" class="flex flex_wrap" action="index.html" method="post">
         <p>Descubri el flujo de</p>
-        <select name="categorias">
-
-          <script type="text/javascript">
-            var data = [
-              'Energías primarias',
-              'Energías secundarias',
-              'Energías terciarias',
-              'Centros de transformación',
-              'Consumos',
-              'No aprovechables'
-            ];
-
-            data.forEach((v, k) => {
-              $('select[name=categorias]').append(`<option value="${ k }">${ v }</option>`);
-            });
-          </script>
-
-        </select>
+        <select name="categorias"></select>
         <p>como el</p>
-        <select name="subcategorias">
-
-          <script type="text/javascript">
-            var data = [
-              'ELEMENT 01',
-              'ELEMENT 02',
-              'ELEMENT 03',
-              'ELEMENT 04',
-              'ELEMENT 05',
-              'ELEMENT 06',
-              'ELEMENT 07',
-              'ELEMENT 08',
-              'ELEMENT 09',
-              'ELEMENT 10',
-              'ELEMENT 11',
-              'ELEMENT 12',
-              'ELEMENT 13',
-              'ELEMENT 14',
-              'ELEMENT 15',
-              'ELEMENT 16',
-              'ELEMENT 17',
-              'ELEMENT 18',
-              'ELEMENT 19',
-              'ELEMENT 20'
-            ];
-
-            data.forEach((v, k) => {
-              $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
-            });
-          </script>
-
-        </select>
+        <select name="subcategorias"></select>
         <p>en el año</p>
-        <select name="anio">
-
-          <script type="text/javascript">
-            var data = [
-              '1998',
-              '1999',
-              '2000',
-              '2001',
-              '2002',
-              '2003',
-              '2004',
-              '2005',
-              '2006',
-              '2007',
-              '2008',
-              '2009',
-              '2010',
-              '2011',
-              '2012',
-              '2013',
-              '2014',
-              '2015',
-              '2016',
-              '2017'
-            ];
-
-            data.reverse().forEach((v, k) => {
-              $('select[name=anio]').append(`<option value="${ k }">${ v }</option>`);
-            });
-          </script>
-
-        </select>
-        <button class="btn btn-default btn-sm no-margin" type="button" name="button">BUSCAR</button>
+        <select name="anio"></select>
       </form>
 
       <div id="sankey"></div>

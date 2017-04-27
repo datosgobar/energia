@@ -1,6 +1,5 @@
 // VARIABLES
-let COLORES_GRADIENTE = [ '#206aab', '#0075c9', '#009dda', '#4dcbec', '#7fdaf1', '#b2e9f7' ],
-    GLOBAL_NODES,
+let GLOBAL_NODES,
     GLOBAL_LINKS,
     INTRO = {
       nodes: [
@@ -30,16 +29,20 @@ let COLORES_GRADIENTE = [ '#206aab', '#0075c9', '#009dda', '#4dcbec', '#7fdaf1',
         ['SECTORES', 'DE CONSUMOS'],
         ['NO APROVECHABLES']
       ]
+    },
+    SELECTORES = {
+      categorias: [
+        ['Energías primarias', ['categorias1', 'categorias1', 'categorias1', 'categorias1', 'categorias1']],
+        ['Energías secundarias', ['categorias2', 'categorias2', 'categorias2', 'categorias2', 'categorias2']],
+        ['Energías terciarias', ['categorias3', 'categorias3', 'categorias3', 'categorias3', 'categorias3']],
+        ['Centros de transformación', ['categorias4', 'categorias4', 'categorias4', 'categorias4', 'categorias4']],
+        ['Consumos', ['categorias5', 'categorias5', 'categorias5', 'categorias5', 'categorias5']],
+        ['No aprovechables', ['categorias6', 'categorias6', 'categorias6', 'categorias6', 'categorias6']]
+      ],
+      anio: []
     };
 
 // FUNCIONES
-const GENERAR_GRADIENTES = (colores) => {
-  let keys = {};
-
-  colores.forEach((v1, k1) => { colores.forEach((v2, k2) => { keys[`${ k1 + 1 }${ k2 + 1 }`] = [v1, v2]; }); });
-
-  return keys;
-};
 const BUSCAR_NODO = (id, modificador = 0) => (GLOBAL_NODES.filter((element) => element.id === id + modificador)[0]);
 
 $(() => {
@@ -70,26 +73,28 @@ $(() => {
 
           // Estilos aplicados a los links relacionados
           all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 42) || (d.target.id === element_id && d.target.id !== 42)))
-            .transition()
-            .style('stroke', (d) => (`url(#key_${ d.source.position }${ d.target.position })`))
+            .style('stroke', 'url(#gradient_link)')
             .style('stroke-opacity', 0.5);
           all_links.filter((d) => ((d.source.id === element_id && d.target.id === 42) || (d.target.id === element_id && d.target.id === 42)))
-            .transition()
-            .style('stroke', (`url(#losses)`))
+            .style('stroke', 'url(#gradient_lossses_on)')
             .style('stroke-opacity', 0.5);
           break;
         case 'fadeOut':
           // Estilos aplicados al nodo seleccionado
           event_node = d3.select(`#node_${ element_id }`);
             event_node.select('rect')
-              .transition()
               .style('stroke', null);
             event_node.select('text')
               .transition()
               .style('fill', null);
 
           // Estilos aplicados a los links relacionados
-          all_links.style('stroke', null).style('stroke-opacity', null);
+          all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 42) || (d.target.id === element_id && d.target.id !== 42)))
+            .style('stroke', null)
+            .style('stroke-opacity', null);
+          all_links.filter((d) => ((d.source.id === element_id && d.target.id === 42) || (d.target.id === element_id && d.target.id === 42)))
+            .style('stroke', 'url(#gradient_lossses_off)')
+            .style('stroke-opacity', null);
 
           $('#tooltip').removeAttr('style');
           break;
@@ -111,32 +116,42 @@ $(() => {
       node_dom.select('text').transition().style('fill', null);
     };
     const link_on = (node, next_node) => {
-      link_dom.transition().style('stroke', (d) => (`url(#key_${ d.source.position }${ d.target.position })`)).style('stroke-opacity', 0.5);
+      link_dom.style('stroke', 'url(#gradient_link)').style('stroke-opacity', 0.5);
     };
     const link_off = (node, next_node) => {
-      link_dom.transition().style('stroke', null).style('stroke-opacity', null);
+      link_dom.style('stroke', null).style('stroke-opacity', null);
     };
 
     switch (state) {
       case 'create':
         d3.select('#content').append('div').attr('id', 'intro_screen').style('top', '0px').style('left', '0px');
         intro_container = d3.select('#content').append('div').attr('id', 'tooltip_intro').style('bottom', '20px').style('right', '20px');
-          intro_container.append('h2').attr('class', 'tooltip_name');
+          intro_container.append('div');
+          intro_container.select('div').attr('class', 'flex flex_justify_between flex_align_start').append('h2').attr('class', 'tooltip_name');
+          intro_container.select('div').append('span').attr('class', 'glyphicon glyphicon-remove tooltip_exit');
           intro_container.append('p').attr('class', 'tooltip_production');
         intro_buttons   = intro_container.append('div').attr('class', 'flex flex_justify_between');
         button_last     = intro_buttons.append('button').attr('id', 'last').text('Anterior');
         button_next     = intro_buttons.append('button').attr('id', 'next').text('Siguiente');
+
+        $('.tooltip_exit').on('click', () => {
+          intro(stage, 'delete', 'none');
+        });
+        $(document).keyup((e) => {
+          if (e.keyCode === 27 && $('.tooltip_exit').length === 1 ) { intro(stage, 'delete', 'none'); }
+        });
+
         break;
       case 'delete':
         d3.select('#tooltip_intro').remove();
         d3.select('#intro_screen').remove();
         d3.selectAll('#sankey .node rect').transition().style('fill', null).style('stroke', null);
         d3.selectAll('#sankey .node text').transition().style('fill', null);
-        d3.selectAll('#sankey .link').transition().style('stroke', null).style('stroke-opacity', null);
+        d3.selectAll('#sankey .link').filter((d) => (d.target.id !== 42)).transition().style('stroke', null).style('stroke-opacity', null);
         return false;
       case 'normal':
         intro_container = d3.select('#tooltip_intro');
-        intro_buttons   = intro_container.select('div');
+        intro_buttons   = intro_container.select('div:nth-child(3)');
         button_last     = intro_buttons.select('#last');
         button_next     = intro_buttons.select('#next');
         break;
@@ -152,7 +167,7 @@ $(() => {
         break;
     }
 
-    intro_container.select('h2').text(INTRO.nodes[stage].name);
+    intro_container.select('h2').text(INTRO.nodes[stage].nombre);
     intro_container.select('p').text(INTRO.nodes_description[stage]);
 
     if (stage === 0) {
@@ -168,36 +183,49 @@ $(() => {
   };
   const tooltipIn = (d) => {
 
-    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7 - 20, left: $('#sankey svg').position().left + d.x + 210 });
+    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 });
 
-    if (d.position === 1 || d.position === 3 || d.position === 5) {
-      $('.tooltip_name').text(d.name);
-      $('.tooltip_ktep').text(d.ketp);
-      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.production }`);
-      $('.tooltip_importation').removeAttr('style').text(`Importación: ${ d.importation }`);
-      $('.tooltip_exportation').removeAttr('style').text(`Exportación: ${ d.exportation }`);
+    if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
+      $('.tooltip_name').text(d.nombre);
+      $('.tooltip_ktep').text(`total: ${ d.oferta_interna }`);
+      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.produccion }`);
+      $('.tooltip_importation').removeAttr('style').text(`Importación: ${ d.importacion }`);
+      $('.tooltip_exportation').removeAttr('style').text(`Exportación: ${ d.exportacion }`);
       $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
-      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.losses }`);
-      $('.tooltip_others').removeAttr('style').text(`Otros: ${ d.others }`);
-    } else if (d.position === 2 || d.position === 4) {
-      $('.tooltip_name').text(d.name);
-      $('.tooltip_ktep').text(d.ketp);
-      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.production }`);
-      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importation }`);
-      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportation }`);
+      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.perdidas }`);
+      $('.tooltip_others').removeAttr('style').text(`Otros: ${ d.otros }`);
+    } else if (d.posicionX === 2 || d.posicionX === 4) {
+      $('.tooltip_name').text(d.nombre);
+      $('.tooltip_ktep').text(`total: ${ d.oferta_interna }`);
+      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.produccion }`);
+      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importacion }`);
+      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportacion }`);
       $('.tooltip_consumo').removeAttr('style').text(`Consumo: ${ d.consumo }`);
-      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.losses }`);
-      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.others }`);
+      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.perdidas }`);
+      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.otros }`);
     } else {
-      $('.tooltip_name').text(d.name);
-      $('.tooltip_ktep').text(d.ketp);
-      $('.tooltip_production').css({'display': 'none'}).text(`Producción: ${ d.production }`);
-      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importation }`);
-      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportation }`);
+      $('.tooltip_name').text(d.nombre);
+      $('.tooltip_ktep').text(`total: ${ d.oferta_interna }`);
+      $('.tooltip_production').css({'display': 'none'}).text(`Producción: ${ d.produccion }`);
+      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importacion }`);
+      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportacion }`);
       $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
-      $('.tooltip_losses').css({'display': 'none'}).text(`Pérdida: ${ d.losses }`);
-      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.others }`);
+      $('.tooltip_losses').css({'display': 'none'}).text(`Pérdida: ${ d.perdidas }`);
+      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.otros }`);
     }
+  };
+  const downloadFile = (anio) => {
+    let promise = new Promise((success) => {
+      d3.json(`public/src/data_${anio}.json`, (data) => {
+
+        GLOBAL_NODES = data.nodes;
+        GLOBAL_LINKS = data.links;
+
+        success();
+      });
+    });
+
+    return promise;
   };
   const dibujarSankey = (width, heigth, data) => {
 
@@ -233,8 +261,7 @@ $(() => {
     // Se crea grafico
     let chart = svg.append('g')
       .attr('transform', `translate(${ margin.left }, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header })`);
-    console.log(data.nodes);
-    console.log(data.nodes.filter((element) => (element.internal_offer > 0 || typeof(element.internal_offer) === 'undefined')));
+
     // Creación Sankey
     sankeyChartD3 = d3.sankey()
       .nodeWidth(anchoNodo)
@@ -244,24 +271,41 @@ $(() => {
       .links(data.links)
       .layout();
 
-    let keys = GENERAR_GRADIENTES(COLORES_GRADIENTE);
-
-    svg.append('defs')
+    // Gradientes
+    let lossesGradientOff = svg.append('defs')
       .append('linearGradient')
-      .attr('id', 'losses')
+      .attr('id', 'gradient_lossses_on')
       .attr('x1', '50%')
       .attr('x2', '50%')
       .attr('y1', '0%')
       .attr('y2', '100%');
-    d3.select('#losses').append('stop').attr('offset', '0%').attr('stop-color', `red`).attr('stop-opacity', 1);
-    d3.select('#losses').append('stop').attr('offset', '50%').attr('stop-color', `red`).attr('stop-opacity', 1);
-    d3.select('#losses').append('stop').attr('offset', '100%').attr('stop-color', `white`).attr('stop-opacity', 0);
-
-    for (let key in keys) {
-      svg.select('defs').append('linearGradient').attr('id', `key_${ key }`).attr('gradientUnits', 'userSpaceOnUse');
-      d3.select(`#key_${ key }`).append('stop').attr('offset', '0%').attr('stop-color', `${ keys[key][0] }`).attr('stop-opacity', 1);
-      d3.select(`#key_${ key }`).append('stop').attr('offset', '100%').attr('stop-color', `${ keys[key][1] }`).attr('stop-opacity', 1);
-    }
+    lossesGradientOff.append('stop').attr('offset', '0%').attr('stop-color', 'red').attr('stop-opacity', 1);
+    lossesGradientOff.append('stop').attr('offset', '50%').attr('stop-color', 'red').attr('stop-opacity', 1);
+    lossesGradientOff.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
+    let lossesGradientOn = svg.select('defs')
+      .append('linearGradient')
+      .attr('id', 'gradient_lossses_off')
+      .attr('x1', '50%')
+      .attr('x2', '50%')
+      .attr('y1', '0%')
+      .attr('y2', '100%');
+    lossesGradientOn.append('stop').attr('offset', '0%').attr('stop-color', 'silver').attr('stop-opacity', 1);
+    lossesGradientOn.append('stop').attr('offset', '50%').attr('stop-color', 'silver').attr('stop-opacity', 1);
+    lossesGradientOn.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
+    svg.select('defs')
+      .append('svg:pattern')
+      .attr('id', 'gradient_link')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('patternUnits', 'userSpaceOnUse')
+      .attr('height', '100%')
+      .attr('width', '100%')
+      .append('svg:image')
+      .attr('y', 0)
+      .attr('x', 0)
+      .attr('xlink:href', './public/image/gradient_link.svg')
+      .attr('width', '100%')
+      .attr('height', '100%');
 
     // Creación de Links
     path = sankeyChartD3.link();
@@ -276,9 +320,8 @@ $(() => {
       .attr('d', path)
       .attr('class', 'link')
       .style('stroke-width', (d) => Math.max(1, d.dy))
-      // .on('mouseover', (d) => { d3.select(d3.event.target).style('stroke-opacity', 1); })
-      // .on('mouseout', (d) => { d3.select(d3.event.target).style('stroke-opacity', 0.75); })
-      .sort((a, b) => (b.dy - a.dy));
+      .filter((d) => (d.target.id === 42))
+      .style('stroke', 'url(#gradient_lossses_off)');
 
     // Se crean nodos
     let node = chart.append('g')
@@ -300,7 +343,7 @@ $(() => {
         // .call(d3.drag().on('drag', dragmove));
 
     // Se crean rectangulos nodos
-    node.filter((element) => (element.name !== 'borrar' && element.internal_offer > 0 || typeof(element.internal_offer) === 'undefined')).append('rect')
+    node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('rect')
         .attr('width', sankeyChartD3.nodeWidth())
         .attr('height', (d) => (Math.max(5, d.dy)))
         .on('mouseover',  fade('fadeIn', null))
@@ -308,21 +351,15 @@ $(() => {
         .on('mousemove', tooltipIn);
 
     // Se crean textos nodos
-    node.filter((element) => (element.name !== 'borrar' && element.internal_offer > 0 || typeof(element.internal_offer) === 'undefined')).append('text')
+    node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('text')
       .attr('class', 'node-text')
       .attr('x', 10 + sankeyChartD3.nodeWidth())
       .attr('y', (d) => (d.dy / 2))
       .attr('dy', '0.35em')
-      .text((d) => (d.name))
+      .text((d) => (d.nombre))
       .filter((d) => (d.targetLinks.length === 0))
       .attr('class', 'node-text-start')
       .attr('x', -10);
-
-    // Se agrega texto referencia hover link
-    // link.append('title').text((d) => `${ d.source.name } (${ d.source.id }) → ${ d.target.name } (${ d.target.id }) → ${ d.value }`);
-
-    // Se agrega texto referencia hover node
-    // node.append('title').text((d) => `${ d.name } (${ d.id })`);
 
     // Se agregan encabezados
     posColumnas.sort((a, b) => (a - b)); // Se ordena posicion de columnas
@@ -340,37 +377,50 @@ $(() => {
         .attr('y', 19)
         .text(v[1]);
     });
-
-    // the function for moving the nodes
-    // function dragmove(d) {
-    //   d3.select(this).attr('transform', `translate(${ d.x = Math.max(0, Math.min(size.width - d.dx, d3.event.x)) }, ${ d.y = Math.max(0, Math.min(size.height - d.dy, d3.event.y)) })`);
-    //   sankeyChartD3.relayout();
-    //   link.attr('d', path);
-    // }
   };
-  const downloadFile = () => {
-    let promise = new Promise((success) => {
-      d3.json('public/src/nodes.json', (nodos) => {
-        GLOBAL_NODES = nodos;
+  const habilitarSelectores = () => {
 
-        d3.json('public/src/links.json', (links) => {
-            GLOBAL_LINKS = links;
-
-            success();
-          }
-        );
+      // Selector 1
+      SELECTORES.categorias.forEach((v, k) => {
+        $('select[name=categorias]').append(`<option value="${ k }">${ v[0] }</option>`);
       });
-    });
 
-    return promise;
+      // Selector 2
+      SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
+        $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
+      });
+
+      // Selector 1 - change
+      $('select[name=categorias]').on('change', (event) => {
+        // Selector 2 - change
+        $('select[name=subcategorias]').empty();
+
+        SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
+          $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
+        });
+      });
+
+      // SELECTOR AÑO
+      for (let i = 2015; i > 1959; i--) { $('select[name=anio]').append(`<option value="${ i }">${ i }</option>`); }
+      // SELECTOR AÑO - CHANGE
+      $('select[name=anio]').on('change', (event) => {
+        downloadFile($('select[name=anio]')[0].value).then(() => {
+          $('#sankey').empty();
+          dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS });
+        });
+      });
+
+
   };
 
-  downloadFile().then(() => {
+  downloadFile(2015).then(() => {
 
     INTRO.nodes.forEach((v, k) => { INTRO.nodes[k] = BUSCAR_NODO(v); });
 
     dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS });
 
     intro(0, 'create', 'next');
+
+    habilitarSelectores();
   });
 });
