@@ -123,29 +123,36 @@ h1 {
   }
   & > .tooltip_ktep {
     font-size: 16px;
+    text-transform: uppercase;
   }
   & > .tooltip_production {
     font-size: 14px;
+    text-transform: uppercase;
     color: gray;
   }
   & > .tooltip_importation {
     font-size: 14px;
+    text-transform: uppercase;
     color: gray;
   }
   & > .tooltip_exportation {
     font-size: 14px;
+    text-transform: uppercase;
     color: gray;
   }
   & > .tooltip_consumo {
     font-size: 14px;
+    text-transform: uppercase;
     color: gray;
   }
   & > .tooltip_losses {
     font-size: 14px;
+    text-transform: uppercase;
     color: gray;
   }
   & > .tooltip_others {
     font-size: 14px;
+    text-transform: uppercase;
     color: gray;
   }
 }
@@ -202,49 +209,3 @@ h1 {
     }
   }
 }
-
-// Gradient
-// $color_1: #206aab;
-// $color_2: #0075c9;
-// $color_3: #009dda;
-// $color_4: #4dcbec;
-// $color_5: #7fdaf1;
-// $color_6: #b2e9f7;
-//
-// #losses { background: linear-gradient(270deg, red 0%, rgba(255, 255, 255, 0); 100%); }
-// #key_11 { background: linear-gradient(0deg, $color_1 0%, $color_1 100%); }
-// #key_12 { background: linear-gradient(0deg, $color_1 0%, $color_2 100%); }
-// #key_13 { background: linear-gradient(0deg, $color_1 0%, $color_3 100%); }
-// #key_14 { background: linear-gradient(0deg, $color_1 0%, $color_4 100%); }
-// #key_15 { background: linear-gradient(0deg, $color_1 0%, $color_5 100%); }
-// #key_16 { background: linear-gradient(0deg, $color_1 0%, $color_6 100%); }
-// #key_21 { background: linear-gradient(0deg, $color_2 0%, $color_1 100%); }
-// #key_22 { background: linear-gradient(0deg, $color_2 0%, $color_2 100%); }
-// #key_23 { background: linear-gradient(0deg, $color_2 0%, $color_3 100%); }
-// #key_24 { background: linear-gradient(0deg, $color_2 0%, $color_4 100%); }
-// #key_25 { background: linear-gradient(0deg, $color_2 0%, $color_5 100%); }
-// #key_26 { background: linear-gradient(0deg, $color_2 0%, $color_6 100%); }
-// #key_31 { background: linear-gradient(0deg, $color_3 0%, $color_1 100%); }
-// #key_32 { background: linear-gradient(0deg, $color_3 0%, $color_2 100%); }
-// #key_33 { background: linear-gradient(0deg, $color_3 0%, $color_3 100%); }
-// #key_34 { background: linear-gradient(0deg, $color_3 0%, $color_4 100%); }
-// #key_35 { background: linear-gradient(0deg, $color_3 0%, $color_5 100%); }
-// #key_36 { background: linear-gradient(0deg, $color_3 0%, $color_6 100%); }
-// #key_41 { background: linear-gradient(0deg, $color_4 0%, $color_1 100%); }
-// #key_42 { background: linear-gradient(0deg, $color_4 0%, $color_2 100%); }
-// #key_43 { background: linear-gradient(0deg, $color_4 0%, $color_3 100%); }
-// #key_44 { background: linear-gradient(0deg, $color_4 0%, $color_4 100%); }
-// #key_45 { background: linear-gradient(0deg, $color_4 0%, $color_5 100%); }
-// #key_46 { background: linear-gradient(0deg, $color_4 0%, $color_6 100%); }
-// #key_51 { background: linear-gradient(0deg, $color_5 0%, $color_1 100%); }
-// #key_52 { background: linear-gradient(0deg, $color_5 0%, $color_2 100%); }
-// #key_53 { background: linear-gradient(0deg, $color_5 0%, $color_3 100%); }
-// #key_54 { background: linear-gradient(0deg, $color_5 0%, $color_4 100%); }
-// #key_55 { background: linear-gradient(0deg, $color_5 0%, $color_5 100%); }
-// #key_56 { background: linear-gradient(0deg, $color_5 0%, $color_6 100%); }
-// #key_61 { background: linear-gradient(0deg, $color_6 0%, $color_1 100%); }
-// #key_62 { background: linear-gradient(0deg, $color_6 0%, $color_2 100%); }
-// #key_63 { background: linear-gradient(0deg, $color_6 0%, $color_3 100%); }
-// #key_64 { background: linear-gradient(0deg, $color_6 0%, $color_4 100%); }
-// #key_65 { background: linear-gradient(0deg, $color_6 0%, $color_5 100%); }
-// #key_66 { background: linear-gradient(0deg, $color_6 0%, $color_6 100%); }

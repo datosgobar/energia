@@ -455,36 +455,42 @@
         {
             "posicionY": 1,
             "nombre": "Pérdidas",
+            "oferta_interna": 1,
             "id": 42,
             "posicionX": 8
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 43,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 44,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 45,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 46,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 47,
             "posicionX": 6
         }
@@ -539,6 +545,11 @@
             "source": 21,
             "target": 29,
             "value": 29.11
+        },
+        {
+            "source": 12,
+            "target": 42,
+            "value": 417.18
         },
         {
             "source": 12,
@@ -642,6 +653,11 @@
         },
         {
             "source": 2,
+            "target": 42,
+            "value": 2832.2
+        },
+        {
+            "source": 2,
             "target": 27,
             "value": 8842.41
         },
@@ -664,6 +680,11 @@
             "source": 22,
             "target": 26,
             "value": 63.9
+        },
+        {
+            "source": 13,
+            "target": 42,
+            "value": 331.07
         },
         {
             "source": 27,
@@ -779,6 +800,11 @@
             "source": 41,
             "target": 32,
             "value": 90.0
+        },
+        {
+            "source": 0,
+            "target": 42,
+            "value": 16.28
         },
         {
             "source": 0,

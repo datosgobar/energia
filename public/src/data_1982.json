@@ -455,36 +455,42 @@
         {
             "posicionY": 1,
             "nombre": "Pérdidas",
+            "oferta_interna": 1,
             "id": 42,
             "posicionX": 8
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 43,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 44,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 45,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 46,
             "posicionX": 6
         },
         {
             "posicionY": 2,
             "nombre": "borrar",
+            "oferta_interna": 1,
             "id": 47,
             "posicionX": 6
         }
@@ -539,6 +545,11 @@
             "source": 21,
             "target": 29,
             "value": 152.8
+        },
+        {
+            "source": 12,
+            "target": 42,
+            "value": 448.89
         },
         {
             "source": 12,
@@ -642,6 +653,11 @@
         },
         {
             "source": 2,
+            "target": 42,
+            "value": 2804.02
+        },
+        {
+            "source": 2,
             "target": 27,
             "value": 10178.07
         },
@@ -664,6 +680,11 @@
             "source": 22,
             "target": 26,
             "value": 61.2
+        },
+        {
+            "source": 13,
+            "target": 42,
+            "value": 402.33
         },
         {
             "source": 27,
@@ -774,6 +795,11 @@
             "source": 41,
             "target": 32,
             "value": 100.0
+        },
+        {
+            "source": 0,
+            "target": 42,
+            "value": 18.91
         },
         {
             "source": 0,

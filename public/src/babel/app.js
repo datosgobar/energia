@@ -65,11 +65,9 @@ $(() => {
           // Estilos aplicados al nodo seleccionado
           event_node = d3.select(`#node_${ element_id }`);
             event_node.select('rect')
-              .transition()
               .style('stroke', 'black');
             event_node.select('text')
-              .transition()
-              .style('fill', 'transparent');
+              .style('fill', 'black');
 
           // Estilos aplicados a los links relacionados
           all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 42) || (d.target.id === element_id && d.target.id !== 42)))
@@ -85,7 +83,6 @@ $(() => {
             event_node.select('rect')
               .style('stroke', null);
             event_node.select('text')
-              .transition()
               .style('fill', null);
 
           // Estilos aplicados a los links relacionados
@@ -381,24 +378,24 @@ $(() => {
   const habilitarSelectores = () => {
 
       // Selector 1
-      SELECTORES.categorias.forEach((v, k) => {
-        $('select[name=categorias]').append(`<option value="${ k }">${ v[0] }</option>`);
-      });
+      // SELECTORES.categorias.forEach((v, k) => {
+      //   $('select[name=categorias]').append(`<option value="${ k }">${ v[0] }</option>`);
+      // });
 
       // Selector 2
-      SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
-        $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
-      });
+      // SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
+      //   $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
+      // });
 
       // Selector 1 - change
-      $('select[name=categorias]').on('change', (event) => {
-        // Selector 2 - change
-        $('select[name=subcategorias]').empty();
-
-        SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
-          $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
-        });
-      });
+      // $('select[name=categorias]').on('change', (event) => {
+      //   // Selector 2 - change
+      //   $('select[name=subcategorias]').empty();
+      //
+      //   SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
+      //     $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
+      //   });
+      // });
 
       // SELECTOR AÑO
       for (let i = 2015; i > 1959; i--) { $('select[name=anio]').append(`<option value="${ i }">${ i }</option>`); }

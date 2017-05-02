@@ -365,8 +365,8 @@ d3.sankey = function() {
   // relative to the source/target node's y-position.
   function computeLinkDepths() {
     nodes.forEach(function(node) {
-      node.sourceLinks.sort(byValue);
-      node.targetLinks.sort(byValue);
+      node.sourceLinks.sort(ascendingSourceDepth);
+      node.targetLinks.sort(ascendingTargetDepth);
     });
     nodes.forEach(function(node) {
       var sy = 0, ty = 0;
@@ -380,12 +380,16 @@ d3.sankey = function() {
       });
     });
 
-    function ascendingSourceDepth(a, b) {
-      return a.source.y - b.source.y;
+    function ascendingSourceDepth(b, a) {
+      if (a.target.id === 42 || b.target.id === 42) {
+        return 1;
+      } else {
+        return a.dy - b.dy;
+      }
     }
 
     function ascendingTargetDepth(a, b) {
-      return a.target.y - b.target.y;
+      return a.target.posicionY - b.target.posicionY;
     }
   }
 
