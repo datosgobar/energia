@@ -401,23 +401,47 @@ $(() => {
       for (let i = 2015; i > 1959; i--) { $('select[name=anio]').append(`<option value="${ i }">${ i }</option>`); }
       // SELECTOR AÑO - CHANGE
       $('select[name=anio]').on('change', (event) => {
-        downloadFile($('select[name=anio]')[0].value).then(() => {
-          $('#sankey').empty();
-          dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS });
-        });
+        downloadFile($('select[name=anio]')[0].value)
+          .then(() => calcularAltura(true));
       });
 
 
   };
+  const obtenerNodosIntro = () => {
+    INTRO.nodes.forEach((v, k) => {
+      INTRO.nodes[k] = BUSCAR_NODO(v);
+    });
 
-  downloadFile(2015).then(() => {
+    return true;
+  };
+  const calcularAltura = (reset = false) => {
+    height  = $('#sankey').height();
+    width   = $('#sankey').width();
 
-    INTRO.nodes.forEach((v, k) => { INTRO.nodes[k] = BUSCAR_NODO(v); });
+    if (reset) {
+      $('#sankey').empty();
+    }
 
-    dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS });
+    if (($('#content h1').outerHeight() + $('#content form').outerHeight() + 550) <= $('#content').outerHeight()) {
+      d3.select('#content').attr('style', null);
+    } else {
+      d3.select('#content').attr('style', 'height: 100%');
+    }
 
-    intro(0, 'create', 'next');
+    if (reset) {
+      dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS });
+    }
+  };
 
-    habilitarSelectores();
+  downloadFile(2015)
+    .then(() => obtenerNodosIntro())
+    .then(() => calcularAltura())
+    .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }))
+    .then(() => intro(0, 'create', 'next'))
+    .then(() => habilitarSelectores())
+    .then(() => {
+      $(window).on('resize', () => {
+        calcularAltura(true);
+      });
   });
 });
