@@ -67,10 +67,7 @@ const directorio = {
       font: './node_modules/bootstrap/dist/fonts/*.*'
     },
     d3: {
-      js: './node_modules/d3/build/d3.min.js',
-      // drag: {
-      //   js: './node_modules/d3-drag/build/d3-drag.min.js'
-      // }
+      js: ['./node_modules/d3/build/d3.min.js', './node_modules/d3-drag/build/d3-drag.min.js'],
     },
     poncho: {
       css: ['./node_modules/argob-poncho/dist/css/poncho.min.css', './node_modules/argob-poncho/dist/css/roboto-fontface.css'],
@@ -90,7 +87,7 @@ gulp.task('server', () => browserSync.init({
   host: 'localhost',
   tunnel: 'modernizacion',
   port: 9000,
-  online: false,
+  online: true,
   browser: ['google chrome'],
   logLevel: 'info',
   ui: false,
@@ -111,7 +108,8 @@ gulp.task('delete_compiled_files', () => gulp.src([
 gulp.task('node_javascript_import', () => gulp.src([
   directorio.node_modules.jquery.js,
   directorio.node_modules.bootstrap.js,
-  directorio.node_modules.d3.js
+  directorio.node_modules.d3.js[0],
+  directorio.node_modules.d3.js[1]
 ]).pipe(uglify()).pipe(gulp.dest(directorio.javascript.build.dir)));
 gulp.task('node_styles_import', () => gulp.src([
     directorio.node_modules.bootstrap.css,

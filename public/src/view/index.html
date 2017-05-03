@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="./public/css/poncho.min.css">
     <!-- D3 -->
     <script type="text/javascript" src="./public/js/d3.min.js"></script>
+    <script type="text/javascript" src="./public/js/d3-drag.min.js"></script>
     <script type="text/javascript" src="./public/js/d3-sankey.min.js"></script>
     <!-- App - JavaScript -->
     <script type="text/javascript" src="./public/js/app.min.js"></script>
@@ -100,13 +101,61 @@
 
       <div id="sankey"></div>
       <div id="tooltip" class="flex flex_column flex_align_start">
-        <span class="tooltip_name"></span><span class="tooltip_ktep"></span>
-        <span class="tooltip_production"></span>
-        <span class="tooltip_importation"></span>
-        <span class="tooltip_exportation"></span>
-        <span class="tooltip_consumo"></span>
-        <span class="tooltip_losses"></span>
-        <span class="tooltip_others"></span>
+        <span class="tooltip_name"></span>
+        <div class="tooltip_container flex flex_justify_between divider">
+          <div class="tooltip_key">
+            <i class="fa fa-circle transparent" aria-hidden="true"></i>
+            total
+          </div>
+          <div class="tooltip_data">
+            <span class="tooltip_ktep"></span>
+          </div>
+        </div>
+        <div class="tooltip_container flex flex_justify_between">
+          <div class="tooltip_key">
+            <i class="fa fa-circle" aria-hidden="true"></i>
+            produccion
+          </div>
+          <div class="tooltip_data">
+            <span class="tooltip_production"></span>
+          </div>
+        </div>
+        <div class="tooltip_container flex flex_justify_between">
+          <div class="tooltip_key">
+            <i class="fa fa-circle" aria-hidden="true"></i>
+            importacion
+          </div>
+          <div class="tooltip_data">
+            <span class="tooltip_importation"></span>
+          </div>
+        </div>
+        <div class="tooltip_container flex flex_justify_between">
+          <div class="tooltip_key">
+            <i class="fa fa-circle" aria-hidden="true"></i>
+            exportacion
+          </div>
+          <div class="tooltip_data">
+            <span class="tooltip_exportation"></span>
+          </div>
+        </div>
+        <div class="tooltip_container flex flex_justify_between">
+          <div class="tooltip_key">
+            <i class="fa fa-circle" aria-hidden="true"></i>
+            perdidas
+          </div>
+          <div class="tooltip_data">
+            <span class="tooltip_losses"></span>
+          </div>
+        </div>
+        <div class="tooltip_container flex flex_justify_between">
+          <div class="tooltip_key">
+            <i class="fa fa-circle transparent" aria-hidden="true"></i>
+            otros
+          </div>
+          <div class="tooltip_data">
+            <span class="tooltip_others"></span>
+          </div>
+        </div>
       </div>
     </div>
 

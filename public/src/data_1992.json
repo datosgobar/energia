@@ -349,7 +349,7 @@
             "consumo": 1455.0
         },
         {
-            "posicionY": 0,
+            "posicionY": 2,
             "nombre": "Consumo Propio",
             "consumo": 4259.21,
             "id": 30,
@@ -398,9 +398,9 @@
             "posicionX": 6
         },
         {
-            "posicionY": 1,
-            "nombre": "Pérdidas por Transformación",
-            "consumo": 9783.77,
+            "posicionY": 0,
+            "nombre": "Pérdidas",
+            "consumo": 13754.02,
             "id": 37,
             "posicionX": 6
         },
@@ -453,45 +453,36 @@
             "exportacion": 0.0
         },
         {
-            "posicionY": 1,
-            "nombre": "Pérdidas",
-            "oferta_interna": 1,
+            "posicionY": null,
+            "nombre": "Importación",
             "id": 42,
-            "posicionX": 8
+            "posicionX": 0
         },
         {
-            "posicionY": 2,
-            "nombre": "borrar",
-            "oferta_interna": 1,
+            "posicionY": null,
+            "nombre": "Exportación",
             "id": 43,
-            "posicionX": 6
+            "posicionX": 4
         },
         {
-            "posicionY": 2,
+            "posicionY": 1,
             "nombre": "borrar",
             "oferta_interna": 1,
             "id": 44,
             "posicionX": 6
         },
         {
-            "posicionY": 2,
+            "posicionY": 1,
             "nombre": "borrar",
             "oferta_interna": 1,
             "id": 45,
             "posicionX": 6
         },
         {
-            "posicionY": 2,
+            "posicionY": 1,
             "nombre": "borrar",
             "oferta_interna": 1,
             "id": 46,
-            "posicionX": 6
-        },
-        {
-            "posicionY": 2,
-            "nombre": "borrar",
-            "oferta_interna": 1,
-            "id": 47,
             "posicionX": 6
         }
     ],
@@ -505,6 +496,16 @@
             "source": 10,
             "target": 26,
             "value": 15.86
+        },
+        {
+            "source": 42,
+            "target": 6,
+            "value": 714.0
+        },
+        {
+            "source": 6,
+            "target": 43,
+            "value": 3.97
         },
         {
             "source": 6,
@@ -527,6 +528,11 @@
             "value": 592.46
         },
         {
+            "source": 21,
+            "target": 43,
+            "value": 370.11
+        },
+        {
             "source": 28,
             "target": 21,
             "value": 1080.88
@@ -547,8 +553,18 @@
             "value": 363.82
         },
         {
+            "source": 42,
+            "target": 12,
+            "value": 223.81
+        },
+        {
             "source": 12,
-            "target": 42,
+            "target": 43,
+            "value": 2.01
+        },
+        {
+            "source": 12,
+            "target": 37,
             "value": 950.17
         },
         {
@@ -585,6 +601,16 @@
             "source": 26,
             "target": 12,
             "value": 4825.21
+        },
+        {
+            "source": 42,
+            "target": 16,
+            "value": 559.14
+        },
+        {
+            "source": 16,
+            "target": 43,
+            "value": 526.73
         },
         {
             "source": 28,
@@ -652,8 +678,13 @@
             "value": 162.9
         },
         {
+            "source": 42,
+            "target": 2,
+            "value": 1659.17
+        },
+        {
             "source": 2,
-            "target": 42,
+            "target": 37,
             "value": 2195.52
         },
         {
@@ -683,7 +714,7 @@
         },
         {
             "source": 13,
-            "target": 42,
+            "target": 37,
             "value": 803.48
         },
         {
@@ -722,6 +753,11 @@
             "value": 5071.27
         },
         {
+            "source": 14,
+            "target": 43,
+            "value": 275.85
+        },
+        {
             "source": 27,
             "target": 14,
             "value": 894.95
@@ -755,6 +791,16 @@
             "source": 14,
             "target": 35,
             "value": 146.37
+        },
+        {
+            "source": 42,
+            "target": 15,
+            "value": 15.65
+        },
+        {
+            "source": 15,
+            "target": 43,
+            "value": 1757.66
         },
         {
             "source": 28,
@@ -803,13 +849,23 @@
         },
         {
             "source": 0,
-            "target": 42,
+            "target": 37,
             "value": 21.08
         },
         {
             "source": 0,
             "target": 26,
             "value": 2107.65
+        },
+        {
+            "source": 42,
+            "target": 23,
+            "value": 115.89
+        },
+        {
+            "source": 23,
+            "target": 43,
+            "value": 20.91
         },
         {
             "source": 28,
@@ -840,6 +896,11 @@
             "source": 9,
             "target": 29,
             "value": 381.86
+        },
+        {
+            "source": 17,
+            "target": 43,
+            "value": 1444.04
         },
         {
             "source": 28,
@@ -875,6 +936,16 @@
             "source": 11,
             "target": 26,
             "value": 55.86
+        },
+        {
+            "source": 42,
+            "target": 3,
+            "value": 9.66
+        },
+        {
+            "source": 3,
+            "target": 43,
+            "value": 2728.69
         },
         {
             "source": 3,
@@ -917,6 +988,16 @@
             "value": 164.27
         },
         {
+            "source": 42,
+            "target": 38,
+            "value": 109.56
+        },
+        {
+            "source": 43,
+            "target": 38,
+            "value": 89.77
+        },
+        {
             "source": 38,
             "target": 35,
             "value": 84.82
@@ -925,6 +1006,16 @@
             "source": 38,
             "target": 29,
             "value": 114.51
+        },
+        {
+            "source": 42,
+            "target": 40,
+            "value": 40.0
+        },
+        {
+            "source": 40,
+            "target": 43,
+            "value": 70.0
         },
         {
             "source": 27,

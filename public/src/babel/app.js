@@ -20,14 +20,22 @@ let GLOBAL_NODES,
       ]
     },
     SANKEY = {
+      margin: {
+        top: 40,
+        right: 200,
+        bottom: 40,
+        left: 200,
+        header: 20
+      },
+      separacionNodo: 20,
+      anchoNodo: 20,
       secciones_header: [
         ['ENERGÍAS', 'PRIMARIAS'],
         ['CENTROS DE', 'TRANSFORMACIÓN'],
         ['ENERGÍAS', 'SECUNDARIAS'],
         ['CENTROS DE', 'TRANSFORMACIÓN'],
-        ['ENERGÍAS', 'TERCIARIAS'],
-        ['SECTORES', 'DE CONSUMOS'],
-        ['NO APROVECHABLES']
+        ['ENERGÍAS', 'SECUNDARIAS'],
+        ['SECTORES', 'DE CONSUMOS']
       ]
     },
     SELECTORES = {
@@ -53,6 +61,51 @@ $(() => {
       nodesGlo, linksGlo,
       sankeyChartD3, path, svg;
 
+  const obtenerNodosIntro = () => {
+    INTRO.nodes.forEach((v, k) => {
+      INTRO.nodes[k] = BUSCAR_NODO(v);
+    });
+
+    return true;
+  };
+  const tooltipIn = (d) => {
+
+    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 });
+
+    if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
+      $('.tooltip_name').text(d.nombre);
+      $('.tooltip_ktep').text(d.oferta_interna);
+      $('.tooltip_production').parent().parent().removeAttr('style');
+      $('.tooltip_production').text(d.produccion);
+      $('.tooltip_importation').parent().parent().removeAttr('style');
+      $('.tooltip_importation').text(d.importacion);
+      $('.tooltip_exportation').parent().parent().removeAttr('style');
+      $('.tooltip_exportation').text(d.exportacion);
+      $('.tooltip_losses').parent().parent().removeAttr('style');
+      $('.tooltip_losses').text(d.perdidas);
+      $('.tooltip_others').parent().parent().removeAttr('style');
+      $('.tooltip_others').text(d.otros);
+    } else if (d.posicionX === 2 || d.posicionX === 4) {
+      $('.tooltip_name').text(d.nombre);
+      $('.tooltip_ktep').text(d.consumo);
+      $('.tooltip_production').parent().parent().removeAttr('style');
+      $('.tooltip_production').text(d.produccion);
+      $('.tooltip_importation').parent().parent().css({ 'display': 'none' });
+      $('.tooltip_exportation').parent().parent().css({ 'display': 'none' });
+      $('.tooltip_losses').parent().parent().removeAttr('style');
+      $('.tooltip_losses').text(d.perdidas);
+      $('.tooltip_others').parent().parent().removeAttr('style');
+      $('.tooltip_others').text(d.otros);
+    } else {
+      $('.tooltip_name').text(d.nombre);
+      $('.tooltip_ktep').text(d.consumo);
+      $('.tooltip_production').parent().parent().css({ 'display': 'none' });
+      $('.tooltip_importation').parent().parent().css({ 'display': 'none' });
+      $('.tooltip_exportation').parent().parent().css({ 'display': 'none' });
+      $('.tooltip_losses').parent().parent().css({ 'display': 'none' });
+      $('.tooltip_others').parent().parent().css({ 'display': 'none' });
+    }
+  };
   const fade = (type = null, id = null) => (g, i) => {
     if (type !== null) {
       let all_links   = d3.selectAll('#sankey .link'),
@@ -70,27 +123,42 @@ $(() => {
               .style('fill', 'black');
 
           // Estilos aplicados a los links relacionados
-          all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 42) || (d.target.id === element_id && d.target.id !== 42)))
-            .style('stroke', 'url(#gradient_link)')
+          all_links.filter((d) => {
+            if (d.source.id === element_id && d.target.id !== 43) {
+              d3.select(`#node_${ d.target.id }`).select('text').style('fill', 'black');
+              return true;
+            } else if (d.target.id === element_id && d.source.id !== 42) {
+              d3.select(`#node_${ d.source.id }`).select('text').style('fill', 'black');
+              return true;
+            }
+          }).style('stroke', 'url(#gradient_link)')
             .style('stroke-opacity', 0.5);
-          all_links.filter((d) => ((d.source.id === element_id && d.target.id === 42) || (d.target.id === element_id && d.target.id === 42)))
-            .style('stroke', 'url(#gradient_lossses_on)')
+          all_links.filter((d) => ((d.source.id === element_id && d.target.id === 43)))
+            .style('stroke', '#394E5F')
+            // .style('stroke', 'url(#gradiente_export_on)')
             .style('stroke-opacity', 0.5);
+          all_links.filter((d) => ((d.target.id === element_id && d.source.id === 42)))
+            .style('stroke', '#6A5587')
+            // .style('stroke', 'url(#gradiente_export_on)')
+            .style('stroke-opacity', 0.5);
+
+          tooltipIn(g);
           break;
         case 'fadeOut':
           // Estilos aplicados al nodo seleccionado
           event_node = d3.select(`#node_${ element_id }`);
             event_node.select('rect')
               .style('stroke', null);
-            event_node.select('text')
+            all_nodes.select('text')
               .style('fill', null);
 
           // Estilos aplicados a los links relacionados
-          all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 42) || (d.target.id === element_id && d.target.id !== 42)))
+          all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 43) || (d.target.id === element_id)))
             .style('stroke', null)
             .style('stroke-opacity', null);
-          all_links.filter((d) => ((d.source.id === element_id && d.target.id === 42) || (d.target.id === element_id && d.target.id === 42)))
-            .style('stroke', 'url(#gradient_lossses_off)')
+          all_links.filter((d) => ((d.source.id === element_id && d.target.id === 43)))
+            .style('stroke', 'silver')
+            // .style('stroke', 'url(#gradiente_export_off)')
             .style('stroke-opacity', null);
 
           $('#tooltip').removeAttr('style');
@@ -178,39 +246,6 @@ $(() => {
       button_next.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage + 1, 'normal', 'next'); });
     }
   };
-  const tooltipIn = (d) => {
-
-    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 });
-
-    if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
-      $('.tooltip_name').text(d.nombre);
-      $('.tooltip_ktep').text(`total: ${ d.oferta_interna }`);
-      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.produccion }`);
-      $('.tooltip_importation').removeAttr('style').text(`Importación: ${ d.importacion }`);
-      $('.tooltip_exportation').removeAttr('style').text(`Exportación: ${ d.exportacion }`);
-      $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
-      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.perdidas }`);
-      $('.tooltip_others').removeAttr('style').text(`Otros: ${ d.otros }`);
-    } else if (d.posicionX === 2 || d.posicionX === 4) {
-      $('.tooltip_name').text(d.nombre);
-      $('.tooltip_ktep').text(`total: ${ d.oferta_interna }`);
-      $('.tooltip_production').removeAttr('style').text(`Producción: ${ d.produccion }`);
-      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importacion }`);
-      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportacion }`);
-      $('.tooltip_consumo').removeAttr('style').text(`Consumo: ${ d.consumo }`);
-      $('.tooltip_losses').removeAttr('style').text(`Pérdida: ${ d.perdidas }`);
-      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.otros }`);
-    } else {
-      $('.tooltip_name').text(d.nombre);
-      $('.tooltip_ktep').text(`total: ${ d.oferta_interna }`);
-      $('.tooltip_production').css({'display': 'none'}).text(`Producción: ${ d.produccion }`);
-      $('.tooltip_importation').css({'display': 'none'}).text(`Importación: ${ d.importacion }`);
-      $('.tooltip_exportation').css({'display': 'none'}).text(`Exportación: ${ d.exportacion }`);
-      $('.tooltip_consumo').css({'display': 'none'}).text(`Consumo: ${ d.consumo }`);
-      $('.tooltip_losses').css({'display': 'none'}).text(`Pérdida: ${ d.perdidas }`);
-      $('.tooltip_others').css({'display': 'none'}).text(`Otros: ${ d.otros }`);
-    }
-  };
   const downloadFile = (anio) => {
     let promise = new Promise((success) => {
       d3.json(`public/src/data_${anio}.json`, (data) => {
@@ -224,15 +259,16 @@ $(() => {
 
     return promise;
   };
-  const dibujarSankey = (width, heigth, data) => {
+  const dibujarSankey = (width, heigth, data, options) => {
 
     // Se definen variables
-    let margin      = { top: 40, right: 200, bottom: 40, left: 200, header: 20 },
-    headerSize      = 38,
-    size            = { width: 1400 - margin.left - margin.right, height: heigth - margin.top - margin.bottom - margin.header - headerSize },
-    anchoNodo       = 20,
-    separacionNodo  = 20,
-    posColumnas     = [];
+    // let margin      = { top: 40, right: 200, bottom: 40, left: 200, header: 20 },
+    let headerSize      = 38,
+        margin          = options.margin,
+        size            = { width: 1400 - margin.left - margin.right, height: heigth - margin.top - margin.bottom - margin.header - headerSize },
+        anchoNodo       = options.anchoNodo,
+        separacionNodo  = options.separacionNodo,
+        posColumnas     = [];
 
     // Creación SVG
     svg = d3.select('#sankey')
@@ -269,26 +305,26 @@ $(() => {
       .layout();
 
     // Gradientes
-    let lossesGradientOff = svg.append('defs')
+    let gradiente_export_on = svg.append('defs')
       .append('linearGradient')
-      .attr('id', 'gradient_lossses_on')
-      .attr('x1', '50%')
-      .attr('x2', '50%')
-      .attr('y1', '0%')
-      .attr('y2', '100%');
-    lossesGradientOff.append('stop').attr('offset', '0%').attr('stop-color', 'red').attr('stop-opacity', 1);
-    lossesGradientOff.append('stop').attr('offset', '50%').attr('stop-color', 'red').attr('stop-opacity', 1);
-    lossesGradientOff.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
-    let lossesGradientOn = svg.select('defs')
+      .attr('id', 'gradiente_export_on')
+      .attr('x1', '0%')
+      .attr('x2', '100%')
+      .attr('y1', '50%')
+      .attr('y2', '50%');
+    gradiente_export_on.append('stop').attr('offset', '0%').attr('stop-color', 'red').attr('stop-opacity', 1);
+    gradiente_export_on.append('stop').attr('offset', '50%').attr('stop-color', 'red').attr('stop-opacity', 1);
+    gradiente_export_on.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
+    let gradiente_export_off = svg.select('defs')
       .append('linearGradient')
-      .attr('id', 'gradient_lossses_off')
-      .attr('x1', '50%')
-      .attr('x2', '50%')
-      .attr('y1', '0%')
-      .attr('y2', '100%');
-    lossesGradientOn.append('stop').attr('offset', '0%').attr('stop-color', 'silver').attr('stop-opacity', 1);
-    lossesGradientOn.append('stop').attr('offset', '50%').attr('stop-color', 'silver').attr('stop-opacity', 1);
-    lossesGradientOn.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
+      .attr('id', 'gradiente_export_off')
+      .attr('x1', '0%')
+      .attr('x2', '100%')
+      .attr('y1', '50%')
+      .attr('y2', '50%');
+    gradiente_export_off.append('stop').attr('offset', '0%').attr('stop-color', 'silver').attr('stop-opacity', 1);
+    gradiente_export_off.append('stop').attr('offset', '50%').attr('stop-color', 'silver').attr('stop-opacity', 1);
+    gradiente_export_off.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
     svg.select('defs')
       .append('svg:pattern')
       .attr('id', 'gradient_link')
@@ -317,8 +353,21 @@ $(() => {
       .attr('d', path)
       .attr('class', 'link')
       .style('stroke-width', (d) => Math.max(1, d.dy))
-      .filter((d) => (d.target.id === 42))
-      .style('stroke', 'url(#gradient_lossses_off)');
+      .sort(function(a, b) { return b.dy - a.dy; });
+    link.filter((d) => (d.source.id === 42))
+      .style('stroke', 'silver');
+      // .style('stroke', 'url(#gradiente_export_off)')
+    link.filter((d) => (d.target.id === 43))
+      // .style('stroke', 'url(#gradiente_export_off)')
+      .style('stroke', 'silver');
+
+    // the function for moving the nodes
+    function dragmove(d) {
+      d3.select(this).attr('transform', 'translate(' + (d.x = Math.max(0, Math.min(size.width - d.dx, d3.event.x))) + ', ' + (d.y = Math.max(0, Math.min(size.height - d.dy, d3.event.y))) + ')');
+      sankeyChartD3.relayout();
+      path = sankeyChartD3.link();
+      link.attr('d', path);
+    }
 
     // Se crean nodos
     let node = chart.append('g')
@@ -330,13 +379,19 @@ $(() => {
         .attr('id', (d) => `node_${ d.id }`)
         .attr('class', 'node')
         .attr('transform', (d) => {
-
           if (posColumnas.indexOf(d.x) === -1) {
             posColumnas.push(d.x);
           }
-
           return `translate(${ d.x }, ${ d.y })`;
-        }); // error compatibilidad
+        }) // error compatibilidad
+        .call(d3.drag()
+        .subject(function(d) {
+          return d;
+        })
+        // .on('start', function() {
+        //   this.parentNode.appendChild(this);
+        // })
+        .on('drag', dragmove));
         // .call(d3.drag().on('drag', dragmove));
 
     // Se crean rectangulos nodos
@@ -344,8 +399,7 @@ $(() => {
         .attr('width', sankeyChartD3.nodeWidth())
         .attr('height', (d) => (Math.max(5, d.dy)))
         .on('mouseover',  fade('fadeIn', null))
-        .on('mouseout',   fade('fadeOut', null))
-        .on('mousemove', tooltipIn);
+        .on('mouseout',   fade('fadeOut', null));
 
     // Se crean textos nodos
     node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('text')
@@ -374,6 +428,36 @@ $(() => {
         .attr('y', 19)
         .text(v[1]);
     });
+  };
+  const calcularAltura = (reset = false) => {
+    height  = $('#sankey').height();
+    width   = $('#sankey').width();
+
+    if (reset) {
+      $('#sankey').empty();
+    }
+
+    if (($('#content h1').outerHeight() + $('#content form').outerHeight() + 550) <= $('#content').outerHeight()) {
+      d3.select('#content').attr('style', null);
+      SANKEY.margin.bottom  = 40;
+      SANKEY.margin.left    = 200;
+      SANKEY.margin.top     = 40;
+      SANKEY.margin.header  = 20;
+      SANKEY.anchoNodo      = 20;
+      SANKEY.separacionNodo = 20;
+    } else {
+      d3.select('#content').attr('style', 'height: 100%');
+      SANKEY.margin.bottom  = 5;
+      SANKEY.margin.left    = 150;
+      SANKEY.margin.top     = 20;
+      SANKEY.margin.header  = 15;
+      SANKEY.anchoNodo      = 10;
+      SANKEY.separacionNodo = 15;
+    }
+
+    if (reset) {
+      dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo });
+    }
   };
   const habilitarSelectores = () => {
 
@@ -407,36 +491,11 @@ $(() => {
 
 
   };
-  const obtenerNodosIntro = () => {
-    INTRO.nodes.forEach((v, k) => {
-      INTRO.nodes[k] = BUSCAR_NODO(v);
-    });
-
-    return true;
-  };
-  const calcularAltura = (reset = false) => {
-    height  = $('#sankey').height();
-    width   = $('#sankey').width();
-
-    if (reset) {
-      $('#sankey').empty();
-    }
-
-    if (($('#content h1').outerHeight() + $('#content form').outerHeight() + 550) <= $('#content').outerHeight()) {
-      d3.select('#content').attr('style', null);
-    } else {
-      d3.select('#content').attr('style', 'height: 100%');
-    }
-
-    if (reset) {
-      dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS });
-    }
-  };
 
   downloadFile(2015)
     .then(() => obtenerNodosIntro())
     .then(() => calcularAltura())
-    .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }))
+    .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
     .then(() => intro(0, 'create', 'next'))
     .then(() => habilitarSelectores())
     .then(() => {

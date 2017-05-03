@@ -12,37 +12,31 @@ d3.sankey = function() {
     nodeWidth = +_;
     return sankey;
   };
-
   sankey.nodePadding = function(_) {
     if (!arguments.length) return nodePadding;
     nodePadding = +_;
     return sankey;
   };
-
   sankey.nodes = function(_) {
     if (!arguments.length) return nodes;
     nodes = _;
     return sankey;
   };
-
   sankey.links = function(_) {
     if (!arguments.length) return links;
     links = _;
     return sankey;
   };
-
   sankey.size = function(_) {
     if (!arguments.length) return size;
     size = _;
     return sankey;
   };
-
- sankey.sinksRight = function (_) {
+  sankey.sinksRight = function (_) {
     if (!arguments.length) return sinksRight;
     sinksRight = _;
     return sankey;
  };
-
   sankey.layout = function(iterations) {
     computeNodeLinks();
     computeNodeValues();
@@ -50,8 +44,8 @@ d3.sankey = function() {
     computeNodeDepths(iterations);
     return sankey;
   };
-
   sankey.relayout = function() {
+    console.log('relayout');
     computeLinkDepths();
     return sankey;
   };
@@ -61,7 +55,7 @@ d3.sankey = function() {
     var curvature = .75;
 
     function link(d) {
-      var xs  = d.source.x + d.source.dx,
+      let xs  = d.source.x + d.source.dx,
           xt  = d.target.x,
           xi  = d3.interpolateNumber(xs, xt),
           xsc = xi(curvature),
@@ -69,28 +63,47 @@ d3.sankey = function() {
           ys  = d.source.y + d.sy + d.dy / 2,
           yt  = d.target.y + d.ty + d.dy / 2;
 
-      if (!d.cycleBreaker) {
-        if (d.target.nombre === 'Pérdidas') { // LINK PERDIDA
+      if (d.source.posicionX < d.target.posicionX) {
+        // Link de exportación
+        if (d.target.id === 43) {
+          // Nueva Curva
+          return `m ${ xs } ${ ys } h 10 l 10 10`;
+          // Curva en L
+          // return `M ${ xs } ${ ys }
+          //         L ${ xs + 5 } ${ ys }
+          //         C ${ xs + 10 } ${ ys } ${ xs + 10 } ${ ys } ${ xs + 10 } ${ ys + 15 }`;
+        // Link normal
+        } else {
+          return `M ${ xs } ${ ys } C ${ xsc } ${ ys } ${ xtc } ${ yt } ${ xt } ${ yt }`;
+        }
+      // Links que dan vuelta
+      } else {
+        // Link de importación
+        if (d.source.nombre === 'Importación') {
+          return `m ${ xt - 20 } ${ yt - 10 } l 10 10 h 10`;
+        } else {
+          let xdelta = (1.5 * d.dy + 0.05 * Math.abs(xs - xt)),
+              xsc = xs + xdelta,
+              xtc = xt - xdelta,
+              xm = xi(0.5),
+              ym = d3.interpolateNumber(ys, yt)(0.5),
+              ydelta = (2 * d.dy + 0.1 * Math.abs(xs - xt) + 0.1 * Math.abs(ys - yt)) * (ym < (size[1] / 2) ? -1 : 1);
+          // return "M" + xs + "," + ys
+          //      + "C" + xsc + "," + ys
+          //      + " " + xsc + "," + (ys + ydelta)
+          //      + " " + xm + "," + (ym + ydelta)
+          //      + "S" + xtc + "," + yt
+          //      + " " + xt + "," + yt;
+          let modificador_ancho = xt - xs - 10,
+              modificador_alto = yt - ys;
 
           return `M ${ xs } ${ ys }
-                  L ${ xs + 5 } ${ ys }
-                  C ${ xs + 5 + 5 } ${ ys } ${ xs + 5 + 5 } ${ ys } ${ xs + 5 + 5 } ${ ys + 15 }`;
-        } else { // NORMAL LINK
-          return `M${ xs },${ ys } C${ xsc },${ ys } ${ xtc },${ yt } ${ xt },${ yt }`;
+                  h 5
+                  c 5 0 5 10 0 10
+                  h ${ modificador_ancho }
+                  c ${ modificador_ancho / 2 } 0 ${ modificador_ancho / 2 } ${ (modificador_alto - 10) } 0 ${ (modificador_alto - 10) }
+                  h 5`;
         }
-      } else {  // CYCLE LINK
-        var xdelta = (1.5 * d.dy + 0.05 * Math.abs(xs - xt));
-        xsc = xs + xdelta;
-        xtc = xt - xdelta;
-        var xm = xi(0.5);
-        var ym = d3.interpolateNumber(ys, yt)(0.5);
-        var ydelta = (2 * d.dy + 0.1 * Math.abs(xs - xt) + 0.1 * Math.abs(ys - yt)) * (ym < (size[1] / 2) ? -1 : 1);
-        return "M" + xs + "," + ys
-             + "C" + xsc + "," + ys
-             + " " + xsc + "," + (ys + ydelta)
-             + " " + xm + "," + (ym + ydelta)
-             + "S" + xtc + "," + yt
-             + " " + xt + "," + yt;
       }
     }
 

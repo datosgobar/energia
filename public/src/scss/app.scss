@@ -116,45 +116,64 @@ h1 {
   background-color: white;
   border-radius: 4px;
   border: 1px solid silver;
-  padding: 10px;
+  padding: 10px 20px;
   position: absolute;
 
+  & > .tooltip_container {
+    width: 100%;
+    min-width: 200px;
+
+    & > .tooltip_key {
+      font-size: 12px;
+      color: gray;
+      text-transform: uppercase;
+      padding: 2px;
+    }
+    &:nth-child(3) {
+      & > .tooltip_key > i {
+        color: #7FC6E6;
+      }
+    }
+    &:nth-child(4) {
+      & > .tooltip_key > i {
+        color: #6A5587;
+      }
+    }
+    &:nth-child(5) {
+      & > .tooltip_key > i {
+        color: #394E5F;
+      }
+    }
+    &:nth-child(6) {
+      & > .tooltip_key > i {
+        color: #D16969;
+      }
+    }
+    &:nth-child(8) {
+      & > .tooltip_key {
+        font-size: 12px;
+        text-transform: none;
+        padding: 10px 0px 0px 17px;
+        width: 200px;
+      }
+    }
+    & > .tooltip_data {
+      color: $dark_color;
+
+      &::after {
+        content: ' ktep';
+        color: gray;
+      }
+    }
+  }
   & > .tooltip_name {
     font-size: 16px;
+    // text-transform: uppercase;
+    margin-bottom: 10px;
   }
-  & > .tooltip_ktep {
-    font-size: 16px;
-    text-transform: uppercase;
-  }
-  & > .tooltip_production {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: gray;
-  }
-  & > .tooltip_importation {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: gray;
-  }
-  & > .tooltip_exportation {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: gray;
-  }
-  & > .tooltip_consumo {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: gray;
-  }
-  & > .tooltip_losses {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: gray;
-  }
-  & > .tooltip_others {
-    font-size: 14px;
-    text-transform: uppercase;
-    color: gray;
+  & .divider {
+    border-bottom: 1px solid silver;
+    margin-bottom: 5px;
   }
 }
 #tooltip {

@@ -30,7 +30,7 @@
             "importacion": 4956.97,
             "produccion": 37786.0,
             "oferta_interna": 41963.55,
-            "nombre": "Gas Natural de Pozo",
+            "nombre": "Gas Natural",
             "otros": 160.47,
             "perdidas": -939.42,
             "id": 2,
@@ -162,7 +162,7 @@
             "importacion": 4603.54,
             "produccion": 33615.19,
             "oferta_interna": 35953.54,
-            "nombre": "Gas Distribuido por Redes",
+            "nombre": "Gas de Red",
             "otros": -206.2,
             "perdidas": -1986.03,
             "id": 13,
@@ -325,7 +325,7 @@
             "posicionY": 37434.0,
             "posicionX": 2,
             "produccion": 37431.92,
-            "nombre": "Plantas de Tratamiento de Gas",
+            "nombre": "Plantas de Gas",
             "perdida": 0.0,
             "id": 27,
             "consumo": 37434.0
@@ -343,13 +343,13 @@
             "posicionY": 4023.0,
             "posicionX": 2,
             "produccion": 3661.69,
-            "nombre": "Otros Centros de Transformación",
+            "nombre": "Otros",
             "perdida": 359.45,
             "id": 29,
             "consumo": 4023.0
         },
         {
-            "posicionY": 0,
+            "posicionY": 2,
             "nombre": "Consumo Propio",
             "consumo": 7960.24,
             "id": 30,
@@ -398,9 +398,9 @@
             "posicionX": 6
         },
         {
-            "posicionY": 1,
-            "nombre": "Pérdidas por Transformación",
-            "consumo": 15455.9,
+            "posicionY": 0,
+            "nombre": "Pérdidas",
+            "consumo": 20163.75,
             "id": 37,
             "posicionX": 6
         },
@@ -453,45 +453,36 @@
             "exportacion": -254.16
         },
         {
-            "posicionY": 1,
-            "nombre": "Pérdidas",
-            "oferta_interna": 1,
+            "posicionY": null,
+            "nombre": "Importación",
             "id": 42,
             "posicionX": 8
         },
         {
-            "posicionY": 2,
-            "nombre": "borrar",
-            "oferta_interna": 1,
+            "posicionY": null,
+            "nombre": "Exportación",
             "id": 43,
-            "posicionX": 6
+            "posicionX": 8
         },
         {
-            "posicionY": 2,
+            "posicionY": 1,
             "nombre": "borrar",
             "oferta_interna": 1,
             "id": 44,
             "posicionX": 6
         },
         {
-            "posicionY": 2,
+            "posicionY": 1,
             "nombre": "borrar",
             "oferta_interna": 1,
             "id": 45,
             "posicionX": 6
         },
         {
-            "posicionY": 2,
+            "posicionY": 1,
             "nombre": "borrar",
             "oferta_interna": 1,
             "id": 46,
-            "posicionX": 6
-        },
-        {
-            "posicionY": 2,
-            "nombre": "borrar",
-            "oferta_interna": 1,
-            "id": 47,
             "posicionX": 6
         }
     ],
@@ -515,6 +506,11 @@
             "source": 10,
             "target": 26,
             "value": 146.0
+        },
+        {
+            "source": 18,
+            "target": 43,
+            "value": 701.52
         },
         {
             "source": 18,
@@ -542,6 +538,16 @@
             "value": 413.05
         },
         {
+            "source": 42,
+            "target": 6,
+            "value": 1431.62
+        },
+        {
+            "source": 6,
+            "target": 43,
+            "value": 8.46
+        },
+        {
             "source": 6,
             "target": 35,
             "value": 4.84
@@ -557,8 +563,18 @@
             "value": 818.81
         },
         {
+            "source": 42,
+            "target": 12,
+            "value": 775.44
+        },
+        {
             "source": 12,
-            "target": 42,
+            "target": 43,
+            "value": 4.77
+        },
+        {
+            "source": 12,
+            "target": 37,
             "value": 1747.1
         },
         {
@@ -605,6 +621,11 @@
             "source": 4,
             "target": 26,
             "value": 51.03
+        },
+        {
+            "source": 16,
+            "target": 43,
+            "value": 23.44
         },
         {
             "source": 28,
@@ -672,8 +693,18 @@
             "value": 122.82
         },
         {
+            "source": 42,
+            "target": 2,
+            "value": 4956.97
+        },
+        {
             "source": 2,
-            "target": 42,
+            "target": 43,
+            "value": 0.48
+        },
+        {
+            "source": 2,
+            "target": 37,
             "value": 939.42
         },
         {
@@ -702,8 +733,18 @@
             "value": 75.76
         },
         {
+            "source": 42,
+            "target": 13,
+            "value": 4603.54
+        },
+        {
             "source": 13,
-            "target": 42,
+            "target": 43,
+            "value": 72.97
+        },
+        {
+            "source": 13,
+            "target": 37,
             "value": 1986.03
         },
         {
@@ -742,6 +783,11 @@
             "value": 13885.82
         },
         {
+            "source": 14,
+            "target": 43,
+            "value": 940.1
+        },
+        {
             "source": 27,
             "target": 14,
             "value": 1875.33
@@ -775,6 +821,16 @@
             "source": 14,
             "target": 35,
             "value": 205.92
+        },
+        {
+            "source": 42,
+            "target": 15,
+            "value": 3337.08
+        },
+        {
+            "source": 15,
+            "target": 43,
+            "value": 1.59
         },
         {
             "source": 28,
@@ -812,6 +868,11 @@
             "value": 1988.68
         },
         {
+            "source": 41,
+            "target": 43,
+            "value": 254.16
+        },
+        {
             "source": 27,
             "target": 41,
             "value": 1009.55
@@ -823,13 +884,18 @@
         },
         {
             "source": 0,
-            "target": 42,
+            "target": 37,
             "value": 35.3
         },
         {
             "source": 0,
             "target": 26,
             "value": 3529.71
+        },
+        {
+            "source": 42,
+            "target": 23,
+            "value": 92.91
         },
         {
             "source": 28,
@@ -872,6 +938,11 @@
             "value": 495.43
         },
         {
+            "source": 42,
+            "target": 17,
+            "value": 11.27
+        },
+        {
             "source": 28,
             "target": 17,
             "value": 6250.04
@@ -887,9 +958,24 @@
             "value": 6298.85
         },
         {
+            "source": 42,
+            "target": 1,
+            "value": 2204.0
+        },
+        {
             "source": 1,
             "target": 26,
             "value": 2203.75
+        },
+        {
+            "source": 42,
+            "target": 24,
+            "value": 27.83
+        },
+        {
+            "source": 24,
+            "target": 43,
+            "value": 666.19
         },
         {
             "source": 28,
@@ -910,6 +996,16 @@
             "source": 11,
             "target": 26,
             "value": 365.29
+        },
+        {
+            "source": 42,
+            "target": 3,
+            "value": 837.15
+        },
+        {
+            "source": 3,
+            "target": 43,
+            "value": 1877.86
         },
         {
             "source": 3,
@@ -970,6 +1066,16 @@
             "source": 38,
             "target": 29,
             "value": 608.92
+        },
+        {
+            "source": 42,
+            "target": 40,
+            "value": 76.54
+        },
+        {
+            "source": 40,
+            "target": 43,
+            "value": 85.86
         },
         {
             "source": 27,
