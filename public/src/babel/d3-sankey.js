@@ -45,70 +45,39 @@ d3.sankey = function() {
     return sankey;
   };
   sankey.relayout = function() {
-    console.log('relayout');
     computeLinkDepths();
     return sankey;
   };
 
   // SVG path data generator, to be used as "d" attribute on "path" element selection.
   sankey.link = function() {
-    var curvature = .75;
+    var curvature = 0.75,
+        formaLink;
 
     function link(d) {
-      let xs  = d.source.x + d.source.dx,
+      var xs  = d.source.x + d.source.dx,
+          ys  = d.source.y + d.sy + d.dy / 2,
           xt  = d.target.x,
+          yt  = d.target.y + d.ty + d.dy / 2,
           xi  = d3.interpolateNumber(xs, xt),
           xsc = xi(curvature),
           xtc = xi(1 - curvature),
-          ys  = d.source.y + d.sy + d.dy / 2,
-          yt  = d.target.y + d.ty + d.dy / 2;
+          modificador_ancho = xt - xs - 10,
+          modificador_alto = yt - ys;
 
       if (d.source.posicionX < d.target.posicionX) {
-        // Link de exportación
-        if (d.target.id === 43) {
-          // Nueva Curva
-          return `m ${ xs } ${ ys } h 10 l 10 10`;
-          // Curva en L
-          // return `M ${ xs } ${ ys }
-          //         L ${ xs + 5 } ${ ys }
-          //         C ${ xs + 10 } ${ ys } ${ xs + 10 } ${ ys } ${ xs + 10 } ${ ys + 15 }`;
-        // Link normal
-        } else {
-          return `M ${ xs } ${ ys } C ${ xsc } ${ ys } ${ xtc } ${ yt } ${ xt } ${ yt }`;
-        }
-      // Links que dan vuelta
+        if (d.target.id === 43) { formaLink = `m ${ xs } ${ ys } h 10 l 10 10`; } // Link de exportación
+        if (d.target.id !== 43) { formaLink = `M ${ xs } ${ ys } C ${ xsc } ${ ys } ${ xtc } ${ yt } ${ xt } ${ yt }`; } // Link normal
       } else {
-        // Link de importación
-        if (d.source.nombre === 'Importación') {
-          return `m ${ xt - 20 } ${ yt - 10 } l 10 10 h 10`;
-        } else {
-          let xdelta = (1.5 * d.dy + 0.05 * Math.abs(xs - xt)),
-              xsc = xs + xdelta,
-              xtc = xt - xdelta,
-              xm = xi(0.5),
-              ym = d3.interpolateNumber(ys, yt)(0.5),
-              ydelta = (2 * d.dy + 0.1 * Math.abs(xs - xt) + 0.1 * Math.abs(ys - yt)) * (ym < (size[1] / 2) ? -1 : 1);
-          // return "M" + xs + "," + ys
-          //      + "C" + xsc + "," + ys
-          //      + " " + xsc + "," + (ys + ydelta)
-          //      + " " + xm + "," + (ym + ydelta)
-          //      + "S" + xtc + "," + yt
-          //      + " " + xt + "," + yt;
-          let modificador_ancho = xt - xs - 10,
-              modificador_alto = yt - ys;
-
-          return `M ${ xs } ${ ys }
-                  h 5
-                  c 5 0 5 10 0 10
-                  h ${ modificador_ancho }
-                  c ${ modificador_ancho / 2 } 0 ${ modificador_ancho / 2 } ${ (modificador_alto - 10) } 0 ${ (modificador_alto - 10) }
-                  h 5`;
-        }
+        if (d.source.nombre === 'Importación') { formaLink = `m ${ xt - 20 } ${ yt - 10 } l 10 10 h 10`; } // Link de importación
+        if (d.source.nombre !== 'Importación') { formaLink = `M ${ xs } ${ ys } h 5 c 5 0 5 10 0 10 c ${ modificador_ancho * 1.5 } 0 ${ modificador_ancho * 1.5 } ${ (modificador_alto - 10) } ${ modificador_ancho } ${ (modificador_alto - 10) } h 5`; }
       }
+
+      return formaLink;
     }
 
     link.curvature = function(_) {
-      if (!arguments.length) return curvature;
+      if (!arguments.length) { return curvature; }
       curvature = +_;
       return link;
     };
@@ -419,7 +388,7 @@ d3.sankey = function() {
   // Alteración del código
   // Ordena los nodos de mayor a menor en función de su valor
   function byValue(first, second) {
-    let firstValue = first.posicionY,
+    var firstValue = first.posicionY,
         secondValue = second.posicionY;
 
     if (firstValue < secondValue) {

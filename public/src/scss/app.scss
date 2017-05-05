@@ -86,6 +86,7 @@ h1 {
   z-index: 10;
   stroke: silver;
   stroke-opacity: 0.25;
+  stroke-linejoin: round;
 }
 .node {
   z-index: 20;
@@ -181,32 +182,32 @@ h1 {
   top: -1000px;
   left: -1000px;
 
-  // &:after, &:before {
-  //   content: '';
-  //   display: block;
-  //   position: absolute;
-  //   bottom: 0px;
-  //   width: 0;
-  //   height: 0;
-  //   border-style: solid;
-  //   transform: translate(-50%, 100%);
-  // }
-  // &:after {
-  //   left: 50%;
-  //   border-color: white transparent transparent transparent;
-  //   border-width: 10px;
-  //   line-height: 0px;
-  //   _border-color: white black black black;
-  //   _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
-  // }
-  // &:before {
-  //   left: 50%;
-  //   border-color: silver transparent transparent transparent;
-  //   border-width: 11px;
-  //   line-height: 0px;
-  //   _border-color: silver black black black;
-  //   _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
-  // }
+  &:after, &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: translate(-50%, 100%);
+  }
+  &:after {
+    left: 50%;
+    border-color: white transparent transparent transparent;
+    border-width: 10px;
+    line-height: 0px;
+    _border-color: white black black black;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
+  }
+  &:before {
+    left: 50%;
+    border-color: silver transparent transparent transparent;
+    border-width: 11px;
+    line-height: 0px;
+    _border-color: silver black black black;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
+  }
 }
 #intro_screen {
   top: 0px;

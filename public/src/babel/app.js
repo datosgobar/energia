@@ -48,6 +48,13 @@ let GLOBAL_NODES,
         ['No aprovechables', ['categorias6', 'categorias6', 'categorias6', 'categorias6', 'categorias6']]
       ],
       anio: []
+    },
+    COLORES_FLUJO = {
+      importacion:  '#FFCF87',
+      exportacion:  '#00897B',
+      produccion:   '#7FC6E6',
+      perdida:      '#ED7960',
+      default:      '#CFD8DC'
     };
 
 // FUNCIONES
@@ -57,8 +64,8 @@ $(() => {
 
   let height      = $('#sankey').height(),
       width       = $('#sankey').width(),
-      nodesOri, linksOri,
-      nodesGlo, linksGlo,
+      nodesOri, linksOri, allLinks,
+      nodesGlo, linksGlo, allNodes,
       sankeyChartD3, path, svg;
 
   const obtenerNodosIntro = () => {
@@ -107,63 +114,78 @@ $(() => {
     }
   };
   const fade = (type = null, id = null) => (g, i) => {
-    if (type !== null) {
-      let all_links   = d3.selectAll('#sankey .link'),
-          all_nodes   = d3.selectAll('#sankey .node'),
-          element_id  = (id === null)?(g.id):(id),
-          event_node;
+    let element_id  = (id === null)?(g.id):(id),
+        event_node;
 
-      switch (type) {
-        case 'fadeIn':
-          // Estilos aplicados al nodo seleccionado
-          event_node = d3.select(`#node_${ element_id }`);
-            event_node.select('rect')
-              .style('stroke', 'black');
-            event_node.select('text')
-              .style('fill', 'black');
+    switch (type) {
+      case 'fadeIn':
+        // Nodo Seleccionado
+        event_node = d3.select(`#node_${ element_id }`);
+        event_node.select('rect').transition().style('stroke', 'black');
+        event_node.select('text').transition().style('fill', 'black');
+        // Nodos Relacionados
+        allLinks.each((v, k) => {
+          if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', 'black');
+        } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', 'black'); }
+        });
 
-          // Estilos aplicados a los links relacionados
-          all_links.filter((d) => {
-            if (d.source.id === element_id && d.target.id !== 43) {
-              d3.select(`#node_${ d.target.id }`).select('text').style('fill', 'black');
-              return true;
-            } else if (d.target.id === element_id && d.source.id !== 42) {
-              d3.select(`#node_${ d.source.id }`).select('text').style('fill', 'black');
-              return true;
-            }
-          }).style('stroke', 'url(#gradient_link)')
-            .style('stroke-opacity', 0.5);
-          all_links.filter((d) => ((d.source.id === element_id && d.target.id === 43)))
-            .style('stroke', '#394E5F')
-            // .style('stroke', 'url(#gradiente_export_on)')
-            .style('stroke-opacity', 0.5);
-          all_links.filter((d) => ((d.target.id === element_id && d.source.id === 42)))
-            .style('stroke', '#6A5587')
-            // .style('stroke', 'url(#gradiente_export_on)')
-            .style('stroke-opacity', 0.5);
+        // Links Producción
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 43 || d.target.id === element_id && d.source.id !== 42))
+          .transition().duration(100)
+          .style('stroke', 'url(#gradient_prod)')
+          .style('stroke-opacity', 0.5);
+        // Links Importación
+        allLinks.filter((d) => (d.source.id === 42 && d.target.id === element_id))
+          .transition().duration(100)
+          .style('stroke', 'url(#gradient_imp)')
+          .style('stroke-opacity', 0.5);
+        // Links Exportación
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 43))
+          .transition().duration(100)
+          .style('stroke', 'url(#gradient_exp)')
+          .style('stroke-opacity', 0.5);
+        // Links Pérdida
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 37 || d.target.id === element_id && element_id === 37))
+          .transition().duration(100)
+          .style('stroke', COLORES_FLUJO.perdida)
+          .style('stroke-opacity', 0.5);
 
-          tooltipIn(g);
-          break;
-        case 'fadeOut':
-          // Estilos aplicados al nodo seleccionado
-          event_node = d3.select(`#node_${ element_id }`);
-            event_node.select('rect')
-              .style('stroke', null);
-            all_nodes.select('text')
-              .style('fill', null);
+        tooltipIn(g);
+        break;
+      case 'fadeOut':
+        // Nodo Seleccionado
+        event_node = d3.select(`#node_${ element_id }`);
+        event_node.select('rect').transition().style('stroke', null);
+        event_node.select('text').transition().style('fill', null);
+        // Nodos Relacionados
+        allLinks.each((v, k) => {
+          if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', null);
+        } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', null); }
+        });
 
-          // Estilos aplicados a los links relacionados
-          all_links.filter((d) => ((d.source.id === element_id && d.target.id !== 43) || (d.target.id === element_id)))
-            .style('stroke', null)
-            .style('stroke-opacity', null);
-          all_links.filter((d) => ((d.source.id === element_id && d.target.id === 43)))
-            .style('stroke', 'silver')
-            // .style('stroke', 'url(#gradiente_export_off)')
-            .style('stroke-opacity', null);
+        // Links Producción
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 43 || d.target.id === element_id && d.source.id !== 42))
+          .transition().duration(100)
+          .style('stroke', COLORES_FLUJO.default)
+          .style('stroke-opacity', null);
+        // Links Importación
+        allLinks.filter((d) => (d.source.id === 42 && d.target.id === element_id))
+          .transition().duration(100)
+          .style('stroke', 'url(#gradient_imp_default)')
+          .style('stroke-opacity', null);
+        // Links Exportación
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 43))
+          .transition().duration(100)
+          .style('stroke', 'url(#gradient_exp_default)')
+          .style('stroke-opacity', null);
+        // Links Pérdida
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 37 || d.target.id === element_id && element_id === 37))
+          .transition().duration(100)
+          .style('stroke', COLORES_FLUJO.default)
+          .style('stroke-opacity', null);
 
-          $('#tooltip').removeAttr('style');
-          break;
-      }
+        $('#tooltip').removeAttr('style');
+        break;
     }
   };
   const intro = (stage, state = 'normal', action = 'none') => {
@@ -212,7 +234,7 @@ $(() => {
         d3.select('#intro_screen').remove();
         d3.selectAll('#sankey .node rect').transition().style('fill', null).style('stroke', null);
         d3.selectAll('#sankey .node text').transition().style('fill', null);
-        d3.selectAll('#sankey .link').filter((d) => (d.target.id !== 42)).transition().style('stroke', null).style('stroke-opacity', null);
+        d3.selectAll('#sankey .link').filter((d) => (d.source.id !== 42 && d.target.id !== 43)).transition().style('stroke', null).style('stroke-opacity', null);
         return false;
       case 'normal':
         intro_container = d3.select('#tooltip_intro');
@@ -260,9 +282,7 @@ $(() => {
     return promise;
   };
   const dibujarSankey = (width, heigth, data, options) => {
-
     // Se definen variables
-    // let margin      = { top: 40, right: 200, bottom: 40, left: 200, header: 20 },
     let headerSize      = 38,
         margin          = options.margin,
         size            = { width: 1400 - margin.left - margin.right, height: heigth - margin.top - margin.bottom - margin.header - headerSize },
@@ -276,25 +296,22 @@ $(() => {
       .attr('width', size.width + margin.right + margin.left)
       .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize)
       .attr('preserveAspectRatio', 'xMidYMid meet');
-
     // Se agregan encabezados
     let encabezado = svg.append('g')
       .attr('id', 'chart-encabezado')
       .attr('transform', `translate(${ margin.left }, ${ margin.top + 15 })`);
-    encabezado.append('text')
-      .attr('class', 'chart-encabezado-left')
-      .attr('x', -10)
-      .text(SANKEY.secciones_header[0][0]);
-    encabezado.append('text')
-      .attr('class', 'chart-encabezado-left')
-      .attr('x', -10)
-      .attr('y', 19)
-      .text(SANKEY.secciones_header[0][1]);
-
+      encabezado.append('text')
+        .attr('class', 'chart-encabezado-left')
+        .attr('x', -10)
+        .text(SANKEY.secciones_header[0][0]);
+      encabezado.append('text')
+        .attr('class', 'chart-encabezado-left')
+        .attr('x', -10)
+        .attr('y', 19)
+        .text(SANKEY.secciones_header[0][1]);
     // Se crea grafico
     let chart = svg.append('g')
       .attr('transform', `translate(${ margin.left }, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header })`);
-
     // Creación Sankey
     sankeyChartD3 = d3.sankey()
       .nodeWidth(anchoNodo)
@@ -303,46 +320,47 @@ $(() => {
       .nodes(data.nodes)
       .links(data.links)
       .layout();
+    // Generación de gradientes
+    let defs = svg.append('defs');
 
-    // Gradientes
-    let gradiente_export_on = svg.append('defs')
-      .append('linearGradient')
-      .attr('id', 'gradiente_export_on')
-      .attr('x1', '0%')
-      .attr('x2', '100%')
-      .attr('y1', '50%')
-      .attr('y2', '50%');
-    gradiente_export_on.append('stop').attr('offset', '0%').attr('stop-color', 'red').attr('stop-opacity', 1);
-    gradiente_export_on.append('stop').attr('offset', '50%').attr('stop-color', 'red').attr('stop-opacity', 1);
-    gradiente_export_on.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
-    let gradiente_export_off = svg.select('defs')
-      .append('linearGradient')
-      .attr('id', 'gradiente_export_off')
-      .attr('x1', '0%')
-      .attr('x2', '100%')
-      .attr('y1', '50%')
-      .attr('y2', '50%');
-    gradiente_export_off.append('stop').attr('offset', '0%').attr('stop-color', 'silver').attr('stop-opacity', 1);
-    gradiente_export_off.append('stop').attr('offset', '50%').attr('stop-color', 'silver').attr('stop-opacity', 1);
-    gradiente_export_off.append('stop').attr('offset', '100%').attr('stop-color', 'white').attr('stop-opacity', 0);
-    svg.select('defs')
-      .append('svg:pattern')
-      .attr('id', 'gradient_link')
-      .attr('x', 0)
-      .attr('y', 0)
-      .attr('patternUnits', 'userSpaceOnUse')
-      .attr('height', '100%')
-      .attr('width', '100%')
-      .append('svg:image')
-      .attr('y', 0)
-      .attr('x', 0)
-      .attr('xlink:href', './public/image/gradient_link.svg')
-      .attr('width', '100%')
-      .attr('height', '100%');
+    let gradient_imp = defs.append('linearGradient').attr('id', 'gradient_imp').attr('x1', '100%').attr('y1', '100%').attr('x2', '0%').attr('y2', '0%');
+        gradient_imp.append('stop').attr('offset', '0%').attr('stop-color', COLORES_FLUJO.importacion).attr('stop-opacity', 1);
+        gradient_imp.append('stop').attr('offset', '50%').attr('stop-color', COLORES_FLUJO.importacion).attr('stop-opacity', 1);
+        gradient_imp.append('stop').attr('offset', '100%').attr('stop-color', COLORES_FLUJO.importacion).attr('stop-opacity', 0);
+    let gradient_imp_default = defs.append('linearGradient').attr('id', 'gradient_imp_default').attr('x1', '100%').attr('y1', '100%').attr('x2', '0%').attr('y2', '0%');
+        gradient_imp_default.append('stop').attr('offset', '0%').attr('stop-color', COLORES_FLUJO.default).attr('stop-opacity', 1);
+        gradient_imp_default.append('stop').attr('offset', '50%').attr('stop-color', COLORES_FLUJO.default).attr('stop-opacity', 1);
+        gradient_imp_default.append('stop').attr('offset', '100%').attr('stop-color', COLORES_FLUJO.default).attr('stop-opacity', 0);
+    let gradient_exp = defs.append('linearGradient').attr('id', 'gradient_exp').attr('x1', '0%').attr('y1', '0%').attr('x2', '100%').attr('y2', '100%');
+        gradient_exp.append('stop').attr('offset', '0%').attr('stop-color', COLORES_FLUJO.exportacion).attr('stop-opacity', 1);
+        gradient_exp.append('stop').attr('offset', '50%').attr('stop-color', COLORES_FLUJO.exportacion).attr('stop-opacity', 1);
+        gradient_exp.append('stop').attr('offset', '100%').attr('stop-color', COLORES_FLUJO.exportacion).attr('stop-opacity', 0);
+    let gradient_exp_default = defs.append('linearGradient').attr('id', 'gradient_exp_default').attr('x1', '0%').attr('y1', '0%').attr('x2', '100%').attr('y2', '100%');
+        gradient_exp_default.append('stop').attr('offset', '0%').attr('stop-color', COLORES_FLUJO.default).attr('stop-opacity', 1);
+        gradient_exp_default.append('stop').attr('offset', '50%').attr('stop-color', COLORES_FLUJO.default).attr('stop-opacity', 1);
+        gradient_exp_default.append('stop').attr('offset', '100%').attr('stop-color', COLORES_FLUJO.default).attr('stop-opacity', 0);
+    let gradient_prod = defs.append('linearGradient').attr('gradientUnits', 'userSpaceOnUse').attr('id', 'gradient_prod').attr('x1', '0%').attr('y1', '50%').attr('x2', '100%').attr('y2', '50%');
+        gradient_prod.append('stop').attr('offset', '0%').attr('stop-color', 'rgb(32,106,171)').attr('stop-opacity', 1);
+        gradient_prod.append('stop').attr('offset', '20%').attr('stop-color', 'rgb(0,117,201)').attr('stop-opacity', 1);
+        gradient_prod.append('stop').attr('offset', '40%').attr('stop-color', 'rgb(0,157,218)').attr('stop-opacity', 1);
+        gradient_prod.append('stop').attr('offset', '60%').attr('stop-color', 'rgb(77,203,236)').attr('stop-opacity', 1);
+        gradient_prod.append('stop').attr('offset', '80%').attr('stop-color', 'rgb(127,218,241)').attr('stop-opacity', 1);
+        gradient_prod.append('stop').attr('offset', '100%').attr('stop-color', 'rgb(178,233,247)').attr('stop-opacity', 1);
+
+    // let gradient_pro = defs.append('svg:pattern')
+    //   .attr('id', 'gradient_link')
+    //   .attr('x', 0).attr('y', 0)
+    //   .attr('patternUnits', 'userSpaceOnUse')
+    //   .attr('height', '100%')
+    //   .attr('width', '100%')
+    //   .append('svg:image')
+    //   .attr('y', 0).attr('x', 0)
+    //   .attr('xlink:href', './public/image/gradient_link.svg')
+    //   .attr('width', '100%')
+    //   .attr('height', '100%');
 
     // Creación de Links
     path = sankeyChartD3.link();
-
     //  Se crean links
     let link = chart.append('g')
       .attr('id', 'links')
@@ -352,23 +370,9 @@ $(() => {
       .append('path')
       .attr('d', path)
       .attr('class', 'link')
-      .style('stroke-width', (d) => Math.max(1, d.dy))
-      .sort(function(a, b) { return b.dy - a.dy; });
-    link.filter((d) => (d.source.id === 42))
-      .style('stroke', 'silver');
-      // .style('stroke', 'url(#gradiente_export_off)')
-    link.filter((d) => (d.target.id === 43))
-      // .style('stroke', 'url(#gradiente_export_off)')
-      .style('stroke', 'silver');
-
-    // the function for moving the nodes
-    function dragmove(d) {
-      d3.select(this).attr('transform', 'translate(' + (d.x = Math.max(0, Math.min(size.width - d.dx, d3.event.x))) + ', ' + (d.y = Math.max(0, Math.min(size.height - d.dy, d3.event.y))) + ')');
-      sankeyChartD3.relayout();
-      path = sankeyChartD3.link();
-      link.attr('d', path);
-    }
-
+      .style('stroke-width', (d) => Math.max(1, d.dy));
+    link.filter((element) => (element.source.id === 42)).style('stroke', 'url(#gradient_imp_default)');
+    link.filter((element) => (element.target.id === 43)).style('stroke', 'url(#gradient_exp_default)');
     // Se crean nodos
     let node = chart.append('g')
       .attr('id', 'nodes')
@@ -384,23 +388,15 @@ $(() => {
           }
           return `translate(${ d.x }, ${ d.y })`;
         }) // error compatibilidad
-        .call(d3.drag()
-        .subject(function(d) {
-          return d;
-        })
-        // .on('start', function() {
-        //   this.parentNode.appendChild(this);
-        // })
-        .on('drag', dragmove));
-        // .call(d3.drag().on('drag', dragmove));
-
+        .on('click', (d) => {
+          console.log('click');
+        });
     // Se crean rectangulos nodos
     node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('rect')
         .attr('width', sankeyChartD3.nodeWidth())
         .attr('height', (d) => (Math.max(5, d.dy)))
-        .on('mouseover',  fade('fadeIn', null))
-        .on('mouseout',   fade('fadeOut', null));
-
+        .on('mouseenter',  fade('fadeIn', null))
+        .on('mouseleave',   fade('fadeOut', null));
     // Se crean textos nodos
     node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('text')
       .attr('class', 'node-text')
@@ -411,10 +407,8 @@ $(() => {
       .filter((d) => (d.targetLinks.length === 0))
       .attr('class', 'node-text-start')
       .attr('x', -10);
-
     // Se agregan encabezados
     posColumnas.sort((a, b) => (a - b)); // Se ordena posicion de columnas
-
     SANKEY.secciones_header.forEach((v, k) => {
       encabezado.append('text')
         .filter((d) => (k > 0))
@@ -459,46 +453,31 @@ $(() => {
       dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo });
     }
   };
-  const habilitarSelectores = () => {
+  const setearNodosYLinks = () => {
+    allLinks = d3.selectAll('#sankey .link');
+    allNodes = d3.selectAll('#sankey .node');
 
-      // Selector 1
-      // SELECTORES.categorias.forEach((v, k) => {
-      //   $('select[name=categorias]').append(`<option value="${ k }">${ v[0] }</option>`);
-      // });
-
-      // Selector 2
-      // SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
-      //   $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
-      // });
-
-      // Selector 1 - change
-      // $('select[name=categorias]').on('change', (event) => {
-      //   // Selector 2 - change
-      //   $('select[name=subcategorias]').empty();
-      //
-      //   SELECTORES.categorias[$('select[name=categorias]')[0].value][1].forEach((v, k) => {
-      //     $('select[name=subcategorias]').append(`<option value="${ k }">${ v }</option>`);
-      //   });
-      // });
-
-      // SELECTOR AÑO
-      for (let i = 2015; i > 1959; i--) { $('select[name=anio]').append(`<option value="${ i }">${ i }</option>`); }
-      // SELECTOR AÑO - CHANGE
-      $('select[name=anio]').on('change', (event) => {
-        downloadFile($('select[name=anio]')[0].value)
-          .then(() => calcularAltura(true));
-      });
-
-
+    return true;
   };
 
   downloadFile(2015)
     .then(() => obtenerNodosIntro())
     .then(() => calcularAltura())
     .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
+    .then(() => setearNodosYLinks())
     .then(() => intro(0, 'create', 'next'))
-    .then(() => habilitarSelectores())
     .then(() => {
+      // Eventos
+
+      // Selector años
+      for (let i = 2015; i > 1959; i--) { $('select[name=anio]').append(`<option value="${ i }">${ i }</option>`); }
+      $('select[name=anio]').on('change', (event) => {
+        downloadFile($('select[name=anio]')[0].value)
+          .then(() => setearNodosYLinks())
+          .then(() => calcularAltura(true));
+      });
+
+      // Altura contenedor Sankey
       $(window).on('resize', () => {
         calcularAltura(true);
       });

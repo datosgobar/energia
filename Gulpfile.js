@@ -5,9 +5,11 @@ const gulp          = require('gulp'),
       sass          = require('gulp-sass'),
       clean         = require('gulp-clean'),
       babel         = require('gulp-babel'),
+      concat        = require('gulp-concat'),
       cssmin        = require('gulp-cssmin'),
       rename        = require('gulp-rename'),
       uglify        = require('gulp-uglify'),
+      prepack       = require('gulp-prepack'),
       htmlmin       = require('gulp-htmlmin'),
       plumber       = require('gulp-plumber'),
       sequence      = require('gulp-sequence'),
@@ -149,6 +151,7 @@ gulp.task('compile_sass', () => gulp.src(directorio.style.compile.dir)
 gulp.task('compile_babel:dev', () => gulp.src(directorio.javascript.compile.dir)
   .pipe(plumber())
   .pipe(babel({ presets: ['es2015', 'es2016', 'es2017'] }))
+  // .pipe(prepack())
   .pipe(uglify())
   .pipe(rename({ suffix: '.min' }))
   .pipe(gulp.dest(directorio.javascript.build.dir))
