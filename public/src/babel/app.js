@@ -56,7 +56,11 @@ let GLOBAL_NODES,
       perdida:      '#ED7960',
       default:      '#CFD8DC'
     };
-
+let STATIC_NODE = {
+  close: true,
+  id: null,
+  tooltip_first: false
+};
 // FUNCIONES
 const BUSCAR_NODO = (id, modificador = 0) => (GLOBAL_NODES.filter((element) => element.id === id + modificador)[0]);
 
@@ -113,7 +117,7 @@ $(() => {
       $('.tooltip_others').parent().parent().css({ 'display': 'none' });
     }
   };
-  const fade = (type = null, id = null) => (g, i) => {
+  const fade = (type = null, id = null, force = false) => (g, i) => {
     let element_id  = (id === null)?(g.id):(id),
         event_node;
 
@@ -130,17 +134,17 @@ $(() => {
         });
 
         // Links Producción
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 43 || d.target.id === element_id && d.source.id !== 42))
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 19 || d.target.id === element_id && d.source.id !== 18))
           .transition().duration(100)
           .style('stroke', 'url(#gradient_prod)')
           .style('stroke-opacity', 0.5);
         // Links Importación
-        allLinks.filter((d) => (d.source.id === 42 && d.target.id === element_id))
+        allLinks.filter((d) => (d.source.id === 18 && d.target.id === element_id))
           .transition().duration(100)
           .style('stroke', 'url(#gradient_imp)')
           .style('stroke-opacity', 0.5);
         // Links Exportación
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 43))
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 19))
           .transition().duration(100)
           .style('stroke', 'url(#gradient_exp)')
           .style('stroke-opacity', 0.5);
@@ -153,38 +157,45 @@ $(() => {
         tooltipIn(g);
         break;
       case 'fadeOut':
-        // Nodo Seleccionado
-        event_node = d3.select(`#node_${ element_id }`);
-        event_node.select('rect').transition().style('stroke', null);
-        event_node.select('text').transition().style('fill', null);
-        // Nodos Relacionados
-        allLinks.each((v, k) => {
-          if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', null);
-        } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', null); }
-        });
+        if ((STATIC_NODE.close && g.id !== STATIC_NODE.id) || force) {
+          // Nodo Seleccionado
+          event_node = d3.select(`#node_${ element_id }`);
+          event_node.select('rect').transition().style('stroke', null);
+          event_node.select('text').transition().style('fill', null);
+          // Nodos Relacionados
+          allLinks.each((v, k) => {
+            if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', null);
+          } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', null); }
+          });
 
-        // Links Producción
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 43 || d.target.id === element_id && d.source.id !== 42))
-          .transition().duration(100)
-          .style('stroke', COLORES_FLUJO.default)
-          .style('stroke-opacity', null);
-        // Links Importación
-        allLinks.filter((d) => (d.source.id === 42 && d.target.id === element_id))
-          .transition().duration(100)
-          .style('stroke', 'url(#gradient_imp_default)')
-          .style('stroke-opacity', null);
-        // Links Exportación
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 43))
-          .transition().duration(100)
-          .style('stroke', 'url(#gradient_exp_default)')
-          .style('stroke-opacity', null);
-        // Links Pérdida
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 37 || d.target.id === element_id && element_id === 37))
-          .transition().duration(100)
-          .style('stroke', COLORES_FLUJO.default)
-          .style('stroke-opacity', null);
+          // Links Producción
+          allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 19 || d.target.id === element_id && d.source.id !== 18))
+            .transition().duration(100)
+            .style('stroke', COLORES_FLUJO.default)
+            .style('stroke-opacity', null);
+          // Links Importación
+          allLinks.filter((d) => (d.source.id === 18 && d.target.id === element_id))
+            .transition().duration(100)
+            .style('stroke', 'url(#gradient_imp_default)')
+            .style('stroke-opacity', null);
+          // Links Exportación
+          allLinks.filter((d) => (d.source.id === element_id && d.target.id === 19))
+            .transition().duration(100)
+            .style('stroke', 'url(#gradient_exp_default)')
+            .style('stroke-opacity', null);
+          // Links Pérdida
+          allLinks.filter((d) => (d.source.id === element_id && d.target.id === 37 || d.target.id === element_id && element_id === 37))
+            .transition().duration(100)
+            .style('stroke', COLORES_FLUJO.default)
+            .style('stroke-opacity', null);
+        }
 
-        $('#tooltip').removeAttr('style');
+        if (!STATIC_NODE.tooltip_first) {
+          $('#tooltip').removeAttr('style');
+        }
+        
+        STATIC_NODE.tooltip_first = false;
+        STATIC_NODE.close = true;
         break;
     }
   };
@@ -234,7 +245,7 @@ $(() => {
         d3.select('#intro_screen').remove();
         d3.selectAll('#sankey .node rect').transition().style('fill', null).style('stroke', null);
         d3.selectAll('#sankey .node text').transition().style('fill', null);
-        d3.selectAll('#sankey .link').filter((d) => (d.source.id !== 42 && d.target.id !== 43)).transition().style('stroke', null).style('stroke-opacity', null);
+        d3.selectAll('#sankey .link').filter((d) => (d.source.id !== 18 && d.target.id !== 19)).transition().style('stroke', null).style('stroke-opacity', null);
         return false;
       case 'normal':
         intro_container = d3.select('#tooltip_intro');
@@ -270,7 +281,7 @@ $(() => {
   };
   const downloadFile = (anio) => {
     let promise = new Promise((success) => {
-      d3.json(`public/src/data_${anio}.json`, (data) => {
+      d3.json(`./public/data/data_${anio}.json`, (data) => {
 
         GLOBAL_NODES = data.nodes;
         GLOBAL_LINKS = data.links;
@@ -347,18 +358,6 @@ $(() => {
         gradient_prod.append('stop').attr('offset', '80%').attr('stop-color', 'rgb(127,218,241)').attr('stop-opacity', 1);
         gradient_prod.append('stop').attr('offset', '100%').attr('stop-color', 'rgb(178,233,247)').attr('stop-opacity', 1);
 
-    // let gradient_pro = defs.append('svg:pattern')
-    //   .attr('id', 'gradient_link')
-    //   .attr('x', 0).attr('y', 0)
-    //   .attr('patternUnits', 'userSpaceOnUse')
-    //   .attr('height', '100%')
-    //   .attr('width', '100%')
-    //   .append('svg:image')
-    //   .attr('y', 0).attr('x', 0)
-    //   .attr('xlink:href', './public/image/gradient_link.svg')
-    //   .attr('width', '100%')
-    //   .attr('height', '100%');
-
     // Creación de Links
     path = sankeyChartD3.link();
     //  Se crean links
@@ -371,8 +370,8 @@ $(() => {
       .attr('d', path)
       .attr('class', 'link')
       .style('stroke-width', (d) => Math.max(1, d.dy));
-    link.filter((element) => (element.source.id === 42)).style('stroke', 'url(#gradient_imp_default)');
-    link.filter((element) => (element.target.id === 43)).style('stroke', 'url(#gradient_exp_default)');
+    link.filter((element) => (element.source.id === 18)).style('stroke', 'url(#gradient_imp_default)');
+    link.filter((element) => (element.target.id === 19)).style('stroke', 'url(#gradient_exp_default)');
     // Se crean nodos
     let node = chart.append('g')
       .attr('id', 'nodes')
@@ -387,16 +386,24 @@ $(() => {
             posColumnas.push(d.x);
           }
           return `translate(${ d.x }, ${ d.y })`;
-        }) // error compatibilidad
-        .on('click', (d) => {
-          console.log('click');
-        });
+        }); // error compatibilidad
     // Se crean rectangulos nodos
     node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('rect')
         .attr('width', sankeyChartD3.nodeWidth())
         .attr('height', (d) => (Math.max(5, d.dy)))
-        .on('mouseenter',  fade('fadeIn', null))
-        .on('mouseleave',   fade('fadeOut', null));
+        .on('mouseenter', fade('fadeIn', null))
+        .on('mouseleave', fade('fadeOut', null))
+        .on('click', (d) => {
+          if (STATIC_NODE.id !== null && STATIC_NODE.id !== d.id) {
+            fade('fadeOut', STATIC_NODE.id, true)(d);
+          }
+
+          STATIC_NODE.id = d.id;
+          STATIC_NODE.close = false;
+          STATIC_NODE.tooltip_first = true;
+
+          fade('fadeIn', STATIC_NODE.id)(d);
+        });
     // Se crean textos nodos
     node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('text')
       .attr('class', 'node-text')
@@ -471,6 +478,13 @@ $(() => {
 
       // Selector años
       for (let i = 2015; i > 1959; i--) { $('select[name=anio]').append(`<option value="${ i }">${ i }</option>`); }
+
+
+      $('select[name=anio]').SumoSelect({ nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk'], });
+
+      $('select[name=anio]').on('sumo:opened', (sumo) => { $('body').attr('style', 'position: fixed'); });
+      $('select[name=anio]').on('sumo:closed', (sumo) => { $('body').attr('style', 'position: relative'); });
+
       $('select[name=anio]').on('change', (event) => {
         downloadFile($('select[name=anio]')[0].value)
           .then(() => setearNodosYLinks())
