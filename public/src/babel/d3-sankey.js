@@ -66,11 +66,11 @@ d3.sankey = function() {
           modificador_alto = yt - ys;
 
       if (d.source.posicionX < d.target.posicionX) {
-        if (d.target.id === 19) { formaLink = `m ${ xs } ${ ys } h 10 l 10 10`; } // Link de exportación
-        if (d.target.id !== 19) { formaLink = `M ${ xs } ${ ys } C ${ xsc } ${ ys } ${ xtc } ${ yt } ${ xt } ${ yt }`; } // Link normal
+        if (d.target.id === 31) { formaLink = `m ${ xs } ${ ys } h 10 l 10 10`; } // Link de exportación
+        if (d.target.id !== 31) { formaLink = `M ${ xs } ${ ys } C ${ xsc } ${ ys } ${ xtc } ${ yt } ${ xt } ${ yt }`; } // Link normal
       } else {
-        if (d.source.id === 18) { formaLink = `m ${ xt - 20 } ${ yt - 10 } l 10 10 h 10`; } // Link de importación
-        if (d.source.id !== 18) { formaLink = `M ${ xs } ${ ys } h 5 c 5 0 5 10 0 10 c ${ modificador_ancho * 1.5 } 0 ${ modificador_ancho * 1.5 } ${ (modificador_alto - 10) } ${ modificador_ancho } ${ (modificador_alto - 10) } h 5`; }
+        if (d.source.id === 30) { formaLink = `m ${ xt - 20 } ${ yt - 10 } l 10 10 h 10`; } // Link de importación
+        if (d.source.id !== 30) { formaLink = `M ${ xs } ${ ys } h 5 c 5 0 5 10 0 10 c ${ modificador_ancho * 1.5 } 0 ${ modificador_ancho * 1.5 } ${ (modificador_alto - 10) } ${ modificador_ancho } ${ (modificador_alto - 10) } h 5`; }
       }
 
       return formaLink;
@@ -363,7 +363,7 @@ d3.sankey = function() {
     });
 
     function ascendingSourceDepth(b, a) {
-      if (a.target.id === 18 || b.target.id === 18) {
+      if (a.target.id === 30 || b.target.id === 30) {
         return 1;
       } else {
         return a.dy - b.dy;

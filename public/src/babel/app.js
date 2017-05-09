@@ -55,14 +55,20 @@ let GLOBAL_NODES,
       produccion:   '#7FC6E6',
       perdida:      '#ED7960',
       default:      '#CFD8DC'
+    },
+    STATIC_NODE = {
+      close: true,
+      id: null
     };
-let STATIC_NODE = {
-  close: true,
-  id: null,
-  tooltip_first: false
-};
+
 // FUNCIONES
 const BUSCAR_NODO = (id, modificador = 0) => (GLOBAL_NODES.filter((element) => element.id === id + modificador)[0]);
+Number.prototype.format_number = function(n, x, s, c) {
+  let re = '\\d(?=(\\d{' + (x || 3) + '})+' + (n > 0 ? '\\D' : '$') + ')',
+      num = this.toFixed(Math.max(0, ~~n));
+
+  return (c ? num.replace('.', c) : num).replace(new RegExp(re, 'g'), '$&' + (s || ','));
+};
 
 $(() => {
 
@@ -81,35 +87,35 @@ $(() => {
   };
   const tooltipIn = (d) => {
 
-    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 });
+    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 }).fadeIn(100);
 
     if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
       $('.tooltip_name').text(d.nombre);
-      $('.tooltip_ktep').text(d.oferta_interna);
+      $('.tooltip_ktep').text(d.oferta_interna.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().removeAttr('style');
-      $('.tooltip_production').text(d.produccion);
+      $('.tooltip_production').text(d.produccion.format_number(2, 3, '.', ','));
       $('.tooltip_importation').parent().parent().removeAttr('style');
-      $('.tooltip_importation').text(d.importacion);
+      $('.tooltip_importation').text(d.importacion.format_number(2, 3, '.', ','));
       $('.tooltip_exportation').parent().parent().removeAttr('style');
-      $('.tooltip_exportation').text(d.exportacion);
+      $('.tooltip_exportation').text(d.exportacion.format_number(2, 3, '.', ','));
       $('.tooltip_losses').parent().parent().removeAttr('style');
-      $('.tooltip_losses').text(d.perdidas);
+      $('.tooltip_losses').text(d.perdidas.format_number(2, 3, '.', ','));
       $('.tooltip_others').parent().parent().removeAttr('style');
-      $('.tooltip_others').text(d.otros);
+      $('.tooltip_others').text(d.otros.format_number(2, 3, '.', ','));
     } else if (d.posicionX === 2 || d.posicionX === 4) {
       $('.tooltip_name').text(d.nombre);
-      $('.tooltip_ktep').text(d.consumo);
+      $('.tooltip_ktep').text(d.consumo.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().removeAttr('style');
-      $('.tooltip_production').text(d.produccion);
+      $('.tooltip_production').text(d.produccion.format_number(2, 3, '.', ','));
       $('.tooltip_importation').parent().parent().css({ 'display': 'none' });
       $('.tooltip_exportation').parent().parent().css({ 'display': 'none' });
       $('.tooltip_losses').parent().parent().removeAttr('style');
-      $('.tooltip_losses').text(d.perdidas);
+      $('.tooltip_losses').text(d.perdidas.format_number(2, 3, '.', ','));
       $('.tooltip_others').parent().parent().removeAttr('style');
-      $('.tooltip_others').text(d.otros);
+      $('.tooltip_others').text(d.otros.format_number(2, 3, '.', ','));
     } else {
       $('.tooltip_name').text(d.nombre);
-      $('.tooltip_ktep').text(d.consumo);
+      $('.tooltip_ktep').text(d.consumo.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().css({ 'display': 'none' });
       $('.tooltip_importation').parent().parent().css({ 'display': 'none' });
       $('.tooltip_exportation').parent().parent().css({ 'display': 'none' });
@@ -123,6 +129,13 @@ $(() => {
 
     switch (type) {
       case 'fadeIn':
+        if (STATIC_NODE.id !== null && STATIC_NODE.id !== g.id) {
+          $('#tooltip').fadeOut(100);
+          fade('fadeOut', STATIC_NODE.id, true)(g, i);
+        }
+
+        STATIC_NODE.close = true;
+
         // Nodo Seleccionado
         event_node = d3.select(`#node_${ element_id }`);
         event_node.select('rect').transition().style('stroke', 'black');
@@ -130,34 +143,32 @@ $(() => {
         // Nodos Relacionados
         allLinks.each((v, k) => {
           if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', 'black');
-        } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', 'black'); }
+          } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', 'black'); }
         });
-
         // Links Producción
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 19 || d.target.id === element_id && d.source.id !== 18))
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 29 && d.target.id !== 31 || d.target.id === element_id && d.source.id !== 30))
           .transition().duration(100)
           .style('stroke', 'url(#gradient_prod)')
           .style('stroke-opacity', 0.5);
         // Links Importación
-        allLinks.filter((d) => (d.source.id === 18 && d.target.id === element_id))
+        allLinks.filter((d) => (d.source.id === 30 && d.target.id === element_id))
           .transition().duration(100)
           .style('stroke', 'url(#gradient_imp)')
           .style('stroke-opacity', 0.5);
         // Links Exportación
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 19))
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 31))
           .transition().duration(100)
           .style('stroke', 'url(#gradient_exp)')
           .style('stroke-opacity', 0.5);
         // Links Pérdida
-        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 37 || d.target.id === element_id && element_id === 37))
+        allLinks.filter((d) => (d.source.id === element_id && d.target.id === 29 || d.target.id === element_id && element_id === 29))
           .transition().duration(100)
           .style('stroke', COLORES_FLUJO.perdida)
           .style('stroke-opacity', 0.5);
 
-        tooltipIn(g);
         break;
       case 'fadeOut':
-        if ((STATIC_NODE.close && g.id !== STATIC_NODE.id) || force) {
+        if ((STATIC_NODE.close && STATIC_NODE.id !== g.id) || force === true) {
           // Nodo Seleccionado
           event_node = d3.select(`#node_${ element_id }`);
           event_node.select('rect').transition().style('stroke', null);
@@ -165,37 +176,32 @@ $(() => {
           // Nodos Relacionados
           allLinks.each((v, k) => {
             if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', null);
-          } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', null); }
+            } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', null); }
           });
-
           // Links Producción
-          allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 37 && d.target.id !== 19 || d.target.id === element_id && d.source.id !== 18))
+          allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 29 && d.target.id !== 31 || d.target.id === element_id && d.source.id !== 30))
             .transition().duration(100)
             .style('stroke', COLORES_FLUJO.default)
             .style('stroke-opacity', null);
           // Links Importación
-          allLinks.filter((d) => (d.source.id === 18 && d.target.id === element_id))
+          allLinks.filter((d) => (d.source.id === 30 && d.target.id === element_id))
             .transition().duration(100)
             .style('stroke', 'url(#gradient_imp_default)')
             .style('stroke-opacity', null);
           // Links Exportación
-          allLinks.filter((d) => (d.source.id === element_id && d.target.id === 19))
+          allLinks.filter((d) => (d.source.id === element_id && d.target.id === 31))
             .transition().duration(100)
             .style('stroke', 'url(#gradient_exp_default)')
             .style('stroke-opacity', null);
           // Links Pérdida
-          allLinks.filter((d) => (d.source.id === element_id && d.target.id === 37 || d.target.id === element_id && element_id === 37))
+          allLinks.filter((d) => (d.source.id === element_id && d.target.id === 29 || d.target.id === element_id && element_id === 29))
             .transition().duration(100)
             .style('stroke', COLORES_FLUJO.default)
             .style('stroke-opacity', null);
+        } else {
+          STATIC_NODE.close = true;
         }
 
-        if (!STATIC_NODE.tooltip_first) {
-          $('#tooltip').removeAttr('style');
-        }
-        
-        STATIC_NODE.tooltip_first = false;
-        STATIC_NODE.close = true;
         break;
     }
   };
@@ -224,19 +230,20 @@ $(() => {
       case 'create':
         d3.select('#content').append('div').attr('id', 'intro_screen').style('top', '0px').style('left', '0px');
         intro_container = d3.select('#content').append('div').attr('id', 'tooltip_intro').style('bottom', '20px').style('right', '20px');
-          intro_container.append('div');
-          intro_container.select('div').attr('class', 'flex flex_justify_between flex_align_start').append('h2').attr('class', 'tooltip_name');
-          intro_container.select('div').append('span').attr('class', 'glyphicon glyphicon-remove tooltip_exit');
-          intro_container.append('p').attr('class', 'tooltip_production');
-        intro_buttons   = intro_container.append('div').attr('class', 'flex flex_justify_between');
+          intro_container.append('div').attr('class', 'tooltip_header flex flex_justify_between flex_align_start');
+          intro_container.select('.tooltip_header').append('h2').attr('class', 'tooltip_name');
+          intro_container.select('.tooltip_header').append('span').attr('class', 'glyphicon glyphicon-remove tooltip_exit');
+          intro_container.append('div').attr('class', 'tooltip_content');
+          intro_container.select('.tooltip_content').append('p').attr('class', 'tooltip_production');
+        intro_buttons   = intro_container.append('div').attr('class', ' tooltip_footer flex flex_justify_between');
         button_last     = intro_buttons.append('button').attr('id', 'last').text('Anterior');
         button_next     = intro_buttons.append('button').attr('id', 'next').text('Siguiente');
 
-        $('.tooltip_exit').on('click', () => {
+        $('.tooltip_exit').last().on('click', () => {
           intro(stage, 'delete', 'none');
         });
         $(document).keyup((e) => {
-          if (e.keyCode === 27 && $('.tooltip_exit').length === 1 ) { intro(stage, 'delete', 'none'); }
+          if (e.keyCode === 27 && $('.tooltip_exit').length === 2 ) { intro(stage, 'delete', 'none'); }
         });
 
         break;
@@ -245,7 +252,7 @@ $(() => {
         d3.select('#intro_screen').remove();
         d3.selectAll('#sankey .node rect').transition().style('fill', null).style('stroke', null);
         d3.selectAll('#sankey .node text').transition().style('fill', null);
-        d3.selectAll('#sankey .link').filter((d) => (d.source.id !== 18 && d.target.id !== 19)).transition().style('stroke', null).style('stroke-opacity', null);
+        d3.selectAll('#sankey .link').filter((d) => (d.source.id !== 30 && d.target.id !== 31)).transition().style('stroke', null).style('stroke-opacity', null);
         return false;
       case 'normal':
         intro_container = d3.select('#tooltip_intro');
@@ -370,8 +377,8 @@ $(() => {
       .attr('d', path)
       .attr('class', 'link')
       .style('stroke-width', (d) => Math.max(1, d.dy));
-    link.filter((element) => (element.source.id === 18)).style('stroke', 'url(#gradient_imp_default)');
-    link.filter((element) => (element.target.id === 19)).style('stroke', 'url(#gradient_exp_default)');
+    link.filter((element) => (element.source.id === 30)).style('stroke', 'url(#gradient_imp_default)');
+    link.filter((element) => (element.target.id === 31)).style('stroke', 'url(#gradient_exp_default)');
     // Se crean nodos
     let node = chart.append('g')
       .attr('id', 'nodes')
@@ -394,15 +401,10 @@ $(() => {
         .on('mouseenter', fade('fadeIn', null))
         .on('mouseleave', fade('fadeOut', null))
         .on('click', (d) => {
-          if (STATIC_NODE.id !== null && STATIC_NODE.id !== d.id) {
-            fade('fadeOut', STATIC_NODE.id, true)(d);
-          }
-
           STATIC_NODE.id = d.id;
           STATIC_NODE.close = false;
-          STATIC_NODE.tooltip_first = true;
 
-          fade('fadeIn', STATIC_NODE.id)(d);
+          tooltipIn(d);
         });
     // Se crean textos nodos
     node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('text')
@@ -430,13 +432,9 @@ $(() => {
         .text(v[1]);
     });
   };
-  const calcularAltura = (reset = false) => {
+  const calcularAltura = () => {
     height  = $('#sankey').height();
     width   = $('#sankey').width();
-
-    if (reset) {
-      $('#sankey').empty();
-    }
 
     if (($('#content h1').outerHeight() + $('#content form').outerHeight() + 550) <= $('#content').outerHeight()) {
       d3.select('#content').attr('style', null);
@@ -456,9 +454,7 @@ $(() => {
       SANKEY.separacionNodo = 15;
     }
 
-    if (reset) {
-      dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo });
-    }
+    return true;
   };
   const setearNodosYLinks = () => {
     allLinks = d3.selectAll('#sankey .link');
@@ -472,13 +468,11 @@ $(() => {
     .then(() => calcularAltura())
     .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
     .then(() => setearNodosYLinks())
-    .then(() => intro(0, 'create', 'next'))
-    .then(() => {
-      // Eventos
-
+    .then(() => intro(0, 'create', 'next')) // Se activa tooltip_intro
+    .then(() => $('#tooltip').fadeOut(100)) // Se activa animación del tooltip_sankey
+    .then(() => { // Se activan eventos
       // Selector años
       for (let i = 2015; i > 1959; i--) { $('select[name=anio]').append(`<option value="${ i }">${ i }</option>`); }
-
 
       $('select[name=anio]').SumoSelect({ nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk'], });
 
@@ -487,10 +481,17 @@ $(() => {
 
       $('select[name=anio]').on('change', (event) => {
         downloadFile($('select[name=anio]')[0].value)
+          .then(() => calcularAltura())
+          .then(() => $('#sankey').empty())
+          .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
           .then(() => setearNodosYLinks())
-          .then(() => calcularAltura(true));
+          .then(() => $('#tooltip').fadeOut(100)); // Se activa animación del tooltip_sankey;
       });
-
+      // Se activa exit_tooltip
+      $('.tooltip_exit').first().on('click', (d) => {
+        $('#tooltip').fadeOut(100);
+        fade('fadeOut', STATIC_NODE.id, true)(BUSCAR_NODO(STATIC_NODE.id));
+      });
       // Altura contenedor Sankey
       $(window).on('resize', () => {
         calcularAltura(true);

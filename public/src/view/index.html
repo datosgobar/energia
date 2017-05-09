@@ -8,29 +8,29 @@
 
     <title>$nombre_del_producto</title>                                         <!-- completar -->
     <!-- Meta Data -->
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <meta http-equiv="Content-Language" content="es"/>
-    <meta name="description" content="$descripcion_producto"/>                  <!-- completar -->
-    <meta name="keywords" content=""/>                                          <!-- completar -->
+    <meta http-equiv="Content-Type"       content="text/html; charset=UTF-8"/>
+    <meta http-equiv="X-UA-Compatible"    content="IE=edge">
+    <meta name="viewport"                 content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="Content-Language"   content="es"/>
+    <meta name="description"              content="$descripcion_producto"/>     <!-- completar -->
+    <meta name="keywords"                 content=""/>                          <!-- completar -->
     <!-- FaceBook -->
-    <meta property="og:url" content="">                                         <!-- completar -->
-    <meta property="og:type" content="">                                        <!-- completar -->
-    <meta property="og:title" content="">                                       <!-- completar -->
-    <meta property="og:site_name" content="">                                   <!-- completar -->
-    <meta property="og:description" content="$descripcion_producto">            <!-- completar -->
-    <meta property="og:image" content="public/image/facebook.png">              <!-- agregar_imagen -->
-    <meta property="og:image:type" content="">                                  <!-- completar -->
-    <meta property="og:image:width" content="">                                 <!-- completar -->
-    <meta property="og:image:height" content="">                                <!-- completar -->
-    <meta property="og:locale" content="">                                      <!-- completar -->
+    <meta property="og:url"               content="">                           <!-- completar -->
+    <meta property="og:type"              content="">                           <!-- completar -->
+    <meta property="og:title"             content="">                           <!-- completar -->
+    <meta property="og:site_name"         content="">                           <!-- completar -->
+    <meta property="og:description"       content="$descripcion_producto">      <!-- completar -->
+    <meta property="og:image"             content="public/image/facebook.png">  <!-- agregar_imagen -->
+    <meta property="og:image:type"        content="">                           <!-- completar -->
+    <meta property="og:image:width"       content="">                           <!-- completar -->
+    <meta property="og:image:height"      content="">                           <!-- completar -->
+    <meta property="og:locale"            content="">                           <!-- completar -->
     <!-- Twitter -->
-    <meta name="twitter:card" content="">                                       <!-- completar -->
-    <meta name="twitter:site" content="">                                       <!-- completar -->
-    <meta name="twitter:title" content="">                                      <!-- completar -->
-    <meta name="twitter:description" content="$descripcion_producto">           <!-- completar -->
-    <meta name="twitter:image:src" content="public/image/twitter.png">          <!-- agregar_imagen -->
+    <meta name="twitter:card"             content="">                           <!-- completar -->
+    <meta name="twitter:site"             content="">                           <!-- completar -->
+    <meta name="twitter:title"            content="">                           <!-- completar -->
+    <meta name="twitter:description"      content="$descripcion_producto">      <!-- completar -->
+    <meta name="twitter:image:src"        content="public/image/twitter.png">   <!-- agregar_imagen -->
     <!-- Favicon -->
     <link href="public/image/favicon.ico" rel="shortcut icon" type="image/png"/><!-- agregar_imagen -->
     <!-- Jquery -->
@@ -92,7 +92,6 @@
     <!-- Contenido del sitio -->
     <div id="content">
       <h1>Balance energético de Argentina</h1>
-
       <form id="form_energia" class="flex flex_wrap" action="index.html" method="post">
         <!-- <p>Descubri el flujo de</p> -->
         <!-- <select name="categorias"></select> -->
@@ -101,63 +100,71 @@
         <p>en el año</p>
         <select name="anio"></select>
       </form>
-
       <div id="sankey"></div>
       <div id="tooltip" class="flex flex_column flex_align_start">
-        <span class="tooltip_name"></span>
-        <div class="tooltip_container flex flex_justify_between divider">
-          <div class="tooltip_key">
-            <i class="fa fa-circle transparent" aria-hidden="true"></i>
-            total
+        <div class="tooltip_header flex flex_justify_between">
+          <span class="tooltip_name"></span>
+          <span class="glyphicon glyphicon-remove tooltip_exit"></span>
+        </div>
+        <div class="tooltip_content flex flex_column flex_align_start">
+          <span class="ref">Cifras en KTEP</span>
+          <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_key">
+              total
+            </div>
+            <div class="tooltip_data">
+              <span class="tooltip_ktep"></span>
+            </div>
           </div>
-          <div class="tooltip_data">
-            <span class="tooltip_ktep"></span>
+          <div class="tooltip_container flex flex_justify_between divider">
+            <div class="tooltip_key">
+              <i class="fa fa-circle" aria-hidden="true"></i>
+              Producción
+            </div>
+            <div class="tooltip_data">
+              <span class="tooltip_production"></span>
+            </div>
+          </div>
+          <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_key">
+              <i class="fa fa-circle" aria-hidden="true"></i>
+              Importación
+            </div>
+            <div class="tooltip_data">
+              <span class="tooltip_importation"></span>
+            </div>
+          </div>
+          <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_key">
+              <i class="fa fa-circle" aria-hidden="true"></i>
+              Exportación
+            </div>
+            <div class="tooltip_data">
+              <span class="tooltip_exportation"></span>
+            </div>
+          </div>
+          <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_key">
+              <i class="fa fa-circle" aria-hidden="true"></i>
+              Pérdida
+            </div>
+            <div class="tooltip_data">
+              <span class="tooltip_losses"></span>
+            </div>
+          </div>
+          <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_key">
+              <i class="fa fa-circle transparent" aria-hidden="true"></i>
+              Otros
+            </div>
+            <div class="tooltip_data">
+              <span class="tooltip_others"></span>
+            </div>
           </div>
         </div>
-        <div class="tooltip_container flex flex_justify_between">
-          <div class="tooltip_key">
-            <i class="fa fa-circle" aria-hidden="true"></i>
-            produccion
-          </div>
-          <div class="tooltip_data">
-            <span class="tooltip_production"></span>
-          </div>
-        </div>
-        <div class="tooltip_container flex flex_justify_between">
-          <div class="tooltip_key">
-            <i class="fa fa-circle" aria-hidden="true"></i>
-            importacion
-          </div>
-          <div class="tooltip_data">
-            <span class="tooltip_importation"></span>
-          </div>
-        </div>
-        <div class="tooltip_container flex flex_justify_between">
-          <div class="tooltip_key">
-            <i class="fa fa-circle" aria-hidden="true"></i>
-            exportacion
-          </div>
-          <div class="tooltip_data">
-            <span class="tooltip_exportation"></span>
-          </div>
-        </div>
-        <div class="tooltip_container flex flex_justify_between">
-          <div class="tooltip_key">
-            <i class="fa fa-circle" aria-hidden="true"></i>
-            perdidas
-          </div>
-          <div class="tooltip_data">
-            <span class="tooltip_losses"></span>
-          </div>
-        </div>
-        <div class="tooltip_container flex flex_justify_between">
-          <div class="tooltip_key">
-            <i class="fa fa-circle transparent" aria-hidden="true"></i>
-            otros
-          </div>
-          <div class="tooltip_data">
-            <span class="tooltip_others"></span>
-          </div>
+        <div class="tooltip_footer flex flex_justify_between">
+          <button name="citas"><span><span class="glyphicon glyphicon-chevron-left"></span>Citas</span></button>
+          <button name="glosario"><span>Glosario<span class="glyphicon glyphicon-chevron-right"></span></span></button>
         </div>
       </div>
     </div>
