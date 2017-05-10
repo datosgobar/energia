@@ -38,6 +38,8 @@
     <!-- Jquery - SumoSelect -->
     <link rel="stylesheet" type="text/css" href="./public/css/sumoselect.min.css">
     <script type="text/javascript" src="./public/js/jquery.sumoselect.min.js"></script>
+    <!-- Jquery - isMobile -->
+    <script type="text/javascript" src="./public/js/jquery-isMobile.min.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" type="text/css" href="./public/css/bootstrap.min.css">
     <script type="text/javascript" src="./public/js/bootstrap.min.js"></script>
@@ -104,7 +106,7 @@
       <div id="tooltip" class="flex flex_column flex_align_start">
         <div class="tooltip_header flex flex_justify_between">
           <span class="tooltip_name"></span>
-          <span class="glyphicon glyphicon-remove tooltip_exit"></span>
+          <img class="tooltip_exit" src="./public/image/cruz.svg" alt="exit icon" width="15">
         </div>
         <div class="tooltip_content flex flex_column flex_align_start">
           <span class="ref">Cifras en KTEP</span>
@@ -162,9 +164,12 @@
             </div>
           </div>
         </div>
+        <div class="tooltip_glosary flex">
+
+        </div>
         <div class="tooltip_footer flex flex_justify_between">
-          <button name="citas"><span><span class="glyphicon glyphicon-chevron-left"></span>Citas</span></button>
-          <button name="glosario"><span>Glosario<span class="glyphicon glyphicon-chevron-right"></span></span></button>
+          <button name="citas"><img class="rotate" src="./public/image/flecha.svg" alt="back icon" width="10">Cifras</button>
+          <button name="glosario">Glosario<img src="./public/image/flecha.svg" alt="next icon" width="10"></button>
         </div>
       </div>
     </div>

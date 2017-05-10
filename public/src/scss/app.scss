@@ -72,7 +72,7 @@ h1 {
 
 .chart-encabezado-right, .chart-encabezado-left {
   fill: #666666;
-  font-weight: bold;
+  font-weight: 500;
 }
 .chart-encabezado-right {
   text-anchor: start;
@@ -143,13 +143,8 @@ h1 {
   }
 }
 
-#tooltip {
+.view_top {
   transform: translate(-50%, -100%);
-  border: 2px solid gray;
-  background-color: white;
-  border-radius: 4px;
-  padding: 10px 20px 0px 20px;
-  position: absolute;
 
   &:after, &:before {
     content: '';
@@ -163,20 +158,63 @@ h1 {
   }
   &:after {
     left: 50%;
-    border-color: #CFD8DC transparent transparent transparent;
+    border-color: #F2F2F2 transparent transparent transparent;
     border-width: 10px;
     line-height: 0px;
-    _border-color: #CFD8DC black black black;
+    _border-color: #F2F2F2 black black black;
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
   }
   &:before {
     left: 50%;
-    border-color: gray transparent transparent transparent;
-    border-width: 12px;
+    border-color: #B3B3B3 transparent transparent transparent;
+    border-width: 11px;
     line-height: 0px;
-    _border-color: gray black black black;
+    _border-color: #B3B3B3 black black black;
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
   }
+}
+.view_bottom {
+  transform: translate(-50%, 0%);
+
+  &:after, &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: translate(-50%, -10px);
+  }
+  &:after {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px;
+    border-color: transparent transparent white transparent;
+    line-height: 0px;
+    _border-color: #000000 #000000 white #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  }
+  &:before {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px;
+    border-color: transparent transparent #B3B3B3 transparent;
+    line-height: 0px;
+    _border-color: #000000 #000000 #B3B3B3 #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  }
+}
+#tooltip {
+  border: 1px solid #B3B3B3;
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px 16px 0px 16px;
+  position: absolute;
+  width: 300px;
 
   & .tooltip_header {
     width: 100%;
@@ -234,7 +272,7 @@ h1 {
       color: silver;
       font-weight: normal;
       font-size: 12px;
-      margin: 0px 0px 20px 0px;
+      margin: 0px 0px 16px 0px;
     }
     & .tooltip_data {
       font-size: 14px;
@@ -247,23 +285,39 @@ h1 {
     }
   }
   & .tooltip_footer {
-    width: calc(100% + 40px);
-    left: -20px;
-    margin-top: 15px;
+    width: calc(100% + 32px);
+    left: -16px;
+    margin-top: 8px;
     position: relative;
-    background-color: #CFD8DC;
+    background-color: #F2F2F2;
     border-radius: 0px 0px 4px 4px;
-    padding: 10px 20px;
+    padding: 8px 16px;
 
     & button {
       background-color: transparent;
       border: none;
+      color: silver;
+      padding: 0px;
+      display: flex;
+      align-items: center;
+      outline: none;
+
+      & img {
+        margin: 0px 0px 0px 10px;
+      }
+
+      & i {
+        font-weight: normal;
+      }
     }
   }
 }
-#tooltip {
-
+.tooltip_glosary {
+  margin-top: 15px;
+  font-size: 14px;
+  color: silver;
 }
+
 #intro_screen {
   top: 0px;
   left: 0px;
@@ -271,4 +325,8 @@ h1 {
   width: 100%;
   height: 100%;
   position: absolute;
+}
+.rotate {
+  transform: rotate(180deg);
+  margin: 0px 10px 0px 0px !important;
 }

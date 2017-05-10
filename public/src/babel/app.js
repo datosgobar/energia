@@ -1,6 +1,7 @@
 // VARIABLES
 let GLOBAL_NODES,
     GLOBAL_LINKS,
+    GLOSARIO,
     INTRO = {
       nodes: [
         3,
@@ -78,6 +79,13 @@ $(() => {
       nodesGlo, linksGlo, allNodes,
       sankeyChartD3, path, svg;
 
+  const setearTooltip = () => {
+    $('.tooltip_content').show();
+    $('.tooltip_glosary').hide();
+
+    d3.select('button[name="citas"]').style('opacity', 0);
+    d3.select('button[name="glosario"]').attr('style', null);
+  };
   const obtenerNodosIntro = () => {
     INTRO.nodes.forEach((v, k) => {
       INTRO.nodes[k] = BUSCAR_NODO(v);
@@ -87,7 +95,13 @@ $(() => {
   };
   const tooltipIn = (d) => {
 
-    $('#tooltip').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 }).fadeIn(100);
+    setearTooltip();
+
+    if (d.y < 10) {
+      $('#tooltip').attr('class', 'view_bottom').css({ top: $('#sankey svg').position().top + d.y + d.dy + 42, left: $('#sankey svg').position().left + d.x + 210 }).fadeIn(100);
+    } else {
+      $('#tooltip').attr('class', 'view_top').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 }).fadeIn(100);
+    }
 
     if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
       $('.tooltip_name').text(d.nombre);
@@ -232,7 +246,7 @@ $(() => {
         intro_container = d3.select('#content').append('div').attr('id', 'tooltip_intro').style('bottom', '20px').style('right', '20px');
           intro_container.append('div').attr('class', 'tooltip_header flex flex_justify_between flex_align_start');
           intro_container.select('.tooltip_header').append('h2').attr('class', 'tooltip_name');
-          intro_container.select('.tooltip_header').append('span').attr('class', 'glyphicon glyphicon-remove tooltip_exit');
+          intro_container.select('.tooltip_header').append('img').attr('class', 'tooltip_exit').attr('src', './public/image/cruz.svg').attr('width', '15');
           intro_container.append('div').attr('class', 'tooltip_content');
           intro_container.select('.tooltip_content').append('p').attr('class', 'tooltip_production');
         intro_buttons   = intro_container.append('div').attr('class', ' tooltip_footer flex flex_justify_between');
@@ -286,15 +300,23 @@ $(() => {
       button_next.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage + 1, 'normal', 'next'); });
     }
   };
-  const downloadFile = (anio) => {
+  const downloadFile = (anio, file) => {
     let promise = new Promise((success) => {
-      d3.json(`./public/data/data_${anio}.json`, (data) => {
+      if (file === 'sankey') {
+        d3.json(`./public/data/data_${anio}.json`, (data) => {
 
-        GLOBAL_NODES = data.nodes;
-        GLOBAL_LINKS = data.links;
+          GLOBAL_NODES = data.nodes;
+          GLOBAL_LINKS = data.links;
 
-        success();
-      });
+          success();
+        });
+      } else {
+        d3.csv(`./public/data/glosario.csv`, (data) => {
+          GLOSARIO = data;
+
+          success();
+        });
+      }
     });
 
     return promise;
@@ -413,7 +435,7 @@ $(() => {
       .attr('y', (d) => (d.dy / 2))
       .attr('dy', '0.35em')
       .text((d) => (d.nombre))
-      .filter((d) => (d.targetLinks.length === 0))
+      .filter((d) => (d.posicionX === 1))
       .attr('class', 'node-text-start')
       .attr('x', -10);
     // Se agregan encabezados
@@ -463,7 +485,7 @@ $(() => {
     return true;
   };
 
-  downloadFile(2015)
+  downloadFile(2015, 'sankey')
     .then(() => obtenerNodosIntro())
     .then(() => calcularAltura())
     .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
@@ -480,7 +502,7 @@ $(() => {
       $('select[name=anio]').on('sumo:closed', (sumo) => { $('body').attr('style', 'position: relative'); });
 
       $('select[name=anio]').on('change', (event) => {
-        downloadFile($('select[name=anio]')[0].value)
+        downloadFile($('select[name=anio]')[0].value, 'sankey')
           .then(() => calcularAltura())
           .then(() => $('#sankey').empty())
           .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
@@ -496,5 +518,27 @@ $(() => {
       $(window).on('resize', () => {
         calcularAltura(true);
       });
-  });
+    });
+  downloadFile(2015, 'glosario')
+    .then(() => {
+      $('.tooltip_glosary').hide();
+      $('button[name="citas"]').css({ opacity: 0 });
+
+      // Activo eventos de los botones de la tooltip
+      $('button[name="glosario"]').on('click', (event) => {
+
+        $('.tooltip_glosary').text(GLOSARIO[STATIC_NODE.id].descripcion).fadeIn('fast');
+        $('.tooltip_content').hide();
+
+        d3.select('button[name="citas"]').transition().attr('style', null);
+        d3.select('button[name="glosario"]').transition().style('opacity', 0);
+      });
+      $('button[name="citas"]').on('click', (event) => {
+        $('.tooltip_glosary').hide();
+        $('.tooltip_content').fadeIn('fast');
+
+        d3.select('button[name="citas"]').transition().style('opacity', 0);
+        d3.select('button[name="glosario"]').transition().attr('style', null);
+      });
+    });
 });
