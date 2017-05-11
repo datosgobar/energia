@@ -104,6 +104,7 @@ $(() => {
     }
 
     if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
+      $('.title_total').text('DISPONIBILIDAD LOCAL');
       $('.tooltip_name').text(d.nombre);
       $('.tooltip_ktep').text(d.oferta_interna.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().removeAttr('style');
@@ -117,6 +118,7 @@ $(() => {
       $('.tooltip_others').parent().parent().removeAttr('style');
       $('.tooltip_others').text(d.otros.format_number(2, 3, '.', ','));
     } else if (d.posicionX === 2 || d.posicionX === 4) {
+      $('.title_total').text('INSUMOS DE LA CENTRAL');
       $('.tooltip_name').text(d.nombre);
       $('.tooltip_ktep').text(d.consumo.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().removeAttr('style');
@@ -124,10 +126,14 @@ $(() => {
       $('.tooltip_importation').parent().parent().css({ 'display': 'none' });
       $('.tooltip_exportation').parent().parent().css({ 'display': 'none' });
       $('.tooltip_losses').parent().parent().removeAttr('style');
-      $('.tooltip_losses').text(d.perdidas.format_number(2, 3, '.', ','));
-      $('.tooltip_others').parent().parent().removeAttr('style');
-      $('.tooltip_others').text(d.otros.format_number(2, 3, '.', ','));
+      $('.tooltip_losses').text(d.perdida.format_number(2, 3, '.', ','));
+      $('.tooltip_others').parent().parent().css({ 'display': 'none' });
     } else {
+      if (d.posicionX === 6 && d.posicionY === 0) {
+        $('.title_total').text('PERDIDA TOTAL');
+      } else {
+        $('.title_total').text('DISPONIBLE PARA CONSUMO');
+      }
       $('.tooltip_name').text(d.nombre);
       $('.tooltip_ktep').text(d.consumo.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().css({ 'display': 'none' });
@@ -490,7 +496,7 @@ $(() => {
     .then(() => calcularAltura())
     .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
     .then(() => setearNodosYLinks())
-    .then(() => intro(0, 'create', 'next')) // Se activa tooltip_intro
+    .then(() => { if (!jQuery.browser.mobile) { return intro(0, 'create', 'next'); }}) // Se activa tooltip_intro
     .then(() => $('#tooltip').fadeOut(100)) // Se activa animación del tooltip_sankey
     .then(() => { // Se activan eventos
       // Selector años
@@ -519,6 +525,9 @@ $(() => {
         calcularAltura(true);
       });
     });
+
+
+
   downloadFile(2015, 'glosario')
     .then(() => {
       $('.tooltip_glosary').hide();

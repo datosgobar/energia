@@ -217,40 +217,40 @@
             "exportacion": -1170.85
         },
         {
-            "posicionY": 14330.0,
+            "posicionY": 14327.84,
             "posicionX": 4,
             "produccion": 6231.77,
             "nombre": "Centrales Eléctricas",
             "perdida": 8096.07,
             "id": 18,
-            "consumo": 14330.0
+            "consumo": 14327.84
         },
         {
-            "posicionY": 24967.0,
+            "posicionY": 24965.48,
             "posicionX": 2,
             "produccion": 24965.48,
             "nombre": "Plantas de Gas",
             "perdida": 0.0,
             "id": 19,
-            "consumo": 24967.0
+            "consumo": 24965.48
         },
         {
-            "posicionY": 26980.0,
+            "posicionY": 26977.51,
             "posicionX": 2,
             "produccion": 24274.87,
             "nombre": "Refinerías",
             "perdida": 2702.64,
             "id": 20,
-            "consumo": 26980.0
+            "consumo": 26977.51
         },
         {
-            "posicionY": 871.0,
+            "posicionY": 869.39,
             "posicionX": 2,
             "produccion": 602.42,
             "nombre": "Otros Centros",
             "perdida": 266.97,
             "id": 21,
-            "consumo": 871.0
+            "consumo": 869.39
         },
         {
             "posicionY": 2,
