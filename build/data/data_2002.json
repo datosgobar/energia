@@ -1,0 +1,850 @@
+{
+    "nodes": [
+        {
+            "posicionY": 3858.16,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 3896.74,
+            "oferta_interna": 3858.16,
+            "nombre": "Energía Hidráulica",
+            "otros": 0.0,
+            "perdidas": -38.58,
+            "id": 0,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 1715.96,
+            "posicionX": 1,
+            "importacion": 1716.0,
+            "produccion": 0.0,
+            "oferta_interna": 1715.96,
+            "nombre": "Energía Nuclear",
+            "otros": -0.04,
+            "perdidas": 0.0,
+            "id": 1,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 34303.16,
+            "posicionX": 1,
+            "importacion": 82.55,
+            "produccion": 40055.31,
+            "oferta_interna": 34303.16,
+            "nombre": "Gas Natural",
+            "otros": -2778.55,
+            "perdidas": -729.94,
+            "id": 2,
+            "exportacion": -2326.22
+        },
+        {
+            "posicionY": 24273.0,
+            "posicionX": 1,
+            "importacion": 542.38,
+            "produccion": 38168.68,
+            "oferta_interna": 24273.0,
+            "nombre": "Petróleo",
+            "otros": -677.9,
+            "perdidas": 0.0,
+            "id": 3,
+            "exportacion": -13760.15
+        },
+        {
+            "posicionY": 0.0,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 0.0,
+            "oferta_interna": 0.0,
+            "nombre": "Energía Eólica",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 4,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 0.0,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 0.0,
+            "oferta_interna": 0.0,
+            "nombre": "Energía Solar",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 5,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 555.9,
+            "posicionX": 1,
+            "importacion": 595.0,
+            "produccion": 57.0,
+            "oferta_interna": 555.9,
+            "nombre": "Carbón Mineral",
+            "otros": -96.1,
+            "perdidas": 0.0,
+            "id": 6,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 0.0,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 0.0,
+            "oferta_interna": 0.0,
+            "nombre": "Alcohol Vegetal",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 7,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 0.0,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 0.0,
+            "oferta_interna": 0.0,
+            "nombre": "Aceites Vegetales",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 8,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 687.21,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 687.21,
+            "oferta_interna": 687.21,
+            "nombre": "Leña",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 9,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 676.0,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 676.0,
+            "oferta_interna": 676.0,
+            "nombre": "Bagazo",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 10,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 410.97,
+            "posicionX": 1,
+            "importacion": 0.0,
+            "produccion": 410.97,
+            "oferta_interna": 410.97,
+            "nombre": "Otros Primarios",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 11,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 6628.33,
+            "posicionX": 5,
+            "importacion": 754.62,
+            "produccion": 7274.74,
+            "oferta_interna": 6628.33,
+            "nombre": "Energía Eléctrica",
+            "otros": 0.0,
+            "perdidas": -1155.44,
+            "id": 12,
+            "exportacion": -245.59
+        },
+        {
+            "posicionY": 22824.17,
+            "posicionX": 3,
+            "importacion": 0.0,
+            "produccion": 26716.66,
+            "oferta_interna": 22824.17,
+            "nombre": "Gas de Red",
+            "otros": 0.0,
+            "perdidas": -1247.28,
+            "id": 13,
+            "exportacion": -2645.21
+        },
+        {
+            "posicionY": 1411.31,
+            "posicionX": 3,
+            "importacion": 0.0,
+            "produccion": 3227.51,
+            "oferta_interna": 1411.31,
+            "nombre": "Gas Licuado",
+            "otros": -381.81,
+            "perdidas": 0.0,
+            "id": 14,
+            "exportacion": -1434.38
+        },
+        {
+            "posicionY": 8533.53,
+            "posicionX": 3,
+            "importacion": 362.95,
+            "produccion": 9590.66,
+            "oferta_interna": 8533.53,
+            "nombre": "Gas Oil",
+            "otros": -110.24,
+            "perdidas": 0.0,
+            "id": 15,
+            "exportacion": -1309.84
+        },
+        {
+            "posicionY": 732.9,
+            "posicionX": 3,
+            "importacion": 6.61,
+            "produccion": 1720.34,
+            "oferta_interna": 732.9,
+            "nombre": "Fuel Oil",
+            "otros": -144.87,
+            "perdidas": 0.0,
+            "id": 16,
+            "exportacion": -849.18
+        },
+        {
+            "posicionY": 2744.58,
+            "posicionX": 3,
+            "importacion": 3.23,
+            "produccion": 4948.06,
+            "oferta_interna": 2744.58,
+            "nombre": "Motonaftas",
+            "otros": 35.74,
+            "perdidas": 0.0,
+            "id": 17,
+            "exportacion": -2242.44
+        },
+        {
+            "posicionY": 13672.64,
+            "posicionX": 4,
+            "produccion": 7274.74,
+            "nombre": "Centrales Eléctricas",
+            "perdida": 6397.9,
+            "id": 18,
+            "consumo": 13672.64
+        },
+        {
+            "posicionY": 30998.0,
+            "posicionX": 2,
+            "produccion": 30998.0,
+            "nombre": "Plantas de Gas",
+            "perdida": -0.0,
+            "id": 19,
+            "consumo": 30998.0
+        },
+        {
+            "posicionY": 24192.22,
+            "posicionX": 2,
+            "produccion": 22345.03,
+            "nombre": "Refinerías",
+            "perdida": 1847.19,
+            "id": 20,
+            "consumo": 24192.22
+        },
+        {
+            "posicionY": 867.11,
+            "posicionX": 2,
+            "produccion": 636.54,
+            "nombre": "Otros Centros",
+            "perdida": 230.57,
+            "id": 21,
+            "consumo": 867.11
+        },
+        {
+            "posicionY": 2,
+            "nombre": "Consumo Propio",
+            "consumo": 5793.92,
+            "id": 22,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 8944.35,
+            "nombre": "Residencial",
+            "consumo": 8944.35,
+            "id": 23,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 2735.64,
+            "nombre": "No Energético",
+            "consumo": 2735.64,
+            "id": 24,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 10493.11,
+            "nombre": "Transporte",
+            "consumo": 10493.11,
+            "id": 25,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 3156.29,
+            "nombre": "Comercial",
+            "consumo": 3156.29,
+            "id": 26,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 10455.49,
+            "nombre": "Industria",
+            "consumo": 10455.49,
+            "id": 27,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 2920.36,
+            "nombre": "Agropecuario",
+            "consumo": 2920.36,
+            "id": 28,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 0,
+            "nombre": "Pérdidas",
+            "consumo": 11646.89,
+            "id": 29,
+            "posicionX": 6
+        },
+        {
+            "posicionY": null,
+            "nombre": "Importación",
+            "id": 30,
+            "posicionX": 8
+        },
+        {
+            "posicionY": null,
+            "nombre": "Exportación",
+            "id": 31,
+            "posicionX": 8
+        },
+        {
+            "posicionY": 0.0,
+            "posicionX": 3,
+            "importacion": 0.0,
+            "produccion": 0.0,
+            "oferta_interna": 0.0,
+            "nombre": "Biocombustibles",
+            "otros": 0.0,
+            "perdidas": 0.0,
+            "id": 32,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 1475.09,
+            "posicionX": 3,
+            "importacion": 0.0,
+            "produccion": 1551.53,
+            "oferta_interna": 1475.09,
+            "nombre": "Otros Gases",
+            "otros": -76.43,
+            "perdidas": 0.0,
+            "id": 33,
+            "exportacion": 0.0
+        },
+        {
+            "posicionY": 5288.02,
+            "posicionX": 3,
+            "importacion": 56.88,
+            "produccion": 8146.42,
+            "oferta_interna": 5288.02,
+            "nombre": "Otras Secundarias",
+            "otros": -725.84,
+            "perdidas": 0.0,
+            "id": 34,
+            "exportacion": -2189.44
+        },
+        {
+            "posicionY": 1,
+            "nombre": "borrar",
+            "oferta_interna": 1,
+            "id": 35,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 1,
+            "nombre": "borrar",
+            "oferta_interna": 1,
+            "id": 36,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 1,
+            "nombre": "borrar",
+            "oferta_interna": 1,
+            "id": 37,
+            "posicionX": 6
+        },
+        {
+            "posicionY": 1,
+            "nombre": "escala1",
+            "id": 38,
+            "posicionX": 9
+        },
+        {
+            "posicionY": 1,
+            "nombre": "escala2",
+            "id": 39,
+            "posicionX": 10
+        }
+    ],
+    "links": [
+        {
+            "source": 10,
+            "target": 27,
+            "value": 613.0
+        },
+        {
+            "source": 10,
+            "target": 18,
+            "value": 63.0
+        },
+        {
+            "source": 30,
+            "target": 6,
+            "value": 595.0
+        },
+        {
+            "source": 6,
+            "target": 18,
+            "value": 44.0
+        },
+        {
+            "source": 6,
+            "target": 21,
+            "value": 511.9
+        },
+        {
+            "source": 30,
+            "target": 12,
+            "value": 754.62
+        },
+        {
+            "source": 12,
+            "target": 31,
+            "value": 245.59
+        },
+        {
+            "source": 12,
+            "target": 29,
+            "value": 1155.44
+        },
+        {
+            "source": 12,
+            "target": 22,
+            "value": 189.08
+        },
+        {
+            "source": 12,
+            "target": 23,
+            "value": 1826.79
+        },
+        {
+            "source": 12,
+            "target": 26,
+            "value": 1596.22
+        },
+        {
+            "source": 12,
+            "target": 25,
+            "value": 45.14
+        },
+        {
+            "source": 12,
+            "target": 28,
+            "value": 42.09
+        },
+        {
+            "source": 12,
+            "target": 27,
+            "value": 2929.01
+        },
+        {
+            "source": 18,
+            "target": 12,
+            "value": 7274.74
+        },
+        {
+            "source": 30,
+            "target": 16,
+            "value": 6.61
+        },
+        {
+            "source": 16,
+            "target": 31,
+            "value": 849.18
+        },
+        {
+            "source": 20,
+            "target": 16,
+            "value": 1720.34
+        },
+        {
+            "source": 16,
+            "target": 22,
+            "value": 187.49
+        },
+        {
+            "source": 16,
+            "target": 26,
+            "value": 58.55
+        },
+        {
+            "source": 16,
+            "target": 25,
+            "value": 79.46
+        },
+        {
+            "source": 16,
+            "target": 28,
+            "value": 112.92
+        },
+        {
+            "source": 16,
+            "target": 27,
+            "value": 167.29
+        },
+        {
+            "source": 16,
+            "target": 18,
+            "value": 127.18
+        },
+        {
+            "source": 30,
+            "target": 2,
+            "value": 82.55
+        },
+        {
+            "source": 2,
+            "target": 31,
+            "value": 2326.22
+        },
+        {
+            "source": 2,
+            "target": 29,
+            "value": 729.94
+        },
+        {
+            "source": 2,
+            "target": 19,
+            "value": 30998.0
+        },
+        {
+            "source": 2,
+            "target": 22,
+            "value": 3305.16
+        },
+        {
+            "source": 13,
+            "target": 31,
+            "value": 2645.21
+        },
+        {
+            "source": 13,
+            "target": 29,
+            "value": 1247.28
+        },
+        {
+            "source": 19,
+            "target": 13,
+            "value": 26716.66
+        },
+        {
+            "source": 13,
+            "target": 22,
+            "value": 778.54
+        },
+        {
+            "source": 13,
+            "target": 23,
+            "value": 5833.24
+        },
+        {
+            "source": 13,
+            "target": 26,
+            "value": 1112.2
+        },
+        {
+            "source": 13,
+            "target": 25,
+            "value": 1693.2
+        },
+        {
+            "source": 13,
+            "target": 27,
+            "value": 6143.33
+        },
+        {
+            "source": 13,
+            "target": 18,
+            "value": 7263.66
+        },
+        {
+            "source": 14,
+            "target": 31,
+            "value": 1434.38
+        },
+        {
+            "source": 19,
+            "target": 14,
+            "value": 2069.81
+        },
+        {
+            "source": 20,
+            "target": 14,
+            "value": 1157.69
+        },
+        {
+            "source": 14,
+            "target": 22,
+            "value": 2.2
+        },
+        {
+            "source": 14,
+            "target": 23,
+            "value": 1014.56
+        },
+        {
+            "source": 14,
+            "target": 26,
+            "value": 169.09
+        },
+        {
+            "source": 14,
+            "target": 28,
+            "value": 70.46
+        },
+        {
+            "source": 14,
+            "target": 27,
+            "value": 155.0
+        },
+        {
+            "source": 30,
+            "target": 15,
+            "value": 362.95
+        },
+        {
+            "source": 15,
+            "target": 31,
+            "value": 1309.84
+        },
+        {
+            "source": 20,
+            "target": 15,
+            "value": 9590.66
+        },
+        {
+            "source": 15,
+            "target": 22,
+            "value": 21.11
+        },
+        {
+            "source": 15,
+            "target": 26,
+            "value": 84.22
+        },
+        {
+            "source": 15,
+            "target": 25,
+            "value": 5558.22
+        },
+        {
+            "source": 15,
+            "target": 28,
+            "value": 2694.89
+        },
+        {
+            "source": 15,
+            "target": 27,
+            "value": 84.22
+        },
+        {
+            "source": 15,
+            "target": 18,
+            "value": 90.88
+        },
+        {
+            "source": 0,
+            "target": 29,
+            "value": 38.58
+        },
+        {
+            "source": 0,
+            "target": 18,
+            "value": 3858.16
+        },
+        {
+            "source": 9,
+            "target": 23,
+            "value": 100.29
+        },
+        {
+            "source": 9,
+            "target": 26,
+            "value": 50.14
+        },
+        {
+            "source": 9,
+            "target": 27,
+            "value": 100.29
+        },
+        {
+            "source": 9,
+            "target": 18,
+            "value": 84.21
+        },
+        {
+            "source": 9,
+            "target": 21,
+            "value": 352.29
+        },
+        {
+            "source": 30,
+            "target": 17,
+            "value": 3.23
+        },
+        {
+            "source": 17,
+            "target": 31,
+            "value": 2242.44
+        },
+        {
+            "source": 20,
+            "target": 17,
+            "value": 4948.06
+        },
+        {
+            "source": 17,
+            "target": 25,
+            "value": 2744.58
+        },
+        {
+            "source": 30,
+            "target": 1,
+            "value": 1716.0
+        },
+        {
+            "source": 1,
+            "target": 18,
+            "value": 1715.96
+        },
+        {
+            "source": 11,
+            "target": 27,
+            "value": 263.34
+        },
+        {
+            "source": 11,
+            "target": 18,
+            "value": 147.63
+        },
+        {
+            "source": 30,
+            "target": 3,
+            "value": 542.38
+        },
+        {
+            "source": 3,
+            "target": 31,
+            "value": 13760.15
+        },
+        {
+            "source": 3,
+            "target": 20,
+            "value": 24192.22
+        },
+        {
+            "source": 3,
+            "target": 22,
+            "value": 80.78
+        },
+        {
+            "source": 20,
+            "target": 29,
+            "value": 1847.19
+        },
+        {
+            "source": 18,
+            "target": 29,
+            "value": 6397.9
+        },
+        {
+            "source": 21,
+            "target": 29,
+            "value": 230.57
+        },
+        {
+            "source": 30,
+            "target": 34,
+            "value": 56.88
+        },
+        {
+            "source": 34,
+            "target": 31,
+            "value": 2189.44
+        },
+        {
+            "source": 19,
+            "target": 34,
+            "value": 2211.52
+        },
+        {
+            "source": 20,
+            "target": 34,
+            "value": 4013.3
+        },
+        {
+            "source": 34,
+            "target": 24,
+            "value": 2735.64
+        },
+        {
+            "source": 34,
+            "target": 23,
+            "value": 169.48
+        },
+        {
+            "source": 34,
+            "target": 26,
+            "value": 85.87
+        },
+        {
+            "source": 34,
+            "target": 25,
+            "value": 372.51
+        },
+        {
+            "source": 34,
+            "target": 21,
+            "value": 2.92
+        },
+        {
+            "source": 20,
+            "target": 33,
+            "value": 914.99
+        },
+        {
+            "source": 33,
+            "target": 22,
+            "value": 1229.56
+        },
+        {
+            "source": 33,
+            "target": 18,
+            "value": 277.96
+        },
+        {
+            "source": 21,
+            "target": 33,
+            "value": 636.54
+        },
+        {
+            "source": 38,
+            "target": 39,
+            "value": 175000
+        }
+    ]
+}

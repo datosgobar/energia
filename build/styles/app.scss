@@ -1,0 +1,332 @@
+@import "pre";
+@import "header_footer";
+
+// Codigo Sitio
+h1 {
+  margin: 20px auto;
+  font-size: 34px;
+  max-width: 300px;
+  text-align: center;
+
+  // (portrait and landscape)
+  @media (min-width: $small) {
+    margin: 40px auto 20px auto;
+    max-width: initial;
+    font-size: 40px;
+  }
+  // (portrait and landscape)
+  @media (min-width: $large) {
+    font-size: 49px;
+  }
+}
+
+#content {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 72px);
+  box-sizing: border-box;
+  overflow: hidden;
+  padding: 0px;
+}
+#form_energia {
+  margin: 0px 10px;
+
+  & > p {
+    display: none;
+    margin: 0px;
+
+    // (portrait and landscape)
+    @media (min-width: $small) {
+      display: inherit;
+    }
+  }
+  & > select {
+    margin: 0px 10px 0px 0px;
+    max-width: 75px;
+
+    // (portrait and landscape)
+    @media (min-width: $small) {
+      display: inherit;
+      margin: 0px 10px;
+      max-width: 150px;
+    }
+  }
+  & > button {
+    height: 24px;
+    padding: 0px 10px;
+  }
+}
+#sankey {
+  width: 100vw;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  text-align: center;
+  height: calc(100vh - 72px - 104px - 24px);
+  min-height: 500px;
+
+  // (portrait and landscape)
+  @media (min-width: $large) {
+    height: calc(100vh - 72px - 113px - 24px);
+  }
+}
+
+.chart-encabezado-right, .chart-encabezado-left {
+  fill: #666666;
+  font-weight: 500;
+}
+.chart-encabezado-right {
+  text-anchor: start;
+}
+.chart-encabezado-left {
+  text-anchor: end;
+}
+
+.link {
+  fill: none;
+  z-index: 10;
+  stroke: silver;
+  stroke-opacity: 0.25;
+  stroke-linejoin: round;
+}
+.node {
+  z-index: 20;
+
+  & > rect {
+    stroke: silver;
+    fill: white;
+    cursor: pointer;
+    // shape-rendering: crispEdges;
+
+  }
+  & > text {
+    fill: #ACACAC;
+    font-weight: normal;
+    font-size: 14px;
+  }
+  & > .node-text {
+    text-anchor: start;
+  }
+  & > .node-text-start {
+    text-anchor: end;
+  }
+}
+
+// ---- Tooltip
+#tooltip_intro {
+  border: 1px solid silver;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius: 4px;
+  position: absolute;
+  max-width: 200px;
+
+  & > .tooltip_header {
+    width: 100%;
+    margin: 0px 0px 10px 0px;
+
+    & > .tooltip_name {
+      font-size: 17px;
+      font-weight: bold;
+      margin: 0px;
+    }
+    & > .tooltip_exit {
+      cursor: pointer;
+    }
+  }
+  & > .tooltip_content {
+    & > p {
+      font-size: 14px;
+    }
+  }
+  & > .tooltip_footer {
+
+  }
+}
+
+.view_top {
+  transform: translate(-50%, -100%);
+
+  &:after, &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 0px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: translate(-50%, 100%);
+  }
+  &:after {
+    left: 50%;
+    border-color: #F2F2F2 transparent transparent transparent;
+    border-width: 10px;
+    line-height: 0px;
+    _border-color: #F2F2F2 black black black;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
+  }
+  &:before {
+    left: 50%;
+    border-color: #B3B3B3 transparent transparent transparent;
+    border-width: 11px;
+    line-height: 0px;
+    _border-color: #B3B3B3 black black black;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
+  }
+}
+.view_bottom {
+  transform: translate(-50%, 0%);
+
+  &:after, &:before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    transform: translate(-50%, -10px);
+  }
+  &:after {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px;
+    border-color: transparent transparent white transparent;
+    line-height: 0px;
+    _border-color: #000000 #000000 white #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  }
+  &:before {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 9px;
+    border-color: transparent transparent #B3B3B3 transparent;
+    line-height: 0px;
+    _border-color: #000000 #000000 #B3B3B3 #000000;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  }
+}
+#tooltip {
+  border: 1px solid #B3B3B3;
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px 16px 0px 16px;
+  position: absolute;
+  width: 250px;
+
+  & .tooltip_header {
+    width: 100%;
+    margin: 0px;
+
+    & .tooltip_name {
+      font-size: 17px;
+      font-weight: bold;
+      margin: 0px;
+    }
+    & .tooltip_exit {
+      cursor: pointer;
+    }
+  }
+  & .tooltip_content {
+    width: 100%;
+
+    & .tooltip_container {
+      width: 100%;
+      min-width: 200px;
+
+      & .tooltip_key {
+        font-size: 14px;
+        color: silver;
+        font-weight: normal;
+        padding: 2px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        & i {
+          font-size: 12px;
+          margin-right: 5px;
+        }
+      }
+
+      &:nth-child(2) {
+        & .tooltip_key {
+          color: gray;
+          font-weight: bold;
+          text-transform: none;
+        }
+      }
+      &:nth-child(3) {
+        & .tooltip_key {
+          padding: 5px 0px 2px 0px;
+          & i { color: #7FC6E6; }
+        }
+      }
+      &:nth-child(4) { & .tooltip_key > i { color: #FFCF87; }}
+      &:nth-child(5) { & .tooltip_key > i { color: #00897B; }}
+      &:nth-child(6) { & .tooltip_key > i { color: #ED7960; }}
+    }
+    & .ref {
+      color: silver;
+      font-weight: normal;
+      font-size: 12px;
+      margin: 0px 0px 16px 0px;
+    }
+    & .tooltip_data {
+      font-size: 14px;
+      font-weight: bold;
+      color: gray;
+    }
+    & .divider {
+      border-top: 1px solid silver;
+      margin-top: 3px;
+    }
+  }
+  & .tooltip_footer {
+    width: calc(100% + 32px);
+    left: -16px;
+    margin-top: 8px;
+    position: relative;
+    background-color: #F2F2F2;
+    border-radius: 0px 0px 4px 4px;
+    padding: 8px 16px;
+
+    & button {
+      background-color: transparent;
+      border: none;
+      color: silver;
+      padding: 0px;
+      display: flex;
+      align-items: center;
+      outline: none;
+
+      & img {
+        margin: 0px 0px 0px 10px;
+      }
+
+      & i {
+        font-weight: normal;
+      }
+    }
+  }
+}
+.tooltip_glosary {
+  margin-top: 15px;
+  font-size: 14px;
+  color: silver;
+}
+
+#intro_screen {
+  top: 0px;
+  left: 0px;
+  background-color: transparent;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+}
+.rotate {
+  transform: rotate(180deg);
+  margin: 0px 10px 0px 0px !important;
+}
