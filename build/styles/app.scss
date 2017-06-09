@@ -3,14 +3,14 @@
 
 // Codigo Sitio
 h1 {
-  margin: 20px auto;
+  margin: 15px auto 10px auto;
   font-size: 34px;
   max-width: 300px;
   text-align: center;
 
   // (portrait and landscape)
   @media (min-width: $small) {
-    margin: 40px auto 20px auto;
+    margin: 30px auto 15px auto;
     max-width: initial;
     font-size: 40px;
   }
@@ -23,10 +23,17 @@ h1 {
 #content {
   position: relative;
   width: 100vw;
-  height: calc(100vh - 72px);
+  min-height: calc(100vh - 72px);
   box-sizing: border-box;
   overflow: hidden;
   padding: 0px;
+
+  & > p {
+    padding: 0px 20px;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 15px;
+  }
 }
 #form_energia {
   margin: 0px 10px;
@@ -61,12 +68,11 @@ h1 {
   overflow-x: scroll;
   overflow-y: hidden;
   text-align: center;
-  height: calc(100vh - 72px - 104px - 24px);
   min-height: 500px;
 
   // (portrait and landscape)
   @media (min-width: $large) {
-    height: calc(100vh - 72px - 113px - 24px);
+    height: calc(100vh - 72px - 98px - 35px - 37px);
   }
 }
 
@@ -115,14 +121,23 @@ h1 {
 #tooltip_intro {
   border: 1px solid silver;
   background-color: white;
-  padding: 10px 20px;
+  padding: 16px 16px 0px 16px;
   border-radius: 4px;
   position: absolute;
-  max-width: 200px;
+  max-width: 400px;
+  left: 50%;
+  bottom: 30%;
+  transform: translateX(-50%);
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.26);
+  color: $dark_color;
+
+  & b {
+    font-weight: 500;
+  }
 
   & > .tooltip_header {
     width: 100%;
-    margin: 0px 0px 10px 0px;
+    margin: 0px 0px 20px 0px;
 
     & > .tooltip_name {
       font-size: 17px;
@@ -131,6 +146,7 @@ h1 {
     }
     & > .tooltip_exit {
       cursor: pointer;
+      margin-left: 10px;
     }
   }
   & > .tooltip_content {
@@ -139,10 +155,45 @@ h1 {
     }
   }
   & > .tooltip_footer {
+    width: calc(100% + 32px);
+    left: -16px;
+    margin-top: 8px;
+    position: relative;
+    background-color: $dark_color;
+    border-radius: 0px 0px 4px 4px;
+    padding: 8px 16px;
 
+    & aside {
+      color: $generic_color;
+    }
+    & button {
+      color: red;
+      background-color: transparent;
+      border: none;
+      color: silver;
+      padding: 0px;
+      margin: 0px;
+      display: flex;
+      align-items: center;
+      outline: none;
+      box-shadow: none;
+
+      & img {
+        margin: 0px 0px 0px 10px;
+      }
+
+      & i {
+        font-weight: normal;
+      }
+    }
+    & button:hover {
+      color: gray;
+    }
+    & button:active {
+      opacity: 0.5;
+    }
   }
 }
-
 .view_top {
   transform: translate(-50%, -100%);
 
@@ -208,17 +259,19 @@ h1 {
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
   }
 }
+
 #tooltip {
   border: 1px solid #B3B3B3;
   background-color: white;
   border-radius: 4px;
-  padding: 8px 16px 0px 16px;
+  padding: 16px 16px 0px 16px;
   position: absolute;
   width: 250px;
+  box-shadow: 0px 2px 5px rgba(0,0,0,0.26);
 
   & .tooltip_header {
     width: 100%;
-    margin: 0px;
+    margin: 0px 0px 0px 0px;
 
     & .tooltip_name {
       font-size: 17px;
@@ -227,6 +280,7 @@ h1 {
     }
     & .tooltip_exit {
       cursor: pointer;
+      margin-left: 10px;
     }
   }
   & .tooltip_content {
@@ -289,12 +343,13 @@ h1 {
     left: -16px;
     margin-top: 8px;
     position: relative;
-    background-color: #F2F2F2;
+    background-color: $dark_color;
     border-radius: 0px 0px 4px 4px;
     padding: 8px 16px;
 
     & button {
       background-color: transparent;
+      box-shadow: none;
       border: none;
       color: silver;
       padding: 0px;
@@ -309,6 +364,12 @@ h1 {
       & i {
         font-weight: normal;
       }
+    }
+    & button:hover {
+      color: gray;
+    }
+    & button:active {
+      opacity: 0.5;
     }
   }
 }
@@ -329,4 +390,102 @@ h1 {
 .rotate {
   transform: rotate(180deg);
   margin: 0px 10px 0px 0px !important;
+}
+.special-component-selector {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  & .command-buttons {
+    display: none;
+    flex-direction: column;
+    position: relative;
+
+    // (portrait and landscape)
+    @media (min-width: $large) {
+      display: flex;
+    }
+
+    & button {
+      height: 16px;
+      width: 20px;
+      background-color: white;
+      border: 1px solid #A4A4A4;
+      border-radius: 0px 0px 0px 5px;
+      border-top: 0px;
+      border-right: 0px;
+      padding: 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      outline: none;
+
+      &:active {
+        background-color: silver;
+      }
+
+      // (portrait and landscape)
+      @media (min-width: $small) {
+        height: 17px;
+      }
+      // (portrait and landscape)
+      @media (min-width: $medium) {
+        height: 18.5px;
+      }
+
+      &:first-child {
+        border-radius: 5px 0px 0px 0px;
+        border-top: 1px solid #A4A4A4;
+      }
+    }
+  }
+
+}
+#content .referencia {
+  position: absolute;
+  bottom: 0px;
+  margin: 15px auto;
+  text-align: center;
+  width: 100%;
+  color: $generic_color;
+  font-size: 14px;
+}
+.mini-tooltip {
+  padding: 4px 8px;
+  background: black;
+  border-radius: 4px;
+  color: $generic_color;
+  position: relative;
+  margin-left: 10px;
+  position: absolute;
+  left: calc(50% + 40px);
+
+  // (portrait and landscape)
+  @media (min-width: $large) {
+    left: calc(50% + 50px);
+  }
+}
+.view_left {
+  transform: translate(-50%, -100%);
+  right: 100%;
+  position: absolute;
+  top: 50%;
+
+  &:after {
+    content: '';
+    width: 0;
+    height: 0;
+    display: block;
+    position: absolute;
+    transform: translateY(-50%);
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+    border-width: 5px;
+    line-height: 0px;
+    right: 0px;
+    top: 50%;
+    _border-color: #F2F2F2 black black black;
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
+  }
 }

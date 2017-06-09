@@ -289,8 +289,7 @@ body {
   width: 100%;
   max-width: 550px;
   margin: auto;
-
-  @media only screen and (min-width: $medium) {
+  @media only screen and (min-width: $small) {
     max-width: 750px;
   }
   @media only screen and (min-width: $large) {
@@ -302,5 +301,45 @@ body {
     display: block;
     height: 0;
     clear: both;
+  }
+}
+
+section#curiosidades {
+  background-color: white;
+  padding: 60px 0px;
+
+  & h3 {
+    text-align: center;
+    margin: 0px auto 20px auto;
+    color: $generic_color;
+    font-weight: normal;
+  }
+  & button {
+    margin: 0px auto 40px auto;
+    color: white;
+    background-color: $gobar_color_dark;
+    border-radius: 16px;
+    border: none;
+    padding: 16px 48px;
+    outline: none;
+
+    &:hover {
+      background-color: lighten($gobar_color_dark, 10%);
+    }
+    &:active {
+      background-color: lighten($gobar_color_dark, 20%);
+    }
+  }
+  & p {
+    text-align: center;
+    font-size: 16px;
+    margin: 0px auto 60px auto;
+    color: $generic_color;
+  }
+  & p.issue {
+    text-align: center;
+    font-size: 14px;
+    margin: 0px auto;
+    color: $generic_color;
   }
 }

@@ -186,9 +186,9 @@ gulp.task('data', () => gulp.src('./build/data/**/*')
   .pipe(gulp.dest('./public/data/')));
 ////////////////////////////////////////////////////////////////////////////////
 // EJECUTAR WATCH
-gulp.task('watch_scripts', () => gulp.watch('./build/scripts/**/*', sequence('build_scripts')));
-gulp.task('watch_styles', () => gulp.watch('./build/styles/**/*', sequence('build_styles')));
-gulp.task('watch_views', () => gulp.watch('./build/views/**/*', sequence('build_views')));
+gulp.task('watch_scripts', () => gulp.watch('./build/scripts/**/*', ['build_scripts']));
+gulp.task('watch_styles', () => gulp.watch('./build/styles/**/*', ['build_styles']));
+gulp.task('watch_views', () => gulp.watch('./build/views/**/*', ['build_views']));
 gulp.task('watch', sequence(['watch_scripts', 'watch_styles', 'watch_views']));
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -202,4 +202,11 @@ gulp.task('compile', sequence(
   'build_scripts',
   'watch',
   'start_server'
+));
+gulp.task('compilar', sequence(
+  'delete',
+  ['import_all', 'images', 'fonts', 'data'],
+  'build_views',
+  'build_styles',
+  'build_scripts'
 ));

@@ -3,21 +3,17 @@ let GLOBAL_NODES,
     GLOBAL_LINKS,
     GLOSARIO,
     INTRO = {
-      nodes: [
-        3,
-        28,
-        15,
-        26,
-        12,
-        31
+      nodes_title: [
+        'Balance energético: qué es y cómo se mide',
+        'Del gas a la electricidad',
+        'Los usos de la electricidad',
+        'Antes y ahora'
       ],
       nodes_description: [
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-        'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        'El balance energético <b>detalla flujos, y cantidades de energía producida y consumida</b>. Por convención, <b>la unidad de medida es el ktep</b>. Cada ktep representa mil toneladas equivalente de petróleo.',
+        'Veamos este ejemplo. En 2015, se extrajeron de la naturaleza 2.000 ktep de Gas de pozo. A través de las Plantas de transformación, se lo convirtió en Gas de red. Luego, el 50% del Gas de red se destinó a Centrales eléctricas que producen electricidad para el consumo.',
+        'El principal uso de la electricidad fue en la industria y los hogares. Observá cómo una porción importante se perdió por causas tecnológicas y naturales.',
+        'Compará con 1960 y descubrí todo el crecimiento que hubo en los montos producidos y consumidos, y cómo la energía perdida disminuyó.'
       ]
     },
     SANKEY = {
@@ -86,12 +82,56 @@ $(() => {
     d3.select('button[name="citas"]').style('opacity', 0);
     d3.select('button[name="glosario"]').attr('style', null);
   };
-  const obtenerNodosIntro = () => {
-    INTRO.nodes.forEach((v, k) => {
-      INTRO.nodes[k] = BUSCAR_NODO(v);
-    });
+  const encederNodos = () => {
+    let nodes = d3.selectAll('#sankey .node');
 
-    return true;
+    nodes.select('rect')
+      .transition().duration(200)
+      .style('stroke', 'black');
+    nodes.select('text')
+      .transition().duration(200)
+      .style('fill', 'black');
+  };
+  const encederLinks = () => {
+    let links = d3.selectAll('#sankey .link');
+
+    // Links Producción
+    links.filter((d) => (d.target.id !== 29 && d.target.id !== 31 && d.source.id !== 30))
+      .transition().duration(200)
+      .style('stroke', 'url(#gradient_prod)')
+      .style('stroke-opacity', 0.5);
+    // Links Importación
+    links.filter((d) => (d.source.id === 30))
+      .transition().duration(200)
+      .style('stroke', 'url(#gradient_imp)')
+      .style('stroke-opacity', 0.5);
+    // Links Exportación
+    links.filter((d) => (d.target.id === 31))
+      .transition().duration(200)
+      .style('stroke', 'url(#gradient_exp)')
+      .style('stroke-opacity', 0.5);
+    // Links Pérdida
+    links.filter((d) => (d.target.id === 29))
+      .transition().duration(200)
+      .style('stroke', COLORES_FLUJO.perdida)
+      .style('stroke-opacity', 0.5);
+  };
+  const apagarNodos = () => {
+    let nodes = d3.selectAll('#sankey .node');
+
+    nodes.select('rect')
+      .transition().duration(200)
+      .style('stroke', null);
+    nodes.select('text')
+      .transition().duration(200)
+      .style('fill', null);
+  };
+  const apagarLinks = () => {
+    let links = d3.selectAll('#sankey .link');
+
+    links.transition().duration(200)
+      .style('stroke', COLORES_FLUJO.default)
+      .style('stroke-opacity', null);
   };
   const tooltipIn = (d) => {
 
@@ -162,8 +202,8 @@ $(() => {
         event_node.select('text').transition().style('fill', 'black');
         // Nodos Relacionados
         allLinks.each((v, k) => {
-          if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', 'black');
-          } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', 'black'); }
+          if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', 'black').style('font-weight', '500');
+          } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', 'black').style('font-weight', '500'); }
         });
         // Links Producción
         allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 29 && d.target.id !== 31 || d.target.id === element_id && d.source.id !== 30))
@@ -195,8 +235,8 @@ $(() => {
           event_node.select('text').transition().style('fill', null);
           // Nodos Relacionados
           allLinks.each((v, k) => {
-            if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', null);
-            } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', null); }
+            if (v.source.id === element_id) { d3.select(`#node_${ v.target.id }`).select('text').transition().style('fill', null).style('font-weight', null);
+            } else if (v.target.id === element_id) { d3.select(`#node_${ v.source.id }`).select('text').transition().style('fill', null).style('font-weight', null); }
           });
           // Links Producción
           allLinks.filter((d) => (d.source.id === element_id && d.target.id !== 29 && d.target.id !== 31 || d.target.id === element_id && d.source.id !== 30))
@@ -226,38 +266,121 @@ $(() => {
     }
   };
   const intro = (stage, state = 'normal', action = 'none') => {
-    let link_dom = d3.selectAll('#sankey .link').filter((link) => (link.source.id === INTRO.nodes[stage].id && link.target.id === INTRO.nodes[(stage + 1)].id)),
-        node_dom = d3.selectAll('#sankey .node').filter((node) => (node.id === INTRO.nodes[stage].id)),
+    let links_dom, nodes_dom,
         intro_container, intro_buttons,
-        button_last, button_next;
+        button_last, button_next,
+        paginator,
+        function_button = {
+          next: {
+            1: () => {
+              let nodes = [2, 19, 13, 18, 12, 29], node,
+                  links = [
+                    {source: 2, target: 19, color: 'url(#gradient_prod)', indice: 1},
+                    {source: 19, target: 13, color: 'url(#gradient_prod)', indice: 2},
+                    {source: 13, target: 18, color: 'url(#gradient_prod)', indice: 3},
+                    {source: 18, target: 12, color: 'url(#gradient_prod)', indice: 4},
+                    {source: 18, target: 29, color: COLORES_FLUJO.perdida, indice: 4}
+                  ];
 
-    const node_on = (node) => {
-      node_dom.select('rect').transition().style('stroke', 'black');
-      node_dom.select('text').transition().style('fill', 'black');
-    };
-    const node_off = (node) => {
-      node_dom.select('rect').transition().style('fill', null).style('stroke', null);
-      node_dom.select('text').transition().style('fill', null);
-    };
-    const link_on = (node, next_node) => {
-      link_dom.style('stroke', 'url(#gradient_link)').style('stroke-opacity', 0.5);
-    };
-    const link_off = (node, next_node) => {
-      link_dom.style('stroke', null).style('stroke-opacity', null);
-    };
+              apagarNodos();
+              apagarLinks();
+
+              // Encender nodos seleccionados
+              nodes.forEach((v, k) => {
+                node = d3.select(`#node_${ v }`);
+                node.select('rect').transition().delay(250 * (k + 1)).duration(200).style('stroke', 'black');
+                node.select('text').transition().delay(250 * (k + 1)).duration(200).style('fill', 'black');
+              });
+
+              // Encender links seleccionados
+              links.forEach((v, k) => {
+                d3.selectAll('#sankey .link').filter((element) => (element.source.id === v.source && element.target.id === v.target))
+                  .transition().delay(250 * v.indice).duration(200)
+                  .style('stroke', v.color)
+                  .style('stroke-opacity', 0.5);
+              });
+            },
+            2: () => {
+              let nodes = [25, 23, 27, 26, 28, 22], node,
+                  links = [
+                    {source: 12, target: 25, color: 'url(#gradient_prod)', indice: 1},
+                    {source: 12, target: 23, color: 'url(#gradient_prod)', indice: 2},
+                    {source: 12, target: 27, color: 'url(#gradient_prod)', indice: 3},
+                    {source: 12, target: 26, color: 'url(#gradient_prod)', indice: 4},
+                    {source: 12, target: 28, color: 'url(#gradient_prod)', indice: 5},
+                    {source: 12, target: 22, color: 'url(#gradient_prod)', indice: 6},
+                    {source: 12, target: 29, color: COLORES_FLUJO.perdida, indice: 7}
+                  ];
+
+              // Encender nodos seleccionados
+              nodes.forEach((v, k) => {
+                node = d3.select(`#node_${ v }`);
+                node.select('rect').transition().delay(250 * (k + 1)).duration(200).style('stroke', 'black');
+                node.select('text').transition().delay(250 * (k + 1)).duration(200).style('fill', 'black');
+              });
+
+              // Encender links seleccionados
+              links.forEach((v, k) => {
+                d3.selectAll('#sankey .link').filter((element) => (element.source.id === v.source && element.target.id === v.target))
+                  .transition().delay(250 * v.indice).duration(200)
+                  .style('stroke', v.color)
+                  .style('stroke-opacity', 0.5);
+              });
+            },
+            3: () => {}
+          },
+          back: {
+            0: () => {
+              encederNodos();
+              encederLinks();
+            },
+            1: () => {
+              let nodes = [25, 23, 27, 26, 28, 22], node;
+
+              // Encender nodos seleccionados
+              nodes.forEach((v, k) => {
+                node = d3.select(`#node_${ v }`);
+                node.select('rect').transition().delay(250).duration(200).style('stroke', null);
+                node.select('text').transition().delay(250).duration(200).style('fill', null);
+              });
+
+              // Encender links seleccionados
+              d3.selectAll('#sankey .link').filter((element) => (element.source.id === 12))
+                .transition().delay(250).duration(200)
+                .style('stroke', COLORES_FLUJO.default)
+                .style('stroke-opacity', null);
+            },
+            2: () => {
+              d3.select('.special-component-selector')
+                .transition()
+                .style('outline-style', 'none');
+            }
+          },
+          start: () => {
+            encederNodos();
+            encederLinks();
+          },
+          end: () => {
+            apagarNodos();
+            apagarLinks();
+
+            $('.mini-tooltip').fadeIn();
+          }
+        };
 
     switch (state) {
       case 'create':
         d3.select('#content').append('div').attr('id', 'intro_screen').style('top', '0px').style('left', '0px');
-        intro_container = d3.select('#content').append('div').attr('id', 'tooltip_intro').style('bottom', '20px').style('right', '20px');
+        intro_container = d3.select('#content').append('div').attr('id', 'tooltip_intro');
           intro_container.append('div').attr('class', 'tooltip_header flex flex_justify_between flex_align_start');
           intro_container.select('.tooltip_header').append('h2').attr('class', 'tooltip_name');
           intro_container.select('.tooltip_header').append('img').attr('class', 'tooltip_exit').attr('src', './public/images/cruz.svg').attr('width', '15');
           intro_container.append('div').attr('class', 'tooltip_content');
           intro_container.select('.tooltip_content').append('p').attr('class', 'tooltip_production');
         intro_buttons   = intro_container.append('div').attr('class', ' tooltip_footer flex flex_justify_between');
-        button_last     = intro_buttons.append('button').attr('id', 'last').text('Anterior');
-        button_next     = intro_buttons.append('button').attr('id', 'next').text('Siguiente');
+        button_last     = intro_buttons.append('button').attr('id', 'last').html('<img class="rotate" src="./public/images/flecha.svg" alt="back icon" width="10">Anterior');
+        paginator       = intro_buttons.append('aside').html(`${ stage + 1 } / ${ INTRO.nodes_title.length }`);
+        button_next     = intro_buttons.append('button').attr('id', 'next').html('Siguiente<img src="./public/images/flecha.svg" alt="next icon" width="10">');
 
         $('.tooltip_exit').last().on('click', () => {
           intro(stage, 'delete', 'none');
@@ -266,8 +389,11 @@ $(() => {
           if (e.keyCode === 27 && $('.tooltip_exit').length === 2 ) { intro(stage, 'delete', 'none'); }
         });
 
+        function_button.start();
         break;
       case 'delete':
+        function_button.end();
+
         d3.select('#tooltip_intro').remove();
         d3.select('#intro_screen').remove();
         d3.selectAll('#sankey .node rect').transition().style('fill', null).style('stroke', null);
@@ -278,32 +404,29 @@ $(() => {
         intro_container = d3.select('#tooltip_intro');
         intro_buttons   = intro_container.select('div:nth-child(3)');
         button_last     = intro_buttons.select('#last');
+        paginator       = intro_buttons.select('aside');
         button_next     = intro_buttons.select('#next');
-        break;
-    }
-    switch (action) {
-      case 'next':
-        node_on(INTRO.nodes[stage]);
-        link_on(INTRO.nodes[stage], INTRO.nodes[stage + 1]);
-        break;
-      case 'back':
-        node_off(INTRO.nodes[stage + 1]);
-        link_off(INTRO.nodes[stage + 1], INTRO.nodes[stage + 2]);
+
+        if (action !== 'none') {
+          function_button[action][stage]();
+        }
+
         break;
     }
 
-    intro_container.select('h2').text(INTRO.nodes[stage].nombre);
-    intro_container.select('p').text(INTRO.nodes_description[stage]);
+    intro_container.select('h2').html(INTRO.nodes_title[stage]);
+    intro_container.select('p').html(INTRO.nodes_description[stage]);
+    paginator.html(`${ stage + 1 } / ${ INTRO.nodes_title.length }`);
 
     if (stage === 0) {
-      button_last.attr('class', 'btn btn-default btn-xs disabled').on('click', () => { intro(stage, 'normal', 'none'); });
+      button_last.attr('class', 'btn btn-default btn-xs').style('opacity', 0);
       button_next.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage + 1, 'normal', 'next'); });
-    } else if (stage === (INTRO.nodes.length - 1)) {
+    } else if (stage === (INTRO.nodes_title.length - 1)) {
       button_last.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage - 1, 'normal', 'back'); });
-      button_next.attr('class', 'btn btn-primary btn-xs').text('Comenzar').on('click', () => { intro(stage, 'delete', 'none'); });
+      button_next.attr('class', 'btn btn-primary btn-xs').html('¡Ir al balance!').on('click', () => { intro(stage, 'delete', 'none'); });
     } else {
-      button_last.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage - 1, 'normal', 'back'); });
-      button_next.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage + 1, 'normal', 'next'); });
+      button_last.attr('class', 'btn btn-default btn-xs').on('click', () => { intro(stage - 1, 'normal', 'back'); }).transition().style('opacity', null);
+      button_next.attr('class', 'btn btn-default btn-xs').html('Siguiente<img src="./public/images/flecha.svg" alt="next icon" width="10">').on('click', () => { intro(stage + 1, 'normal', 'next'); });
     }
   };
   const downloadFile = (anio, file) => {
@@ -464,7 +587,7 @@ $(() => {
     height  = $('#sankey').height();
     width   = $('#sankey').width();
 
-    if (($('#content h1').outerHeight() + $('#content form').outerHeight() + 550) <= $('#content').outerHeight()) {
+    if (($('#content > h1').outerHeight() + $('#content > p').outerHeight() + $('#content > form').outerHeight() + 550) <= $('#content').outerHeight()) {
       d3.select('#content').attr('style', null);
       SANKEY.margin.bottom  = 40;
       SANKEY.margin.left    = 200;
@@ -492,7 +615,6 @@ $(() => {
   };
 
   downloadFile(2015, 'sankey')
-    .then(() => obtenerNodosIntro())
     .then(() => calcularAltura())
     .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
     .then(() => setearNodosYLinks())
@@ -504,10 +626,11 @@ $(() => {
 
       $('select[name=anio]').SumoSelect({ nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk'], });
 
-      $('select[name=anio]').on('sumo:opened', (sumo) => { $('body').attr('style', 'position: fixed'); });
+      $('select[name=anio]').on('sumo:opened', (sumo) => { $('body').attr('style', 'position: fixed'); $('.mini-tooltip').remove(); });
       $('select[name=anio]').on('sumo:closed', (sumo) => { $('body').attr('style', 'position: relative'); });
 
       $('select[name=anio]').on('change', (event) => {
+        $('.mini-tooltip').remove();
         downloadFile($('select[name=anio]')[0].value, 'sankey')
           .then(() => calcularAltura())
           .then(() => $('#sankey').empty())
@@ -524,11 +647,41 @@ $(() => {
       $(window).on('resize', () => {
         calcularAltura(true);
       });
+      // Tooltip_scroll_mobile
+      let lastScrollLeft = 0;
+      $('#sankey').scroll((e) => {
+        let sankeyScrollLeft = $('#sankey').scrollLeft();
+        if (lastScrollLeft !== sankeyScrollLeft) {
+          $('#tooltip').css({ left: function() {
+            // console.log(parseInt($(this).css('left').slice(0, -2)));
+            // console.log((sankeyScrollLeft - lastScrollLeft));
+            // console.log((parseInt($(this).css('left').slice(0, -2)) + (sankeyScrollLeft - lastScrollLeft)) + 'px');
+            return (parseInt($(this).css('left').slice(0, -2)) - (sankeyScrollLeft - lastScrollLeft)) + 'px';
+          }});
+          lastScrollLeft = sankeyScrollLeft;
+        }
+      });
+
+      // Botones de avance de año
+      $('#nextYear').on('click', (event) => {
+        let data = $('select[name=anio]')[0].sumo.getSelStr(),
+            data_number = Number(data);
+
+        if (data_number < 2015) {
+          $('select[name=anio]')[0].sumo.selectItem(`${ (data_number + 1).toString() }`);
+        }
+      });
+      $('#backYear').on('click', (event) => {
+        let data = $('select[name=anio]')[0].sumo.getSelStr(),
+            data_number = Number(data);
+
+        if (data_number > 1960) {
+          $('select[name=anio]')[0].sumo.selectItem(`${ (data_number - 1).toString() }`);
+        }
+      });
     });
 
-
-
-  downloadFile(2015, 'glosario')
+  downloadFile(null, 'glosario')
     .then(() => {
       $('.tooltip_glosary').hide();
       $('button[name="citas"]').css({ opacity: 0 });
