@@ -37,6 +37,7 @@ h1 {
 }
 #form_energia {
   margin: 0px 10px;
+  position: relative;
 
   & > p {
     display: none;
@@ -65,8 +66,7 @@ h1 {
 }
 #sankey {
   width: 100vw;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow: auto;
   text-align: center;
   min-height: 500px;
 
@@ -90,7 +90,7 @@ h1 {
 .link {
   fill: none;
   z-index: 10;
-  stroke: silver;
+  stroke: #CFD8DC;
   stroke-opacity: 0.25;
   stroke-linejoin: round;
 }
@@ -209,10 +209,10 @@ h1 {
   }
   &:after {
     left: 50%;
-    border-color: #F2F2F2 transparent transparent transparent;
+    border-color: #424242 transparent transparent transparent;
     border-width: 10px;
     line-height: 0px;
-    _border-color: #F2F2F2 black black black;
+    _border-color: #424242 black black black;
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='black');
   }
   &:before {
@@ -425,6 +425,10 @@ h1 {
         background-color: silver;
       }
 
+      & > i {
+        width: 100%;
+      }
+
       // (portrait and landscape)
       @media (min-width: $small) {
         height: 17px;
@@ -460,6 +464,9 @@ h1 {
   margin-left: 10px;
   position: absolute;
   left: calc(50% + 40px);
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
 
   // (portrait and landscape)
   @media (min-width: $large) {

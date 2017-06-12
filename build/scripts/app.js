@@ -33,7 +33,8 @@ let GLOBAL_NODES,
         ['CENTROS DE', 'TRANSFORMACIÓN'],
         ['ENERGÍAS', 'SECUNDARIAS'],
         ['SECTORES', 'DE CONSUMOS']
-      ]
+      ],
+      tooltip: {}
     },
     SELECTORES = {
       categorias: [
@@ -137,10 +138,18 @@ $(() => {
 
     setearTooltip();
 
+    console.log(SANKEY);
+
     if (d.y < 10) {
-      $('#tooltip').attr('class', 'view_bottom').css({ top: $('#sankey svg').position().top + d.y + d.dy + 42, left: $('#sankey svg').position().left + d.x + 210 }).fadeIn(100);
+      $('#tooltip')
+        .attr('class', 'view_bottom')
+        .css({ top: $('#sankey svg').offset().top + d.y + d.dy + SANKEY.tooltip.top, left: $('#sankey svg').offset().left + d.x + SANKEY.tooltip.left })
+        .fadeIn(100);
     } else {
-      $('#tooltip').attr('class', 'view_top').css({ top: $('#sankey svg').position().top + d.y + 7, left: $('#sankey svg').position().left + d.x + 210 }).fadeIn(100);
+      $('#tooltip')
+        .attr('class', 'view_top')
+        .css({ top: $('#sankey svg').offset().top + d.y + SANKEY.tooltip.bottom, left: $('#sankey svg').offset().left + d.x + SANKEY.tooltip.left })
+        .fadeIn(100);
     }
 
     if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
@@ -461,14 +470,17 @@ $(() => {
 
     // Creación SVG
     svg = d3.select('#sankey')
-      .append('svg')
+      .append('div')
+      .attr('class', 'nano-content');
+
+    svg = svg.append('svg')
       .attr('width', size.width + margin.right + margin.left)
       .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize)
       .attr('preserveAspectRatio', 'xMidYMid meet');
     // Se agregan encabezados
     let encabezado = svg.append('g')
       .attr('id', 'chart-encabezado')
-      .attr('transform', `translate(${ margin.left }, ${ margin.top + 15 })`);
+      .attr('style', `transform: translate(${ margin.left }px, ${ margin.top + 15 }px); -webkit-transform: translate(${ margin.left }px, ${ margin.top + 15 }px)`);
       encabezado.append('text')
         .attr('class', 'chart-encabezado-left')
         .attr('x', -10)
@@ -480,7 +492,7 @@ $(() => {
         .text(SANKEY.secciones_header[0][1]);
     // Se crea grafico
     let chart = svg.append('g')
-      .attr('transform', `translate(${ margin.left }, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header })`);
+      .attr('style', `transform: translate(${ margin.left }px, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header }px); -webkit-transform: translate(${ margin.left }px, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header }px)`);
     // Creación Sankey
     sankeyChartD3 = d3.sankey()
       .nodeWidth(anchoNodo)
@@ -539,12 +551,13 @@ $(() => {
       .append('g')
         .attr('id', (d) => `node_${ d.id }`)
         .attr('class', 'node')
-        .attr('transform', (d) => {
+        .attr('style', (d) => {
           if (posColumnas.indexOf(d.x) === -1) {
             posColumnas.push(d.x);
           }
-          return `translate(${ d.x }, ${ d.y })`;
-        }); // error compatibilidad
+
+          return `transform: translate(${ d.x }px, ${ d.y }px); -webkit-transform: translate(${ d.x }px, ${ d.y }px)`;
+        });
     // Se crean rectangulos nodos
     node.filter((element) => (element.nombre !== 'borrar' && element.oferta_interna > 0 || typeof(element.oferta_interna) === 'undefined')).append('rect')
         .attr('width', sankeyChartD3.nodeWidth())
@@ -595,6 +608,9 @@ $(() => {
       SANKEY.margin.header  = 20;
       SANKEY.anchoNodo      = 20;
       SANKEY.separacionNodo = 20;
+      SANKEY.tooltip.top    = 42;
+      SANKEY.tooltip.left   = 210;
+      SANKEY.tooltip.bottom = 7;
     } else {
       d3.select('#content').attr('style', 'height: 100%');
       SANKEY.margin.bottom  = 5;
@@ -603,6 +619,9 @@ $(() => {
       SANKEY.margin.header  = 15;
       SANKEY.anchoNodo      = 10;
       SANKEY.separacionNodo = 15;
+      SANKEY.tooltip.top    = 15;
+      SANKEY.tooltip.left   = 155;
+      SANKEY.tooltip.bottom = -15;
     }
 
     return true;
@@ -649,13 +668,11 @@ $(() => {
       });
       // Tooltip_scroll_mobile
       let lastScrollLeft = 0;
-      $('#sankey').scroll((e) => {
-        let sankeyScrollLeft = $('#sankey').scrollLeft();
+      $('#sankey .nano-content').scroll((e) => {
+        let sankeyScrollLeft = $('#sankey .nano-content').scrollLeft();
+
         if (lastScrollLeft !== sankeyScrollLeft) {
           $('#tooltip').css({ left: function() {
-            // console.log(parseInt($(this).css('left').slice(0, -2)));
-            // console.log((sankeyScrollLeft - lastScrollLeft));
-            // console.log((parseInt($(this).css('left').slice(0, -2)) + (sankeyScrollLeft - lastScrollLeft)) + 'px');
             return (parseInt($(this).css('left').slice(0, -2)) - (sankeyScrollLeft - lastScrollLeft)) + 'px';
           }});
           lastScrollLeft = sankeyScrollLeft;
