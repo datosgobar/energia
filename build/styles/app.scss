@@ -16,7 +16,7 @@ h1 {
   }
   // (portrait and landscape)
   @media (min-width: $large) {
-    font-size: 49px;
+    font-size: 42px;
   }
 }
 
@@ -68,7 +68,7 @@ h1 {
   width: 100vw;
   overflow: auto;
   text-align: center;
-  min-height: 500px;
+  min-height: 525px;
 
   // (portrait and landscape)
   @media (min-width: $large) {
@@ -164,7 +164,7 @@ h1 {
     padding: 8px 16px;
 
     & aside {
-      color: $generic_color;
+      color: silver;
     }
     & button {
       color: red;
@@ -459,7 +459,7 @@ h1 {
   padding: 4px 8px;
   background: black;
   border-radius: 4px;
-  color: $generic_color;
+  color: silver;
   position: relative;
   margin-left: 10px;
   position: absolute;

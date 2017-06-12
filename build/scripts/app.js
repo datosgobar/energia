@@ -470,10 +470,7 @@ $(() => {
 
     // Creación SVG
     svg = d3.select('#sankey')
-      .append('div')
-      .attr('class', 'nano-content');
-
-    svg = svg.append('svg')
+      .append('svg')
       .attr('width', size.width + margin.right + margin.left)
       .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize)
       .attr('preserveAspectRatio', 'xMidYMid meet');
@@ -600,7 +597,7 @@ $(() => {
     height  = $('#sankey').height();
     width   = $('#sankey').width();
 
-    if (($('#content > h1').outerHeight() + $('#content > p').outerHeight() + $('#content > form').outerHeight() + 550) <= $('#content').outerHeight()) {
+    if (($('#content > h1').outerHeight() + $('#content > p').outerHeight() + $('#content > form').outerHeight() + 575) <= $('#content').outerHeight()) {
       d3.select('#content').attr('style', null);
       SANKEY.margin.bottom  = 40;
       SANKEY.margin.left    = 200;
@@ -612,7 +609,7 @@ $(() => {
       SANKEY.tooltip.left   = 210;
       SANKEY.tooltip.bottom = 7;
     } else {
-      d3.select('#content').attr('style', 'height: 100%');
+      d3.select('#content').attr('style', null);
       SANKEY.margin.bottom  = 5;
       SANKEY.margin.left    = 150;
       SANKEY.margin.top     = 20;
@@ -668,8 +665,8 @@ $(() => {
       });
       // Tooltip_scroll_mobile
       let lastScrollLeft = 0;
-      $('#sankey .nano-content').scroll((e) => {
-        let sankeyScrollLeft = $('#sankey .nano-content').scrollLeft();
+      $('#sankey').scroll((e) => {
+        let sankeyScrollLeft = $('#sankey').scrollLeft();
 
         if (lastScrollLeft !== sankeyScrollLeft) {
           $('#tooltip').css({ left: function() {
