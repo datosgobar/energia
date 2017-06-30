@@ -1,7 +1,12 @@
-@import "pre";
-@import "header_footer";
+@import "_normalize";
+@import "_pre";
 
-// Codigo Sitio
+// Codigo SCSS
+body {
+  background-color: #F5F5F5;
+  min-height: 100vh;
+}
+
 h1 {
   margin: 15px auto 10px auto;
   font-size: 34px;
@@ -20,13 +25,11 @@ h1 {
   }
 }
 
-#content {
-  position: relative;
-  width: 100vw;
-  min-height: calc(100vh - 72px);
-  box-sizing: border-box;
+#modal_contenido {
   overflow: hidden;
-  padding: 0px;
+  position: relative;
+  box-sizing: border-box;
+  padding: 72px 0px 0px 0px;
 
   & > p {
     padding: 0px 20px;
@@ -68,14 +71,9 @@ h1 {
   width: 100vw;
   overflow: auto;
   text-align: center;
-  min-height: 525px;
   position: relative;
   overflow-y: hidden;
-
-  // (portrait and landscape)
-  @media (min-width: $large) {
-    height: calc(100vh - 72px - 98px - 35px - 37px);
-  }
+  position: relative;
 }
 
 .chart-encabezado-right, .chart-encabezado-left {
@@ -129,9 +127,9 @@ h1 {
   max-width: 400px;
   left: 50%;
   bottom: 30%;
-  transform: translateX(-50%);
+  transform: translate(-50%, 68%);
   box-shadow: 0px 2px 5px rgba(0,0,0,0.26);
-  color: $dark_color;
+  color: $color_texto_oscuro;
   z-index: 20000;
 
   & b {
@@ -162,7 +160,7 @@ h1 {
     left: -16px;
     margin-top: 8px;
     position: relative;
-    background-color: $dark_color;
+    background-color: $color_texto_oscuro;
     border-radius: 0px 0px 4px 4px;
     padding: 8px 16px;
 
@@ -318,7 +316,7 @@ h1 {
       &:nth-child(3) {
         & .tooltip_key {
           padding: 5px 0px 2px 0px;
-          & i { color: #7FC6E6; }
+          & i { color: #40C4FF; }
         }
       }
       &:nth-child(4) { & .tooltip_key > i { color: #FFCF87; }}
@@ -346,7 +344,7 @@ h1 {
     left: -16px;
     margin-top: 8px;
     position: relative;
-    background-color: $dark_color;
+    background-color: $color_texto_oscuro;
     border-radius: 0px 0px 4px 4px;
     padding: 8px 16px;
 
@@ -380,6 +378,9 @@ h1 {
   margin-top: 15px;
   font-size: 14px;
   color: silver;
+}
+.tooltip_production {
+  font-weight: 300;
 }
 
 #intro_screen {
@@ -440,7 +441,7 @@ h1 {
       }
       // (portrait and landscape)
       @media (min-width: $medium) {
-        height: 18.5px;
+        height: 18px;
       }
 
       &:first-child {
@@ -451,13 +452,13 @@ h1 {
   }
 
 }
-#content .referencia {
+#modal_contenido .referencia {
   position: absolute;
   bottom: 0px;
   margin: 15px auto;
   text-align: center;
   width: 100%;
-  color: $generic_color;
+  color: $color_texto_base;
   font-size: 14px;
 }
 .mini-tooltip {

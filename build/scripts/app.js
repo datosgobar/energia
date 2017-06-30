@@ -11,9 +11,9 @@ let GLOBAL_NODES,
       ],
       nodes_description: [
         'El balance energético <b>detalla flujos, y cantidades de energía producida y consumida</b>. Por convención, <b>la unidad de medida es el ktep</b>. Cada ktep representa mil toneladas equivalente de petróleo.',
-        'Veamos este ejemplo. En 2015, se extrajeron de la naturaleza 2.000 ktep de Gas de pozo. A través de las Plantas de transformación, se lo convirtió en Gas de red. Luego, el 50% del Gas de red se destinó a Centrales eléctricas que producen electricidad para el consumo.',
-        'El principal uso de la electricidad fue en la industria y los hogares. Observá cómo una porción importante se perdió por causas tecnológicas y naturales.',
-        'Compará con 1960 y descubrí todo el crecimiento que hubo en los montos producidos y consumidos, y cómo la energía perdida disminuyó.'
+        'Veamos este ejemplo. En 2015, se extrajeron 2.000 ktep de Gas de pozo. A través de las plantas de transformación, se lo convirtió en gas de red. Luego, el 50% del gas de red se destinó a centrales eléctricas que producen electricidad para el consumo.',
+        'El principal uso de la electricidad fue en la industria y los hogares. Como parte del proceso, una porción importante se perdió por causas tecnológicas y naturales.',
+        'Compará con 1960 y descubrí todo el crecimiento que hubo en los montos producidos y consumidos.'
       ]
     },
     SANKEY = {
@@ -24,6 +24,10 @@ let GLOBAL_NODES,
         left: 200,
         header: 20
       },
+      size: {
+        width: '',
+        height: ''
+      },
       separacionNodo: 20,
       anchoNodo: 20,
       secciones_header: [
@@ -32,7 +36,7 @@ let GLOBAL_NODES,
         ['ENERGÍAS', 'SECUNDARIAS'],
         ['CENTROS DE', 'TRANSFORMACIÓN'],
         ['ENERGÍAS', 'SECUNDARIAS'],
-        ['SECTORES', 'DE CONSUMOS']
+        ['SECTORES', 'DE CONSUMO']
       ],
       tooltip: {}
     },
@@ -138,8 +142,6 @@ $(() => {
 
     setearTooltip();
 
-    console.log(SANKEY);
-
     if (d.y < 10) {
       $('#tooltip')
         .attr('class', 'view_bottom')
@@ -153,7 +155,7 @@ $(() => {
     }
 
     if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
-      $('.title_total').text('Disponibilidad Local');
+      $('.title_total').text('Disponibilidad local');
       $('.tooltip_name').text(d.nombre);
       $('.tooltip_ktep').text(d.oferta_interna.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().removeAttr('style');
@@ -167,7 +169,7 @@ $(() => {
       $('.tooltip_others').parent().parent().removeAttr('style');
       $('.tooltip_others').text(d.otros.format_number(2, 3, '.', ','));
     } else if (d.posicionX === 2 || d.posicionX === 4) {
-      $('.title_total').text('Insumos de la Central');
+      $('.title_total').text('Insumos de la central');
       $('.tooltip_name').text(d.nombre);
       $('.tooltip_ktep').text(d.consumo.format_number(2, 3, '.', ','));
       $('.tooltip_production').parent().parent().removeAttr('style');
@@ -179,9 +181,9 @@ $(() => {
       $('.tooltip_others').parent().parent().css({ 'display': 'none' });
     } else {
       if (d.posicionX === 6 && d.posicionY === 0) {
-        $('.title_total').text('Pérdida Total');
+        $('.title_total').text('Pérdida total');
       } else {
-        $('.title_total').text('Disponible para consumo');
+        $('.title_total').text('Consumo');
       }
       $('.tooltip_name').text(d.nombre);
       $('.tooltip_ktep').text(d.consumo.format_number(2, 3, '.', ','));
@@ -379,8 +381,8 @@ $(() => {
 
     switch (state) {
       case 'create':
-        d3.select('#content').append('div').attr('id', 'intro_screen').style('top', '0px').style('left', '0px');
-        intro_container = d3.select('#content').append('div').attr('id', 'tooltip_intro');
+        d3.select('#modal_contenido').append('div').attr('id', 'intro_screen').style('top', '0px').style('left', '0px');
+        intro_container = d3.select('#modal_contenido').append('div').attr('id', 'tooltip_intro');
           intro_container.append('div').attr('class', 'tooltip_header flex flex_justify_between flex_align_start');
           intro_container.select('.tooltip_header').append('h2').attr('class', 'tooltip_name');
           intro_container.select('.tooltip_header').append('img').attr('class', 'tooltip_exit').attr('src', './public/images/cruz.svg').attr('width', '15');
@@ -459,11 +461,11 @@ $(() => {
 
     return promise;
   };
-  const dibujarSankey = (width, heigth, data, options) => {
+  const dibujarSankey = (data, options) => {
     // Se definen variables
     let headerSize      = 38,
         margin          = options.margin,
-        size            = { width: 1400 - margin.left - margin.right, height: heigth - margin.top - margin.bottom - margin.header - headerSize },
+        size            = options.size,
         anchoNodo       = options.anchoNodo,
         separacionNodo  = options.separacionNodo,
         posColumnas     = [];
@@ -471,8 +473,8 @@ $(() => {
     // Creación SVG
     svg = d3.select('#sankey')
       .append('svg')
-      .attr('width', size.width + margin.right + margin.left)
-      .attr('height', size.height + margin.top + margin.bottom + margin.header + headerSize)
+      .attr('width', size.width)
+      .attr('height', size.height)
       .attr('preserveAspectRatio', 'xMidYMid meet');
     // Se agregan encabezados
     let encabezado = svg.append('g')
@@ -490,14 +492,16 @@ $(() => {
     // Se crea grafico
     let chart = svg.append('g')
       .attr('style', `transform: translate(${ margin.left }px, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header }px); -webkit-transform: translate(${ margin.left }px, ${ margin.top + $('#chart-encabezado')[0].getBBox().height + margin.header }px)`);
+
     // Creación Sankey
     sankeyChartD3 = d3.sankey()
       .nodeWidth(anchoNodo)
       .nodePadding(separacionNodo)
-      .size([size.width, size.height])
+      .size([size.width - margin.left - margin.right, size.height - margin.top - margin.bottom])
       .nodes(data.nodes)
       .links(data.links)
       .layout();
+
     // Generación de gradientes
     let defs = svg.append('defs');
 
@@ -597,25 +601,33 @@ $(() => {
     height  = $('#sankey').height();
     width   = $('#sankey').width();
 
-    if (($('#content > h1').outerHeight() + $('#content > p').outerHeight() + $('#content > form').outerHeight() + 575) <= $('#content').outerHeight()) {
-      d3.select('#content').attr('style', null);
-      SANKEY.margin.bottom  = 40;
-      SANKEY.margin.left    = 200;
-      SANKEY.margin.top     = 40;
-      SANKEY.margin.header  = 20;
+    if (($('#modal_contenido > h1').outerHeight() + $('#modal_contenido > p').outerHeight() + $('#modal_contenido > form').outerHeight() + 575) <= $('#modal_contenido').outerHeight()) {
+      d3.select('#modal_contenido').attr('style', null);
       SANKEY.anchoNodo      = 20;
       SANKEY.separacionNodo = 20;
+      SANKEY.size.width     = 1400;
+      SANKEY.size.height    = 550;
+      SANKEY.margin.left    = 175;
+      SANKEY.margin.right   = 175;
+      SANKEY.margin.top     = 40;
+      SANKEY.margin.bottom  = 40;
+
+      SANKEY.margin.header  = 20;
       SANKEY.tooltip.top    = 42;
-      SANKEY.tooltip.left   = 210;
+      SANKEY.tooltip.left   = 190;
       SANKEY.tooltip.bottom = 7;
     } else {
-      d3.select('#content').attr('style', null);
-      SANKEY.margin.bottom  = 5;
-      SANKEY.margin.left    = 150;
-      SANKEY.margin.top     = 20;
-      SANKEY.margin.header  = 15;
+      d3.select('#modal_contenido').attr('style', null);
       SANKEY.anchoNodo      = 10;
       SANKEY.separacionNodo = 15;
+      SANKEY.size.width     = 1400;
+      SANKEY.size.height    = 550;
+      SANKEY.margin.left    = 150;
+      SANKEY.margin.right   = 150;
+      SANKEY.margin.top     = 20;
+      SANKEY.margin.bottom  = 40;
+
+      SANKEY.margin.header  = 15;
       SANKEY.tooltip.top    = 15;
       SANKEY.tooltip.left   = 155;
       SANKEY.tooltip.bottom = -15;
@@ -630,9 +642,27 @@ $(() => {
     return true;
   };
 
+  // const antesSvg = (anio) => {
+  //   let elemento = d3.select('#sankey').append('div');
+  //
+  //   elemento.append('h4').text(`Energía argentina - ${ anio }`);
+  // };
+  //
+  // for (var i = 1960; i < 2016; i++) {
+  //   let anio = i;
+  //
+  //   console.log(anio);
+  //
+  //   downloadFile(i, 'sankey')
+  //     .then(() => antesSvg(anio))
+  //     .then(() => calcularAltura())
+  //     .then(() => dibujarSankey({ 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo, size: SANKEY.size }))
+  //     .then(() => setearNodosYLinks());
+  // }
+
   downloadFile(2015, 'sankey')
     .then(() => calcularAltura())
-    .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
+    .then(() => dibujarSankey({ 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo, size: SANKEY.size }))
     .then(() => setearNodosYLinks())
     .then(() => { if (!jQuery.browser.mobile) { return intro(0, 'create', 'next'); }}) // Se activa tooltip_intro
     .then(() => $('#tooltip').fadeOut(100)) // Se activa animación del tooltip_sankey
@@ -650,7 +680,7 @@ $(() => {
         downloadFile($('select[name=anio]')[0].value, 'sankey')
           .then(() => calcularAltura())
           .then(() => $('#sankey').empty())
-          .then(() => dibujarSankey(width, height, { 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo }))
+          .then(() => dibujarSankey({ 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo, size: SANKEY.size }))
           .then(() => setearNodosYLinks())
           .then(() => $('#tooltip').fadeOut(100)); // Se activa animación del tooltip_sankey;
       });

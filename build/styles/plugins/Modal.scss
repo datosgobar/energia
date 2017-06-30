@@ -1,0 +1,745 @@
+/*
+  Producto: MODAL
+  Descripción: Sistema de modularización de contenido
+  Autor: Francisco Tomás López
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900');
+
+//  Color Rules
+$base:           #767676;
+$base_contraste: #444444;
+$gobar_ligth:    #17b2f8;
+$gobar_dark:     #0695d6;
+
+//  Color Palette
+$color1: #14499E;
+$color2: #27B5F6;
+$color3: #02D57A;
+$color4: #FF8140;
+$color5: #FFBB42;
+
+//  Responsive Rules
+$x-small: 460px;
+$small:   768px;
+$medium:  992px;
+$large:   1200px;
+
+html {
+  font-size: 12px;
+
+  @media (min-width: $small) { font-size: 14px; }
+  @media (min-width: $large) { font-size: 16px; }
+}
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Helpers
+
+.modal_extremo {
+  font-size: 2rem !important;
+  font-weight: 500 !important;
+}
+.modal_big {
+  font-size: 1.15rem !important;
+  font-weight: 400 !important;
+}
+.modal_small {
+  font-size: 0.9rem !important;
+  font-weight: 300 !important;
+}
+
+//  Parrafos
+.modal_parrafo {
+  text-align: center;
+  color: $base;
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+//  Compartir Modulo
+.fixed-action-btn {
+  padding: 0px;
+  padding-left: 10px;
+  position: absolute;
+  right: 20px;
+  top: -47.5px;
+  opacity: 1;
+
+  @media (min-width: $small) { opacity: 0; }
+  @media (min-width: $large) { top: -52.5px; }
+
+  &.active {
+    ul { visibility: visible; }
+  }
+
+  ul {
+    left: auto;
+    right: 45px;
+    top: 50%;
+    text-align: right;
+    position: absolute;
+    bottom: 64px;
+    margin: 0;
+    visibility: hidden;
+    transform: translateY(-50%);
+    height: 100%;
+    width: 500px; /*width 100% only goes to width of button container */
+
+    li {
+      margin-left: 10px;
+      display: flex;
+    }
+  }
+}
+
+//  Dimension Options
+.max_width {
+  width: 100%;
+}
+.max_height {
+  height: 100%;
+}
+
+//  Mostrar/ocultar
+.modal_show {
+  display: flex;
+}
+.modal_hide {
+  display: hide;
+}
+
+//  Box Options
+.no_padding {
+  padding: 0px;
+}
+.no_margin {
+  margin: 0px;
+}
+
+// Grafico de Barra Horizontal
+.horizontal_chart {
+  width: 100%;
+  position: relative;
+
+  & .barras {
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    margin-bottom: 5px;
+    transition: width 0.2s ease-in-out;
+    width: 0px;
+  }
+  & .contenido {
+  }
+}
+
+.modelo_grafico {
+  width: 100%;
+  height: 250px;
+  border: 1px solid orange;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Componentes
+//
+
+// ---------------------------------------------------------------- Contenedores
+
+.modal_contenedor {
+  background-color: white;
+  position: relative;
+  padding: 60px 0px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
+  @media (min-width: $large) { padding: 70px 0px; }
+}
+
+.contenedor_limites {
+  width: 100%;
+  max-width: 550px;
+  margin: 0px auto;
+  padding: 0px 20px;
+  position: relative;
+  height: 100%;
+
+  @media (min-width: $small) { max-width: 750px; }
+  @media (min-width: $large) { max-width: 1200px; }
+}
+
+.modal_linea_linea {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.modal_columna_linea {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  @media (min-width: $small) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
+
+.modal_columna_linea_invertido {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column-reverse;
+  flex-wrap: nowrap;
+
+  @media (min-width: $small) {
+    justify-content: space-between;
+    flex-direction: row;
+  }
+}
+
+.modal_columna_columna {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+
+  @media (min-width: $small) { align-items: flex-start; }
+}
+
+.hijo_1_2 {
+  width: 100%;
+
+  @media (min-width: $small) { width: 45%; }
+}
+.hijos_2 {
+  & > .contenedor {
+    @extend .hijo_1_2;
+  }
+}
+
+.hijo_1_3 {
+  width: 100%;
+
+  @media (min-width: $small) { width: 30%; }
+}
+.hijos_3 {
+  & > .contenedor {
+    @extend .hijo_1_3;
+  }
+}
+
+.hijo_1_4 {
+  width: 100%;
+
+  @media (min-width: $small) { width: 22.5%; }
+}
+.hijos_4 {
+  & > .contenedor {
+    @extend .hijo_1_4;
+  }
+}
+
+.todo_centrado {
+  align-items: center;
+  justify-content: center;
+
+  & > .contenedor_limites {
+    align-items: center;
+    justify-content: center;
+  }
+}
+// ----------------------------------------------------------------- Encabezados
+
+.componente_titulo {
+  color: $base;
+  font-weight: 500;
+  line-height: 1.2;
+  margin: 0px auto 0px auto;
+  padding: 0px;
+  text-align: center;
+
+  @media (min-width: $small) { text-align: left; }
+}
+
+h1.componente_titulo {
+  @extend .componente_titulo;
+
+  font-size: 2.5rem;
+}
+
+h2.componente_titulo {
+  @extend .componente_titulo;
+
+  font-size: 2rem;
+}
+
+h3.componente_titulo {
+  @extend .componente_titulo;
+
+  font-size: 1.75rem;
+}
+
+h4.componente_titulo {
+  @extend .componente_titulo;
+
+  font-size: 1.5rem;
+}
+
+h5.componente_titulo {
+  @extend .componente_titulo;
+
+  font-size: 1.25rem;
+}
+
+h6.componente_titulo {
+  @extend .componente_titulo;
+
+  font-size: 1rem;
+}
+
+// --------------------------------------------------------------------- Botones
+
+.componente_boton {
+  @extend .flex;
+
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  outline: none;
+  position: relative;
+  margin: 0px auto;
+  padding: 0px;
+  transition: background-color 0.25s ease-out;
+  width: 100%;
+  font-size: 1rem;
+
+  @media (min-width: $x-small) {
+    width: initial;
+  }
+
+  & > span {
+    @extend .flex;
+    transition: background-color 0.25s ease-out;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+
+.boton_grande {
+  padding: 1rem 2rem;
+}
+
+.boton_chico {
+  padding: 0.5rem 1rem;
+}
+
+.boton_redondeado {
+  border-radius: 50px;
+
+  & > span {
+    border-radius: 50px;
+  }
+}
+
+.boton_cuadrado {
+  border-radius: 4px;
+
+  & > span {
+    border-radius: 4px;
+  }
+}
+
+.boton_circular {
+  border-radius: 100%;
+
+  & > span {
+    border-radius: 100%;
+  }
+}
+
+.boton_circular_grande {
+  width: 50px;
+  height: 50px;
+  padding: 0px;
+}
+
+.boton_circular_chico {
+  border-radius: 100%;
+  width: 35px;
+  height: 35px;
+  padding: 0px;
+}
+
+// --------------------------------------------------------------------- Enlaces
+
+.componente_enlace {
+  outline: none;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+
+.enlace_link {
+  color: $gobar_dark;
+  font-weight: 400;
+  margin: 0px auto 1rem auto;
+  transition: color 0.25s ease-out;
+
+  &:focus, &:hover {
+    color: $gobar_ligth;
+  }
+}
+
+.enlace_bloque {}
+
+// ---------------------------------------------------------------- Espaciadores
+
+.componente_espacio {
+  width: 100%;
+
+  & > hr {
+    margin: 0px;
+    border: none;
+    height: 0.9rem;
+  }
+}
+.solo_web {
+  display: none;
+
+  @media (min-width: $small) { display: inherit; }
+}
+.solo_mobile {
+  @media (min-width: $small) { display: none; }
+}
+
+// -------------------------------------------------------------------- Parrafos
+
+.volanta {
+  text-align: center;
+  color: $base;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 600;
+  margin: 0px;
+  text-transform: uppercase;
+
+  @media (min-width: $small) { text-align: left; font-size: 16px; }
+}
+
+// -------------------------------------------------------------------- Parrafos
+
+.componente_parrafo {
+  text-align: center;
+  color: $base;
+  font-size: 14px;
+  line-height: 1.5;
+  font-weight: 400;
+  margin: 0px;
+
+  @media (min-width: $small) { text-align: left; font-size: 16px; }
+}
+
+.p_grande {
+  font-size: 44px !important;
+  font-weight: 600 !important;
+}
+.p_chico {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+// --------------------------------------------------------------- Incrementador
+
+.componente_incrementador {
+  text-align: center;
+  line-height: 1;
+}
+
+.incr_grande {
+  font-size: 4rem;
+
+  @media (min-width: $x-small) {
+    font-size: 6rem;
+  }
+  @media (min-width: $small) {
+    font-size: 8rem;
+  }
+}
+
+.incr_mediano {
+  font-size: 2rem;
+
+  @media (min-width: $x-small) {
+    font-size: 3rem;
+  }
+  @media (min-width: $small) {
+    font-size: 4rem;
+  }
+}
+
+.incr_chico {
+  font-size: 1rem;
+
+  @media (min-width: $x-small) {
+    font-size: 1.5rem;
+  }
+  @media (min-width: $small) {
+    font-size: 2rem;
+  }
+}
+
+// -------------------------------------------------------------------- Graficos
+
+.grafico_torta {
+  position: relative;
+  margin: 0px auto;
+
+  @media (min-width: $small) { margin: 0px 0px; }
+
+  .arco_fondo {
+    fill: rgba(0, 0, 0, 0.1);
+  }
+
+  .arco {
+    fill: $color3;
+  }
+
+  .torta_texto_contenedor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    & > span:nth-child(1) {
+      font-size: 80px;
+      line-height: 1;
+      color: $color3;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    & > span:nth-child(2) {
+      font-size: 16px;
+      line-height: 1.5;
+      color: $base;
+      text-align: center;
+      width: 200px;
+      margin-top: 20px;
+    }
+  }
+}
+
+// ------------------------------------------------------------- Boton Compartir
+
+$menu-items: 3;
+
+.menu {
+  $height: 50px;
+
+  width: calc(100% - 40px);
+  height: $height;
+  box-sizing: border-box;
+  text-align: right;
+  margin: 0px 0px 0px -80px;
+  padding: 0px;
+  position: absolute;
+  position: absolute;
+  top: 0 - $height - ((60 - $height) / 2);
+  right: 20px;
+  filter: url('#shadowed-goo');
+  transition: all 0.2s ease-in-out;
+
+  @media (min-width: $small) { opacity: 0; }
+  @media (min-width: $large) { top: 0 - $height - ((70 - $height) / 2); }
+}
+
+.menu-open {
+  display: none;
+}
+
+.menu-open-button {
+  $width: 35px;
+  $height: 35px;
+
+  width: $width;
+  height: $height;
+  position: absolute;
+  top: (50 - $height) / 2;
+  margin-left: -$width;
+  line-height: $height;
+  text-align: center;
+  border-radius: 100%;
+  z-index: 2;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  border: 1px solid $base;
+  opacity: 0.5;
+
+  &.claro {
+    border: 1px solid white;
+
+    & > .hamburger {
+      background: white;
+    }
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  & > .hamburger {
+    $width: 15px;
+    $height: 2px;
+
+    width: $width;
+    height: $height;
+    background: $base;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -$width/2;
+    margin-top: -$height/2;
+    transition: transform 200ms;
+
+    &.hamburger-1 {
+      transform: translate3d(0, -5px, 0);
+    }
+
+    &.hamburger-2 {
+      transform: translate3d(0, 0, 0);
+    }
+
+    &.hamburger-3 {
+      transform:translate3d(0, 5px, 0);
+    }
+  }
+}
+
+.menu-open:checked+.menu-open-button {
+  transform: scale(0.5);
+
+  & .hamburger-1 {
+    transform: rotate(45deg);
+  }
+
+  & .hamburger-2 {
+    transform: scale(0.1,1);
+  }
+
+  & .hamburger-3 {
+    transform: rotate(-45deg);
+  }
+}
+
+.menu-item {
+  $width: 35px;
+  $height: 35px;
+
+  width: $width;
+  height: $height;
+  position: absolute;
+  top: (50 - $height) / 2;
+  line-height: $height;
+  margin-left: -$width;
+  background-color: white;
+  border-radius: 100%;
+  text-align: center;
+  transition: all 0.6s cubic-bezier(0.1, 0.1, 0.2, 1);
+  opacity: 0;
+
+  &:hover {
+    background: silver;
+    color: white;
+  }
+
+  @for $i from 1 through $menu-items {
+    &:nth-child(#{$i + 2}) {
+      transition-duration: 0.2s;
+    }
+  }
+}
+
+.menu-open:checked~.menu-item {
+  opacity: 1;
+
+  @for $i from 1 through $menu-items {
+
+    &:nth-child(#{$i+2}) {
+      transition-duration: 0.3s + (0.1s * $i);
+      transform: scale(0.9) translate3d(-60px * $i, 0, 0);
+    }
+  }
+}
+
+
+// ------------------------------------------------------------ Opciones FlexBox
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.flex_column {
+  flex-direction: column;
+}
+
+.flex_justify_between {
+  justify-content: space-between;
+}
+
+.flex_justify_around {
+  justify-content: space-around;
+}
+
+.flex_justify_start {
+  justify-content: flex-start;
+}
+
+.flex_justify_end {
+  justify-content: flex-end;
+}
+
+.flex_align_center {
+  align-items: center;
+}
+
+.flex_align_between {
+  align-items: space-between;
+}
+
+.flex_align_around {
+  align-items: space-around;
+}
+
+.flex_align_start {
+  align-items: flex-start;
+}
+
+.flex_align_end {
+  align-items: flex-end;
+}
+
+.flex_wrap {
+  flex-wrap: wrap;
+}
+
+.transparent {
+  color: transparent;
+}

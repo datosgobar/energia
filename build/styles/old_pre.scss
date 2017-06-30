@@ -1,0 +1,124 @@
+// Tipografía
+$font-family-sans-serif:  'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$font-family-serif:       Georgia, "Times New Roman", Times, serif;
+$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
+
+// Tamaño tipográfico
+$font-size-base:          14px;
+$line-height-base:        1.43; // 20/14
+
+// Colores
+$generic_color:           #767676; // Color Generico Texto
+$dark_color:              #424242; // Color Generico Oscuro Texto
+$gobar_color_ligth:       #17b2f8; // Color Gob. Nación
+$gobar_color_dark:        #0695d6; // Color Gob. Nación Oscuro
+
+// Header and Footer
+$navHeight:               72px;
+$footerHeight:            265px;
+
+// Responsive Rules
+$x-small:                 460px;
+$small:                   768px;
+$medium:                  992px;
+$large:                   1200px;
+
+// Estilos Globales
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.flex_column {
+  flex-direction: column;
+}
+
+.flex_justify_between {
+  justify-content: space-between;
+}
+
+.flex_justify_around {
+  justify-content: space-around;
+}
+
+.flex_justify_start {
+  justify-content: flex-start;
+}
+
+.flex_justify_end {
+  justify-content: flex-end;
+}
+
+.flex_align_between {
+  align-items: space-between;
+}
+
+.flex_align_around {
+  align-items: space-around;
+}
+
+.flex_align_start {
+  align-items: flex-start;
+}
+
+.flex_align_end {
+  align-items: flex-end;
+}
+
+.flex_wrap {
+  flex-wrap: wrap;
+}
+
+.hide {
+  display: none;
+}
+
+.transparent {
+  color: transparent;
+}
+
+html {
+  font-family: $font-family-sans-serif;
+}
+
+body {
+  color: $dark_color;
+  line-height: $line-height-base;
+  font-size: $font-size-base;
+}
+
+hr {
+  margin-top: $line-height-base;
+  margin-bottom: $line-height-base;
+}
+
+a {
+  color: $gobar_color_dark;
+  text-decoration: none;
+
+  &:focus, &:hover {
+    color: $gobar_color_ligth;
+  }
+}
+
+// Responsive Sitio
+// (portrait and landscape)
+@media only screen and (min-width: $x-small) {}
+// (landscape)
+@media only screen and (min-width: $x-small) and (orientation: landscape) {}
+// (portrait)
+@media only screen and (min-width: $x-small) and (orientation: portrait) {}
+// (portrait and landscape)
+@media only screen and (min-width: $small) {}
+// (landscape)
+@media only screen and (min-width: $small) and (orientation: landscape) {}
+// (portrait)
+@media only screen and (min-width: $small) and (orientation: portrait) {}
+// (portrait and landscape)
+@media only screen and (min-width: $medium) {}
+// (portrait and landscape)
+@media only screen and (min-width: $large) {}

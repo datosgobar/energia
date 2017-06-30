@@ -1,4 +1,5 @@
 .SumoSelect {
+
 }
 .SumoSelect label {
   margin: 0px;
@@ -123,4 +124,9 @@
 }
 .opt.selected label {
   font-weight: 500;
+}
+.CaptionCont.SelectBox {
+  display: flex;
+  height: 36px;
+  align-items: center;
 }

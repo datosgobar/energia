@@ -1,124 +1,269 @@
-// Tipografía
-$font-family-sans-serif:  'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-$font-family-serif:       Georgia, "Times New Roman", Times, serif;
-$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace;
+//  Colors
+    $color_texto_base:        #767676; // Color Generico Texto
+    $color_texto_oscuro:      #424242; // Color Generico Oscuro Texto
+    $gobar_color_ligth:       #17b2f8; // Color Gob. Nación
+    $gobar_color_dark:        #0695d6; // Color Gob. Nación Oscuro
 
-// Tamaño tipográfico
-$font-size-base:          14px;
-$line-height-base:        1.43; // 20/14
+//  Responsive Rules
+    $x-small: 460px;
+    $small:   768px;
+    $medium:  992px;
+    $large:   1200px;
 
-// Colores
-$generic_color:           #767676; // Color Generico Texto
-$dark_color:              #424242; // Color Generico Oscuro Texto
-$gobar_color_ligth:       #17b2f8; // Color Gob. Nación
-$gobar_color_dark:        #0695d6; // Color Gob. Nación Oscuro
+//  Header and Footer
+    $header_height: 72px;
 
-// Header and Footer
-$navHeight:               72px;
-$footerHeight:            265px;
+    body {
+      padding: $header_height 0px 0px 0px;
+      position: relative;
+    }
+    a {
+      color: $gobar_color_dark;
+      text-decoration: none !important;
 
-// Responsive Rules
-$x-small:                 460px;
-$small:                   768px;
-$medium:                  992px;
-$large:                   1200px;
+      &:focus, &:hover {
+        color: $gobar_color_ligth;
+      }
+    }
 
-// Estilos Globales
+    header#barra_navegacion {
+      background-color: white;
+      box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      margin: 0px;
+      padding: 0px;
+      z-index: 99999999;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      height: $header_height;
 
-.flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
+      @media (min-width: $small) {
+        position: fixed;
+      }
 
-.flex_column {
-  flex-direction: column;
-}
+      & a#logo_modernizacion {
+        padding: 0px;
+        height: 100%;
 
-.flex_justify_between {
-  justify-content: space-between;
-}
+        @media (min-width: $x-small) {
+          padding: 0px 0px;
+        }
 
-.flex_justify_around {
-  justify-content: space-around;
-}
+        & > img {
+          width: 300px;
+          max-width: 100%;
+          height: 100%;
 
-.flex_justify_start {
-  justify-content: flex-start;
-}
+          @media (min-width: $small) {}
 
-.flex_justify_end {
-  justify-content: flex-end;
-}
+          @media (min-width: $large) {}
+        }
+      }
+      & div#header_redes_sociales {
+        display: none;
+        padding: 0px 0px;
+        height: $header_height;
 
-.flex_align_between {
-  align-items: space-between;
-}
+        @media (min-width: $small) {
+          display: flex;
+          align-items: center;
+        }
 
-.flex_align_around {
-  align-items: space-around;
-}
+        & > span {
+          color: $gobar_color_dark;
+          padding: 0px 10px;
+          margin: 0px;
+          font-size: 17px;
+          font-weight: 500;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          line-height: $header_height;
+        }
+        & > a {
+          color: $gobar_color_dark;
+          background-color: white;
+          padding: 0px 0.3em;
+          margin: 0px;
+          cursor: pointer;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          height: 100%;
+          line-height: $header_height;
 
-.flex_align_start {
-  align-items: flex-start;
-}
+          &:hover {
+            color: white;
+            background-color: $gobar_color_dark;
+          }
 
-.flex_align_end {
-  align-items: flex-end;
-}
+          @media (min-width: $medium) {
+            padding: 0px 10px;
+          }
 
-.flex_wrap {
-  flex-wrap: wrap;
-}
+          & > i {
+            font-size: 32px;
+          }
+        }
+      }
+    }
+    div#modal_contenido {
+      min-height: calc(100vh - 72px);
+    }
+    section#curiosidades {
+      background-color: white;
+      padding: 60px 0px;
 
-.hide {
-  display: none;
-}
+      & > .restricted-max-width {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
 
-.transparent {
-  color: transparent;
-}
+        & h3 {
+          text-align: center;
+          margin: 0px auto 20px auto;
+          color: $color_texto_base;
+          font-weight: normal;
+        }
+        & button {
+          margin: 0px auto 40px auto;
+          color: white;
+          background-color: $gobar_color_dark;
+          border-radius: 16px;
+          border: none;
+          padding: 16px 48px;
+          outline: none;
 
-html {
-  font-family: $font-family-sans-serif;
-}
+          &:hover {
+            background-color: lighten($gobar_color_dark, 10%);
+          }
+          &:active {
+            background-color: lighten($gobar_color_dark, 20%);
+          }
+        }
+        & p {
+          text-align: center;
+          margin: 0px auto 60px auto;
+          color: $color_texto_base;
+        }
+        & p.issue {
+          text-align: center;
+          margin: 0px auto;
+          color: $color_texto_base;
+        }
+      }
+    }
+    footer#footer {
+      position: relative;
+      background-color: white;
+      box-shadow: 0px -2px 4px rgba(220, 220, 220, 0.75);
+      padding: 0px;
+      width: 100%;
+      z-index: 999;
+      bottom: 0px;
 
-body {
-  color: $dark_color;
-  line-height: $line-height-base;
-  font-size: $font-size-base;
-}
+      & p {
+        font-size: 16px;
+        font-weight: 500;
+      }
+      & #footer-spacer {
+        padding: 20px 0;
 
-hr {
-  margin-top: $line-height-base;
-  margin-bottom: $line-height-base;
-}
+        @media (min-width: $small) {
+          padding: 50px 0;
+        }
 
-a {
-  color: $gobar_color_dark;
-  text-decoration: none;
+        & .footer-section {
+          color: $gobar_color_dark;
+          font-size: 16px;
+          font-weight: 500;
+          text-align: center;
 
-  &:focus, &:hover {
-    color: $gobar_color_ligth;
-  }
-}
+          @media (min-width: $small) {
+            text-align: left;
+          }
 
-// Responsive Sitio
-// (portrait and landscape)
-@media only screen and (min-width: $x-small) {}
-// (landscape)
-@media only screen and (min-width: $x-small) and (orientation: landscape) {}
-// (portrait)
-@media only screen and (min-width: $x-small) and (orientation: portrait) {}
-// (portrait and landscape)
-@media only screen and (min-width: $small) {}
-// (landscape)
-@media only screen and (min-width: $small) and (orientation: landscape) {}
-// (portrait)
-@media only screen and (min-width: $small) and (orientation: portrait) {}
-// (portrait and landscape)
-@media only screen and (min-width: $medium) {}
-// (portrait and landscape)
-@media only screen and (min-width: $large) {}
+          &.logo {
+
+            & img {
+              max-width: 300px;
+              margin-bottom: 20px;
+            }
+            & a.social-link {
+              display: inline-block;
+              border-radius: 4px;
+              padding: 8px;
+              text-align: center;
+              width: 46px;
+              height: 46px;
+
+              &:hover {
+                background: $gobar_color_dark;
+                color: white;
+              }
+              & i {
+                 display: inline-block;
+                 font-size: 28px;
+               }
+            }
+          }
+          &.links-internos a {
+
+            &:hover {
+              color: $gobar_color_ligth;
+            }
+            &.ckan-anchor {
+              display: inline-block;
+              text-align: left;
+            }
+          }
+          &.links-externos {
+
+            & .ckan-link {
+              margin: 0;
+              color: $color_texto_base;
+            }
+            & .ckan-name {
+              color: $gobar_color_dark;
+
+              &:hover {
+                color: $gobar_color_ligth;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .restricted-max-width {
+      width: 100%;
+      max-width: 550px;
+      margin: 0px auto;
+      overflow: hidden;
+
+      @media (min-width: $small) {
+        max-width: 750px;
+      }
+      @media (min-width: $large) {
+        max-width: 1200px;
+      }
+
+      &:after {
+        content: " ";
+        display: block;
+        height: 0;
+        clear: both;
+      }
+    }
+    .header-span-link {
+      color: $gobar_color_dark;
+      font-size: 17px;
+      padding: 0px 10px;
+      font-weight: 500;
+    }
+    .header-spacing {
+      padding: 0px 20px;
+    }

@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Herramientas de desarrollo para JavaScript",
   "dependencies": {
-    "argob-poncho": "^0.3.2",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-es2016": "^6.16.0",
     "babel-preset-es2017": "^6.16.0",
@@ -19,7 +18,6 @@
     "gulp-decomment": "^0.1.3",
     "gulp-htmlmin": "^3.0.0",
     "gulp-if": "^2.0.2",
-    "gulp-notify": "^3.0.0",
     "gulp-plumber": "^1.1.0",
     "gulp-removelogs": "^0.1.0",
     "gulp-rename": "^1.2.2",
@@ -31,5 +29,5 @@
     "gulp-uglify": "^2.1.2",
     "jquery": "^3.1.1"
   },
-  "author": "Francisco Tomás López"
+  "author": "Francisco Tomás López - frammlopez@gmail.com"
 }

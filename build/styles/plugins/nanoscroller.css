@@ -14,11 +14,7 @@ body.nano > .nano-content {
   bottom        : 0;
   left          : 0;
 }
-@media (min-width: 768px) {
-  body.nano > .nano-content {
-    top: 72px;
-  }
-}
+
 .nano > .nano-content:focus {
   outline: thin dotted;
 }
