@@ -399,6 +399,9 @@ $(() => {
         $(document).keyup((e) => {
           if (e.keyCode === 27 && $('.tooltip_exit').length === 2 ) { intro(stage, 'delete', 'none'); }
         });
+        $('#intro_screen').first().on('click', (d) => {
+          intro(stage, 'delete', 'none');
+        });
 
         function_button.start();
         break;

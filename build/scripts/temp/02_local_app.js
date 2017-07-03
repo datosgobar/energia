@@ -363,6 +363,9 @@ $(function () {
             intro(stage, 'delete', 'none');
           }
         });
+        $('#intro_screen').first().on('click', function (d) {
+          intro(stage, 'delete', 'none');
+        });
 
         function_button.start();
         break;
