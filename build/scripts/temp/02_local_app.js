@@ -6,7 +6,7 @@ var GLOBAL_NODES = void 0,
     GLOSARIO = void 0,
     INTRO = {
   nodes_title: ['Balance energético: qué es y cómo se mide', 'Del gas a la electricidad', 'Los usos de la electricidad', 'Antes y ahora'],
-  nodes_description: ['El balance energético <b>detalla flujos, y cantidades de energía producida y consumida</b>. Por convención, <b>la unidad de medida es el ktep</b>. Cada ktep representa mil toneladas equivalente de petróleo.', 'Veamos este ejemplo. En 2015, se extrajeron 2.000 ktep de Gas de pozo. A través de las plantas de transformación, se lo convirtió en gas de red. Luego, el 50% del gas de red se destinó a centrales eléctricas que producen electricidad para el consumo.', 'El principal uso de la electricidad fue en la industria y los hogares. Como parte del proceso, una porción importante se perdió por causas tecnológicas y naturales.', 'Compará con 1960 y descubrí todo el crecimiento que hubo en los montos producidos y consumidos.']
+  nodes_description: ['El balance energético <b>detalla flujos, y cantidades de energía producida y consumida</b>. Por convención, <b>la unidad de medida es el ktep</b>. Cada ktep representa mil toneladas equivalente de petróleo.', 'Veamos este ejemplo. En 2015, se extrajeron 2.000 ktep de Gas natural. A través de las plantas de transformación, se lo convirtió en gas de red. Luego, el 50% del gas de red se destinó a centrales eléctricas que producen electricidad para el consumo.', 'El principal uso de la electricidad fue en la industria y los hogares. Como parte del proceso, una porción importante se perdió por causas tecnológicas y naturales.', 'Compará con 1960 y descubrí todo el crecimiento que hubo en los montos producidos y consumidos.']
 },
     SANKEY = {
   margin: {
@@ -116,11 +116,11 @@ $(function () {
   var tooltipIn = function tooltipIn(d) {
 
     setearTooltip();
-
+    console.log(d);
     if (d.y < 10) {
-      $('#tooltip').attr('class', 'view_bottom').css({ top: $('#sankey svg').offset().top + d.y + d.dy + SANKEY.tooltip.top, left: $('#sankey svg').offset().left + d.x + SANKEY.tooltip.left }).fadeIn(100);
+      $('#tooltip').attr('class', 'view_bottom').css({ top: $('#sankey > svg > g:nth-child(2)').offset().top + window.document.querySelector('.nano-content').scrollTop + d.y + d.dy + 25, left: $('#sankey > svg > g:nth-child(2)').offset().left + d.dx / 2 + d.x }).fadeIn(100);
     } else {
-      $('#tooltip').attr('class', 'view_top').css({ top: $('#sankey svg').offset().top + d.y + SANKEY.tooltip.bottom, left: $('#sankey svg').offset().left + d.x + SANKEY.tooltip.left }).fadeIn(100);
+      $('#tooltip').attr('class', 'view_top').css({ top: $('#sankey > svg > g:nth-child(2)').offset().top + window.document.querySelector('.nano-content').scrollTop + d.y - 10, left: $('#sankey > svg > g:nth-child(2)').offset().left + d.dx / 2 + d.x }).fadeIn(100);
     }
 
     if (d.posicionX === 1 || d.posicionX === 3 || d.posicionX === 5) {
@@ -345,12 +345,12 @@ $(function () {
       case 'create':
         d3.select('#modal_contenido').append('div').attr('id', 'intro_screen').style('top', '0px').style('left', '0px');
         intro_container = d3.select('#modal_contenido').append('div').attr('id', 'tooltip_intro');
-        intro_container.append('div').attr('class', 'tooltip_header flex flex_justify_between flex_align_start');
+        intro_container.append('div').attr('class', 'tooltip_header flex flex-justify-between flex-align-start');
         intro_container.select('.tooltip_header').append('h2').attr('class', 'tooltip_name');
         intro_container.select('.tooltip_header').append('img').attr('class', 'tooltip_exit').attr('src', './public/images/cruz.svg').attr('width', '15');
         intro_container.append('div').attr('class', 'tooltip_content');
         intro_container.select('.tooltip_content').append('p').attr('class', 'tooltip_production');
-        intro_buttons = intro_container.append('div').attr('class', ' tooltip_footer flex flex_justify_between');
+        intro_buttons = intro_container.append('div').attr('class', ' tooltip_footer flex flex-justify-between');
         button_last = intro_buttons.append('button').attr('id', 'last').html('<img class="rotate" src="./public/images/flecha.svg" alt="back icon" width="10">Anterior');
         paginator = intro_buttons.append('aside').html(stage + 1 + ' / ' + INTRO.nodes_title.length);
         button_next = intro_buttons.append('button').attr('id', 'next').html('Siguiente<img src="./public/images/flecha.svg" alt="next icon" width="10">');
@@ -592,24 +592,6 @@ $(function () {
 
     return true;
   };
-
-  // const antesSvg = (anio) => {
-  //   let elemento = d3.select('#sankey').append('div');
-  //
-  //   elemento.append('h4').text(`Energía argentina - ${ anio }`);
-  // };
-  //
-  // for (var i = 1960; i < 2016; i++) {
-  //   let anio = i;
-  //
-  //   console.log(anio);
-  //
-  //   downloadFile(i, 'sankey')
-  //     .then(() => antesSvg(anio))
-  //     .then(() => calcularAltura())
-  //     .then(() => dibujarSankey({ 'nodes': GLOBAL_NODES, 'links': GLOBAL_LINKS }, { margin: SANKEY.margin, separacionNodo: SANKEY.separacionNodo, anchoNodo: SANKEY.anchoNodo, size: SANKEY.size }))
-  //     .then(() => setearNodosYLinks());
-  // }
 
   downloadFile(2015, 'sankey').then(function () {
     return calcularAltura();

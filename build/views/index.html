@@ -54,17 +54,17 @@
 
       <!-- Barra de Navegación -->
       <header id="barra_navegacion">
-        <div class="contenedor_limites">
-          <div class="flex flex_justify_between max_width max_height">
-            <a id="logo_modernizacion" href="http://historias.datos.gob.ar" class="flex" alt="logo ministerio de modernización">
-              <img src="./public/images/logo.svg">
+        <div class="modalResponsive">
+          <div class="flex flex-justify-between max-width max-height">
+            <a id="logo_modernizacion" class="flex" alt="logo ministerio de modernización">
+              <img src="./public/images/logo-gobar.svg">
             </a>
-            <div id="header_redes_sociales" class="max_height">
+            <div id="header_redes_sociales" class="max-height">
               <span>COMPARTÍ</span>
-              <a href="javascript: window.open('https://www.facebook.com/sharer/sharer.php?u=https://datosgobar.github.io/energia', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank"><!-- completar -->
+              <a href="javascript: window.open('https://www.facebook.com/sharer/sharer.php?u=https://datosgobar.github.io/energia', 'pop', 'width=600, height=260, scrollbars=no');" target="_blank">
                 <i class="fa fa-facebook fa-2x" aria-hidden="true"></i>
               </a>
-              <a href="javascript: window.open('https://twitter.com/share?url=https://datosgobar.github.io/energia')" target="_blank"><!-- completar -->
+              <a href="javascript: window.open('https://twitter.com/share?url=https://datosgobar.github.io/energia')" target="_blank">
                 <i class="fa fa-twitter fa-2x" aria-hidden="true"></i>
               </a>
             </div>
@@ -76,7 +76,7 @@
       <div id="modal_contenido">
         <h1>Energía argentina</h1>
         <p class="restricted-max-width">Descubrí el ciclo de vida de la energía desde su origen hasta el consumo final. Explorá los balances energéticos desde 1960 a 2015.</p>
-        <form id="form_energia" class="flex flex_wrap" action="index.html" method="post">
+        <form id="form_energia" class="flex flex-wrap" action="index.html" method="post">
           <div class="special-component-selector">
             <div class="command-buttons">
               <button id="nextYear" type="button"><i class="fa fa-caret-right fa-rotate-270" aria-hidden="true"></i></button>
@@ -90,15 +90,15 @@
           </div>
         </form>
         <div id="sankey"></div>
-        <p class="referencia">Cifras en ktep. Cada ktep representa mil toneladas equivalente de petróleo.</p>
-        <div id="tooltip" class="flex flex_column flex_align_start">
-          <div class="tooltip_header flex flex_justify_between">
+        <p class="referencia">Cifras en ktep. Cada ktep representa mil toneladas equivalente de petróleo. <a href="https://www.minem.gob.ar" class="link link-inline">Fuente</a>.</p>
+        <div id="tooltip" class="flex flex-column flex-align-start">
+          <div class="tooltip_header flex flex-justify-between">
             <span class="tooltip_name"></span>
             <img class="tooltip_exit" src="./public/images/cruz.svg" alt="exit icon" width="15">
           </div>
-          <div class="tooltip_content flex flex_column flex_align_start">
+          <div class="tooltip_content flex flex-column flex-align-start">
             <span class="ref">Cifras en ktep</span>
-            <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_container flex flex-justify-between">
               <div class="tooltip_key title_total">
                 disponibilidad local
               </div>
@@ -106,7 +106,7 @@
                 <span class="tooltip_ktep"></span>
               </div>
             </div>
-            <div class="tooltip_container flex flex_justify_between divider">
+            <div class="tooltip_container flex flex-justify-between divider">
               <div class="tooltip_key">
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 Producción
@@ -115,7 +115,7 @@
                 <span class="tooltip_production"></span>
               </div>
             </div>
-            <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_container flex flex-justify-between">
               <div class="tooltip_key">
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 Importación
@@ -124,7 +124,7 @@
                 <span class="tooltip_importation"></span>
               </div>
             </div>
-            <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_container flex flex-justify-between">
               <div class="tooltip_key">
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 Exportación
@@ -133,7 +133,7 @@
                 <span class="tooltip_exportation"></span>
               </div>
             </div>
-            <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_container flex flex-justify-between">
               <div class="tooltip_key">
                 <i class="fa fa-circle" aria-hidden="true"></i>
                 Pérdida
@@ -142,7 +142,7 @@
                 <span class="tooltip_losses"></span>
               </div>
             </div>
-            <div class="tooltip_container flex flex_justify_between">
+            <div class="tooltip_container flex flex-justify-between">
               <div class="tooltip_key">
                 <i class="fa fa-circle transparent" aria-hidden="true"></i>
                 Otros
@@ -155,44 +155,51 @@
           <div class="tooltip_glosary flex">
 
           </div>
-          <div class="tooltip_footer flex flex_justify_between">
+          <div class="tooltip_footer flex flex-justify-between">
             <button name="citas"><img class="rotate" src="./public/images/flecha.svg" alt="back icon" width="10">Cifras</button>
             <button name="glosario">Glosario<img src="./public/images/flecha.svg" alt="next icon" width="10"></button>
           </div>
         </div>
       </div>
 
-      <!-- Footer -->
-
-      <section class="modal_contenedor todo_centrado" id="curiosidades" compartir="false">
-        <div class="contenedor_limites modal_columna_columna">
-          <h3 class="componente_titulo">¿Te gustó la visualización?</h3>
-          <div class="componente_espacio undefined">
+      <!-- Curiosidades -->
+      <section module-nro="8" id="curiosidades" class="strictCenter modalContainer" style="background-color: rgb(249, 249, 249);">
+        <div class="mod-col-col child-1 modalResponsive">
+          <h3 class="title">¿Te gustó la visualización?</h3>
+          <div class="breakLine">
+            <hr>
+            <hr>
+          </div><a class="link link-block"><button class="button buttonRound" style="background-color: rgb(6, 149, 214); color: white;"><span class="buttonBig boton_efecto">Conocé cómo hicimos Energía Argentina</span></button></a>
+          <div class="breakLine">
             <hr>
             <hr>
           </div>
-          <a class="componente_enlace enlace_bloque">
-            <button class="componente_boton boton_redondeado" style="background-color: rgb(6, 149, 214); color: white;">
-              <span class="boton_grande boton_efecto">Conocé cómo hicimos Energía Argentina</span>
-            </button>
-          </a>
-          <div class="componente_espacio undefined">
-            <hr>
+          <p class="paragraph" style="text-align: center;">Energía argentina es posible gracias a los datos de la Dirección Nacional de Información Energética.</p>
+          <div class="breakLine">
             <hr>
           </div>
-          <p class="componente_parrafo" style="text-align: center;">
-            Energía argentina es posible gracias a los datos de la Dirección Nacional de Información Energética. Podés consultar el documento metodológico del <a href="http://www.energia.gob.ar/contenidos/archivos/Reorganizacion/informacion_del_mercado/publicaciones/energia_en_gral/balances_2016/documento-metodologico-balance-energetico-nacional-final-2015.pdf" class="enlace_link">Balance Energético Nacional 2015</a>. Los <a href="http://www.energia.gob.ar/contenidos/verpagina.php?idpagina=3366" class="enlace_link">conjuntos de datos originales</a> y también los datos específicos que usamos están disponibles para que los uses. Además, podés <a class="enlace_link">descargar las imágenes de los balances</a> de todos los años.
-          </p>
-          <div class="componente_espacio undefined">
-            <hr>
+          <p class="paragraph" style="text-align: center;">Podés consultar el documento metodológico del <a href="http://www.energia.gob.ar/contenidos/archivos/Reorganizacion/informacion_del_mercado/publicaciones/energia_en_gral/balances_2016/documento-metodologico-balance-energetico-nacional-final-2015.pdf"
+              class="link link-inline">Balance Energético Nacional 2015</a>.</p>
+          <div class="breakLine">
             <hr>
           </div>
-          <p class="componente_parrafo p_chico">
-            ¿Tenés comentarios? ¿Encontraste algún error? <a href="mailto:datos@modernizacion.gob.ar" class="enlace_link">¡Escribinos!</a>
-          </p>
+          <p class="paragraph" style="text-align: center;">Los <a href="http://www.energia.gob.ar/contenidos/verpagina.php?idpagina=3366" class="link link-inline">conjuntos de datos originales</a> están disponibles para que los uses. Además, podés descargar las imágenes de los balances de todos los años.</p>
+          <div
+            class="breakLine">
+            <hr>
+            <hr>
         </div>
+        <p class="paragraph pSmall" style="text-align: center;">¿Encontraste algún error? Por favor, <a href="mailto:datos@modernizacion.gob.ar" class="link link-inline">escribinos</a>.</p>
+        <div class="breakLine">
+          <hr>
+          <hr>
+        </div>
+        <a href="https://www.minem.gob.ar" class="link link-block">
+          <img height="48" src="public/images/logo-min.svg" class="image"></div>
+        </a>
       </section>
 
+      <!-- Footer -->
       <footer id="footer" class="container-fluid">
         <div class="restricted-max-width">
           <div id="footer-spacer" class="col-xs-12">
@@ -203,7 +210,7 @@
                 <a href="https://github.com/datosgobar" target="_blank" class="social-link"><i class="fa fa-github-alt"></i></a>
                 <a href="https://www.facebook.com/GobAbiertoAR/" target="_blank" class="social-link"><i class="fa fa-facebook"></i></a>
               </p>
-              <a href="http://www.argentina.gob.ar/modernizacion" target="_blank"><img src="./public/images/logo.svg" class="logo-ministerio"></a>
+              <a href="http://www.argentina.gob.ar/modernizacion" target="_blank"><img src="./public/images/logo-modernizacion.svg" class="logo-ministerio"></a>
             </div>
             <div class="no-padding footer-section links-externos col-xs-12 col-sm-3 col-sm-offset-3 col-md-2 col-md-offset-4">
               <a href="mailto:datos@modernizacion.gob.ar"><p>Contacto</p></a>

@@ -215,7 +215,8 @@ header#barra_navegacion {
   position: absolute;
   top: 0px;
   left: 0px;
-  height: 72px; }
+  height: 72px;
+  display: flex; }
   @media (min-width: 768px) {
     header#barra_navegacion {
       position: fixed; } }
@@ -267,9 +268,6 @@ header#barra_navegacion {
           padding: 0px 10px; } }
       header#barra_navegacion div#header_redes_sociales > a > i {
         font-size: 32px; }
-
-div#modal_contenido {
-  min-height: calc(100vh - 72px); }
 
 section#curiosidades {
   background-color: white;
@@ -532,7 +530,7 @@ h1 {
       opacity: 0.5; }
 
 .view_top {
-  transform: translate(-50%, -100%); }
+  transform: translate(-2px, -100%); }
   .view_top:after, .view_top:before {
     content: '';
     display: block;
@@ -558,7 +556,7 @@ h1 {
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='black'); }
 
 .view_bottom {
-  transform: translate(-50%, 0%); }
+  transform: translate(-2px, 0%); }
   .view_bottom:after, .view_bottom:before {
     content: '';
     display: block;

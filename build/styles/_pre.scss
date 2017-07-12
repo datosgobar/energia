@@ -37,6 +37,7 @@
       top: 0px;
       left: 0px;
       height: $header_height;
+      display: flex;
 
       @media (min-width: $small) {
         position: fixed;
@@ -108,9 +109,6 @@
           }
         }
       }
-    }
-    div#modal_contenido {
-      min-height: calc(100vh - 72px);
     }
     section#curiosidades {
       background-color: white;

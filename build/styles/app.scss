@@ -74,6 +74,10 @@ h1 {
   position: relative;
   overflow-y: hidden;
   position: relative;
+
+  // @media (min-width: $large) {
+  //   height: calc(100vh - 91px - 37px - 36px - 72px);
+  // }
 }
 
 .chart-encabezado-right, .chart-encabezado-left {
@@ -196,7 +200,7 @@ h1 {
   }
 }
 .view_top {
-  transform: translate(-50%, -100%);
+  transform: translate(-2px, -100%);
 
   &:after, &:before {
     content: '';
@@ -226,7 +230,7 @@ h1 {
   }
 }
 .view_bottom {
-  transform: translate(-50%, 0%);
+  transform: translate(-2px, 0%);
 
   &:after, &:before {
     content: '';
