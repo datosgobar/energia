@@ -77,13 +77,13 @@ gulp.task('start_server', () => browserSync.init({
 ////////////////////////////////////////////////////////////////////////////////
 // CLONAR ARCHIVOS DE NODE_MODULES
 gulp.task('import_scripts', () => gulp.src([
-  `./node_modules/jquery/dist/jquery${ entorno.ext }.js`,
-  `./node_modules/bootstrap/dist/js/bootstrap${ entorno.ext }.js`,
-  `./node_modules/d3/build/d3${ entorno.ext }.js`
+  `./node_modules/jquery/dist/jquery.min.js`,
+  `./node_modules/bootstrap/dist/js/bootstrap.min.js`,
+  `./node_modules/d3/build/d3.min.js`
 ]).pipe(concat('00_import_plugins.js')).pipe(gulp.dest('./build/scripts/temp/')));
 gulp.task('import_styles',  () => gulp.src([
-  `./node_modules/bootstrap/dist/css/bootstrap${ entorno.ext }.css`,
-  // `./node_modules/argob-poncho/dist/css/poncho${ entorno.ext }.css`,
+  `./node_modules/bootstrap/dist/css/bootstrap.min.css`,
+  // `./node_modules/argob-poncho/dist/css/poncho.min.css`,
   // `./node_modules/argob-poncho/dist/css/roboto-fontface.css`
 ]).pipe(concat('00_plugins_import.css')).pipe(gulp.dest('./build/styles/temp/')));
 gulp.task('import_fonts',   () => gulp.src([
@@ -94,14 +94,14 @@ gulp.task('import_all',     sequence(['import_scripts','import_styles','import_f
 ////////////////////////////////////////////////////////////////////////////////
 // views task
 gulp.task('html',            () => gulp.src('./build/views/*.html')
-  .pipe(plumber())
-  .pipe(gulpif(entorno.isProd, htmlmin(options.htmlmin)))
-  .pipe(gulpif(entorno.isProd, special(options.special)))
+  .pipe( plumber() )
+  .pipe( htmlmin(options.htmlmin) )
+  .pipe( special(options.special) )
   .pipe(gulp.dest('./'))
   .pipe(browserSync.stream()));
 
 gulp.task('delete_views',    () => gulp.src('./*.html')
-.pipe(clean({ force: true })));
+  .pipe(clean({ force: true })));
 gulp.task('build_views',     (callback) => sequence('html')(callback));
 gulp.task('watch_views',     () => gulp.watch('./build/views/*.html', ['build_views']));
 
@@ -120,15 +120,15 @@ gulp.task('sass',            () => gulp.src(['./build/styles/*.*', '!./build/sty
 gulp.task('css',             () => gulp.src('./build/styles/temp/*.css')
   .pipe(plumber())
   .pipe(concat('03_final_app.css'))
-  .pipe(gulpif(entorno.isProd, stripCssComments(options.stripCssComments)))
+  .pipe( stripCssComments(options.stripCssComments) )
   .pipe(autoprefixer(options.autoprefixer))
-  .pipe(gulpif(entorno.isProd, csso(options.csso)))
+  .pipe( csso(options.csso) )
   .pipe(gulp.dest('./build/styles/temp/')));
 gulp.task('sourcemap_css',   () => gulp.src('./build/styles/temp/*final_app.css')
   .pipe(plumber())
   .pipe(concat('app.css'))
-  .pipe(gulpif(!entorno.isProd, sourcemaps.init(options.sourcemaps)))
-  .pipe(gulpif(!entorno.isProd, sourcemaps.write('')))
+  // .pipe(gulpif(!entorno.isProd, sourcemaps.init(options.sourcemaps)))
+  // .pipe(gulpif(!entorno.isProd, sourcemaps.write('')))
   .pipe(gulp.dest('./public/styles/'))
   .pipe(browserSync.stream()));
 gulp.task('delete_styles',   () => gulp.src(['./build/styles/temp', './public/styles'])
@@ -140,28 +140,28 @@ gulp.task('watch_styles',    () => gulp.watch('./build/styles/**/*.scss', ['rebu
 ////////////////////////////////////////////////////////////////////////////////
 // scripts task
 gulp.task('babel_plugins',   () => gulp.src(['./build/scripts/plugins/*.js', '!./build/scripts/plugins/old_*.*'])
-  .pipe(plumber())
-  .pipe(concat('01_local_plugins.js'))
-  .pipe(babel(options.babel))
-  .pipe(gulpif(entorno.isProd, uglify(options.uglify)))
-  .pipe(gulpif(entorno.isProd, removeLogs(options.removeLogs)))
-  .pipe(gulp.dest('./build/scripts/temp/')));
+  .pipe( plumber() )
+  .pipe( concat('01_local_plugins.js') )
+  .pipe( babel(options.babel) )
+  // .pipe( uglify() )
+  .pipe( removeLogs(options.removeLogs) )
+  .pipe( gulp.dest('./build/scripts/temp/')) );
 gulp.task('babel',           () => gulp.src(['./build/scripts/*.js', '!./build/scripts/old_*.*'])
-  .pipe(plumber())
-  .pipe(concat('02_local_app.js'))
-  .pipe(babel(options.babel))
-  .pipe(gulpif(entorno.isProd, uglify(options.uglify)))
+  .pipe( plumber() )
+  .pipe( concat('02_local_app.js') )
+  .pipe( babel(options.babel) )
+  .pipe( uglify() )
   .pipe(gulp.dest('./build/scripts/temp/')));
 gulp.task('javascript',      () => gulp.src('./build/scripts/temp/*.js')
-  .pipe(plumber())
-  .pipe(concat('03_final_app.js'))
-  .pipe(gulpif(entorno.isProd, decomment(options.decomment)))
+  .pipe( plumber() )
+  .pipe( concat('03_final_app.js') )
+  .pipe( decomment(options.decomment) )
   .pipe(gulp.dest('./build/scripts/temp/')));
 gulp.task('sourcemap_js',    () => gulp.src('./build/scripts/temp/*final_app.js')
   .pipe(plumber())
   .pipe(concat('app.js'))
-  .pipe(gulpif(!entorno.isProd, sourcemaps.init(options.sourcemaps)))
-  .pipe(gulpif(!entorno.isProd, sourcemaps.write('')))
+  // .pipe(gulpif(!entorno.isProd, sourcemaps.init(options.sourcemaps)))
+  // .pipe(gulpif(!entorno.isProd, sourcemaps.write('')))
   .pipe(gulp.dest('./public/scripts/'))
   .pipe(browserSync.stream()));
 gulp.task('delete_scripts',  () => gulp.src(['./build/scripts/temp', './public/scripts'])

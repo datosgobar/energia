@@ -11,7 +11,7 @@ let GLOBAL_NODES,
       ],
       nodes_description: [
         'El balance energético <b>detalla flujos, y cantidades de energía producida y consumida</b>. Por convención, <b>la unidad de medida es el ktep</b>. Cada ktep representa mil toneladas equivalente de petróleo.',
-        'Veamos este ejemplo. En 2015, se extrajeron 2.000 ktep de Gas natural. A través de las plantas de transformación, se lo convirtió en gas de red. Luego, el 50% del gas de red se destinó a centrales eléctricas que producen electricidad para el consumo.',
+        'Veamos este ejemplo. En 2015, se extrajeron 37.786 ktep de Gas natural. A través de las plantas de transformación, se lo convirtió en gas de red. Luego, el 40% del gas de red se destinó a centrales eléctricas que producen electricidad para el consumo.',
         'El principal uso de la electricidad fue en la industria y los hogares. Como parte del proceso, una porción importante se perdió por causas tecnológicas y naturales.',
         'Compará con 1960 y descubrí todo el crecimiento que hubo en los montos producidos y consumidos.'
       ]
@@ -605,20 +605,34 @@ $(() => {
     width   = $('#sankey').width();
 
     if (($('#modal_contenido > h1').outerHeight() + $('#modal_contenido > p').outerHeight() + $('#modal_contenido > form').outerHeight() + 575) <= $('#modal_contenido').outerHeight()) {
+      // d3.select('#modal_contenido').attr('style', null);
+      // SANKEY.anchoNodo      = 20;
+      // SANKEY.separacionNodo = 20;
+      // SANKEY.size.width     = 1400;
+      // SANKEY.size.height    = 550;
+      // SANKEY.margin.left    = 175;
+      // SANKEY.margin.right   = 175;
+      // SANKEY.margin.top     = 40;
+      // SANKEY.margin.bottom  = 40;
+      //
+      // SANKEY.margin.header  = 20;
+      // SANKEY.tooltip.top    = 42;
+      // SANKEY.tooltip.left   = 190;
+      // SANKEY.tooltip.bottom = 7;
       d3.select('#modal_contenido').attr('style', null);
-      SANKEY.anchoNodo      = 20;
-      SANKEY.separacionNodo = 20;
+      SANKEY.anchoNodo      = 10;
+      SANKEY.separacionNodo = 15;
       SANKEY.size.width     = 1400;
       SANKEY.size.height    = 550;
-      SANKEY.margin.left    = 175;
-      SANKEY.margin.right   = 175;
-      SANKEY.margin.top     = 40;
+      SANKEY.margin.left    = 150;
+      SANKEY.margin.right   = 150;
+      SANKEY.margin.top     = 20;
       SANKEY.margin.bottom  = 40;
 
-      SANKEY.margin.header  = 20;
-      SANKEY.tooltip.top    = 42;
-      SANKEY.tooltip.left   = 190;
-      SANKEY.tooltip.bottom = 7;
+      SANKEY.margin.header  = 15;
+      SANKEY.tooltip.top    = 15;
+      SANKEY.tooltip.left   = 155;
+      SANKEY.tooltip.bottom = -15;
     } else {
       d3.select('#modal_contenido').attr('style', null);
       SANKEY.anchoNodo      = 10;
