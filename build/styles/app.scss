@@ -95,7 +95,7 @@ h1 {
   fill: none;
   z-index: 10;
   stroke: #CFD8DC;
-  stroke-opacity: 0.25;
+  stroke-opacity: 0.5;
   stroke-linejoin: round;
 }
 .node {
@@ -463,7 +463,7 @@ h1 {
   text-align: center;
   width: 100%;
   color: $color_texto_base;
-  font-size: 14px;
+  font-size: 13px;
 }
 .mini-tooltip {
   padding: 4px 8px;

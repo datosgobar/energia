@@ -11,7 +11,7 @@ let GLOBAL_NODES,
       ],
       nodes_description: [
         'El balance energético <b>detalla flujos, y cantidades de energía producida y consumida</b>. Por convención, <b>la unidad de medida es el ktep</b>. Cada ktep representa mil toneladas equivalente de petróleo.',
-        'Veamos este ejemplo. En 2015, se extrajeron 37.786 ktep de Gas natural. A través de las plantas de transformación, se lo convirtió en gas de red. Luego, el 40% del gas de red se destinó a centrales eléctricas que producen electricidad para el consumo.',
+        'Veamos este ejemplo. En 2015, se extrajeron 37.786 ktep de gas natural. A través de las plantas de transformación, se lo convirtió en gas de red. Luego, el 40% del gas de red se destinó a centrales eléctricas que producen electricidad para el consumo.',
         'El principal uso de la electricidad fue en la industria y los hogares. Como parte del proceso, una porción importante se perdió por causas tecnológicas y naturales.',
         'Compará con 1960 y descubrí todo el crecimiento que hubo en los montos producidos y consumidos.'
       ]

@@ -58,7 +58,7 @@ let options = {
 
 ////////////////////////////////////////////////////////////////////////////////
 // ENTORNO
-let entorno         = { state: 'desarrollo' }; // opciones: desarrollo, produccion
+let entorno         = { state: 'produccion' }; // opciones: desarrollo, produccion
     entorno.ext     = (entorno.state === 'produccion') ? ('.min') : ('');
     entorno.isProd  = (entorno.state === 'produccion') ? (true) : (false);
 
