@@ -1,13 +1,20 @@
 # [Balance energético de Argentina](http://datosgobar.github.io/energia)
 
-Descubrí el ciclo de vida de la energía desde su origen hasta el consumo final. Explorá los balances energéticos desde 1960 a 2015.
+Descubrí el ciclo de vida de la energía desde su origen hasta el consumo final.
 
 ## ¿Cómo levantar el server?
 
-El sitio está hosteado en github-pages.
+El sitio está hosteado en [GitHub Pages](https://pages.github.com/).
 
-Para tener una instancia local de desarrollo, hace falta clonar el repo y levantar un server dentro de la carpeta raiz. Esto se puede hacer por ejemplo con node.js, usando el siguiente comando `http-server --cors ./`.
-Las hojas de estilo CSS están generadas usando SASS. Para realizar modificaciones al CSS, modificar los respectivos archivos .scss dentro de la carpeta `./public/styles/sass` y compilarlos a css mediante GULP.
+Para poder obtener una instancia local del proyecto hace falta clonar el repositorio, y dentro de la carpeta raíz, instalar las dependencias del archivo `package.json` con el comando `npm install`. Después, tenés que levantar un servidor con el comando `gulp server`. Para lograr esto, hace falta tener instalado [node](https://nodejs.org/es/) y [npm](https://www.npmjs.com/).
+
+Si deseás modificar el código, usá los archivos del directorio `./build/` y luego compilalo con Gulp. Los archivos compilados se guardan en el directorio `./public/`.
+
+En el archivo `gulpfile.js`, se encuentra la variable `entorno` para poder definir si estás trabajando en un ambiente de desarrollo o producción. Además, contás con tareas programadas que te ayudaran en el proceso de desarrollo:
+- `Gulp compile` te servirá para compilar el proyecto.
+- `Gulp server` te servirá para iniciar un servidor.
+- `Gulp start` te servirá para iniciar un servidor, compilar el proyecto, y además, genera watches para recompilar el proyecto durante el desarrollo.
+- `Gulp reset_app` te servirá para eliminar la compilación.
 
 ## Contacto
 
