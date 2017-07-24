@@ -536,7 +536,6 @@ h6.title { @extend %title; font-size: 1rem; }
   padding: 0px;
   transition: background-color 0.25s ease-out;
   width: 100%;
-  font-size: 14px;
 
   @media (min-width: $x-small) {
     width: initial;
